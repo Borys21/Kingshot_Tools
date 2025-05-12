@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hero Star Shard Calculator</title>
+  <script src="shard-calc.js" defer></script>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; background: #f8f8f8; border-radius: 8px; }
+    h1 { text-align: center; }
+    label, select, input { display: block; margin: 15px 0 5px; }
+    button { margin-top: 20px; padding: 10px 20px; }
+    #result { margin-top: 30px; font-size: 1.2em; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Hero Star Shard Calculator</h1>
+
+  <label for="current-star">Current Star:</label>
+  <select id="current-star">
+    <option value="1">★ 1</option>
+    <option value="2">★ 2</option>
+    <option value="3">★ 3</option>
+    <option value="4">★ 4</option>
+    <option value="5">★ 5</option>
+  </select>
+
+  <label for="target-star">Target Star:</label>
+  <select id="target-star">
+    <option value="2">★ 2</option>
+    <option value="3">★ 3</option>
+    <option value="4">★ 4</option>
+    <option value="5">★ 5</option>
+    <option value="6">★ 6</option>
+  </select>
+
+  <button onclick="calculateShards()">Calculate</button>
+
+  <div id="result"></div>
+</body>
+</html>
