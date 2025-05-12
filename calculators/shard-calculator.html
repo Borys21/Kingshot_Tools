@@ -1,38 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Hero Star Shard Calculator</title>
+  <link rel="stylesheet" href="shard-style.css" />
   <script src="shard-calc.js" defer></script>
-  <style>
-    body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; background: #f8f8f8; border-radius: 8px; }
-    h1 { text-align: center; }
-    label, select, input { display: block; margin: 15px 0 5px; }
-    button { margin-top: 20px; padding: 10px 20px; }
-    #result { margin-top: 30px; font-size: 1.2em; font-weight: bold; }
-  </style>
 </head>
 <body>
   <h1>Hero Star Shard Calculator</h1>
 
-  <label for="current-star">Current Star:</label>
-  <select id="current-star">
-    <option value="1">★ 1</option>
-    <option value="2">★ 2</option>
-    <option value="3">★ 3</option>
-    <option value="4">★ 4</option>
-  </select>
+  <div class="main-wrapper">
+    <div style="flex: 1; min-width: 300px;">
 
-  <label for="target-star">Target Star:</label>
-  <select id="target-star">
-    <option value="2">★ 2</option>
-    <option value="3">★ 3</option>
-    <option value="4">★ 4</option>
-    <option value="5">★ 5</option>
-  </select>
+      <!-- Current Star -->
+      <label>Current Star:</label>
+      <div class="custom-select-wrapper">
+        <select id="current-star" class="native-select">
+          <option value="0" selected>0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+        <div id="current-star-fake" class="custom-select">
+          <div data-value="0" class="selected"><img src="/assets/icons/star-0.png" /></div>
+          <div data-value="1"><img src="/assets/icons/star-1.png" /></div>
+          <div data-value="2"><img src="/assets/icons/star-2.png" /></div>
+          <div data-value="3"><img src="/assets/icons/star-3.png" /></div>
+          <div data-value="4"><img src="/assets/icons/star-4.png" /></div>
+        </div>
+      </div>
 
-  <button onclick="calculateShards()">Calculate</button>
+      <!-- Current Tier -->
+      <label>Current Tier:</label>
+      <div class="custom-select-wrapper">
+        <select id="current-tier" class="native-select">
+          <option value="0" selected>0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        <div id="current-tier-fake" class="custom-select">
+          <div data-value="0" class="selected"><img src="/assets/icons/star-0.png" /></div>
+          <div data-value="1"><img src="/assets/icons/tier-1.png" /></div>
+          <div data-value="2"><img src="/assets/icons/tier-2.png" /></div>
+          <div data-value="3"><img src="/assets/icons/tier-3.png" /></div>
+          <div data-value="4"><img src="/assets/icons/tier-4.png" /></div>
+          <div data-value="5"><img src="/assets/icons/tier-5.png" /></div>
+        </div>
+      </div>
 
-  <div id="result"></div>
+      <!-- Target Star -->
+      <label>Target Star:</label>
+      <div class="custom-select-wrapper">
+        <select id="target-star" class="native-select">
+          <option value="1" selected>1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        <div id="target-star-fake" class="custom-select">
+          <div data-value="1" class="selected"><img src="/assets/icons/star-1.png" /></div>
+          <div data-value="2"><img src="/assets/icons/star-2.png" /></div>
+          <div data-value="3"><img src="/assets/icons/star-3.png" /></div>
+          <div data-value="4"><img src="/assets/icons/star-4.png" /></div>
+          <div data-value="5"><img src="/assets/icons/star-5.png" /></div>
+        </div>
+      </div>
+
+      <!-- Main Shard Progress UI -->
+      <div class="shard-container">
+        <img src="/assets/icons/shard.png" alt="Shard Icon" class="shard-icon" />
+        <div class="shard-info">
+          <h2>Total shards needed: <span id="total-shards">0</span></h2>
+          <label for="owned-shards">Owned Shards:</label>
+          <input type="number" id="owned-shards" value="0" min="0" />
+          <div class="progress-bar-bg">
+            <div id="progress-fill" class="progress-bar-fill"></div>
+            <div id="progress-text" class="progress-bar-text">Missing: 0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upgrade Table -->
+    <div class="upgrade-container">
+      <h3>Next upgrade:</h3>
+      <div id="upgrade-table"></div>
+    </div>
+  </div>
 </body>
 </html>
