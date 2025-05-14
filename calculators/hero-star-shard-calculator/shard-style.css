@@ -203,17 +203,34 @@ h1 {
   margin: 0 auto;
 }
 
-/* === Mobile Layout Fixes === */
-@media (max-width: 600px) {
+/* === Mobile Layout Fixes (Pionowe dopasowanie) === */
+@media screen and (max-width: 768px) {
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
   .wrapper {
-    margin: 10px;
+    margin: 8px;
     padding: 10px;
     max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .main-wrapper {
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .section-box,
+  .upgrade-container,
+  .shard-container {
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .custom-select img {
@@ -222,8 +239,8 @@ h1 {
   }
 
   .shard-icon {
-    width: 60px;
-    height: 60px;
+    width: 58px;
+    height: 58px;
   }
 
   .shard-info h2 {
@@ -231,12 +248,12 @@ h1 {
   }
 
   .shard-info input {
-    width: 40px;
-    font-size: 12px;
+    width: 50px;
+    font-size: 14px;
   }
 
   .progress-bar-text {
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .upgrade-table-entry img.star {
@@ -245,11 +262,7 @@ h1 {
   }
 
   .upgrade-table-entry .shard-wrapper {
-    width: 36px;
-    height: 36px;
-  }
-
-  .upgrade-container {
-    width: 100%;
+    width: 34px;
+    height: 34px;
   }
 }
