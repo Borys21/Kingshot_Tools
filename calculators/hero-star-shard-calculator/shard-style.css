@@ -198,41 +198,38 @@ h1 {
 .main-wrapper {
   display: flex;
   flex-direction: row;
-  gap: 30px;
+  gap: 16px;
   align-items: flex-start;
   justify-content: flex-start;
-  max-width: 100%;
+  align-items: flex-start;
+  max-width: 860px;
   width: 100%;
-  box-sizing: border-box;
-  flex-wrap: nowrap;
+  margin: 0 auto;
 }
 
 /* === Mobile Layout Fixes (Pionowe dopasowanie) === */
 @media screen and (max-width: 768px) {
-  .wrapper {
-    margin: 10px;
-    padding: 10px;
-    max-width: 100%;
+  .custom-select img {
+    width: 34px;
+    height: 34px;
   }
 
-  .section-box,
-  .shard-container,
-  .upgrade-container {
+  .section-box {
+    padding: 8px 6px;
+    gap: 4px;
+  }
+
+  .shard-container {
     padding: 8px;
   }
 
-  .custom-select img {
-    width: 32px;
-    height: 32px;
-  }
-
   .shard-icon {
-    width: 50px;
-    height: 50px;
+    width: 48px;
+    height: 48px;
   }
 
   .shard-info h2 {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .shard-info input {
@@ -244,24 +241,15 @@ h1 {
     font-size: 11px;
   }
 
-  .upgrade-container h3 {
-    font-size: 14px;
-    margin-bottom: 6px;
-  }
-
   .upgrade-table-entry img.star {
-    width: 24px;
-    margin-right: 6px;
+    width: 26px;
   }
 
   .upgrade-table-entry .shard-wrapper {
-    width: 30px;
-    height: 30px;
+    width: 34px;
+    height: 34px;
   }
-
-  .upgrade-table-entry .shard-count {
-    font-size: 10px;
-  }
+}
 
   .main-wrapper {
     gap: 10px;
