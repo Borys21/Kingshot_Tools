@@ -136,3 +136,19 @@ document.addEventListener('readystatechange', () => {
     calculateShards();
   }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.getElementById("owned-shards");
+  const btnInc = document.getElementById("shard-increase");
+  const btnDec = document.getElementById("shard-decrease");
+
+  btnInc.addEventListener("click", () => {
+    input.stepUp();
+    calculateShards();
+  });
+
+  btnDec.addEventListener("click", () => {
+    input.stepDown();
+    calculateShards();
+  });
+});
