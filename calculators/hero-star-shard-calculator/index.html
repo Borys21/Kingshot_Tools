@@ -10,7 +10,6 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-V8DN27T9RG');
     </script>
     <link rel="stylesheet" href="shard-style.css" />
@@ -25,7 +24,7 @@
       <!-- === Main Flex Layout: Selections + Upgrade Table === -->
       <div class="main-wrapper">
         <!-- === Left Panel: Selections + Progress === -->
-        <div style="flex: 1; min-width: 300px">
+        <div class="left-panel">
           <!-- === Current Star === -->
           <div class="section-box">
             <label>Current star:</label>
@@ -38,31 +37,11 @@
                 <option value="4">4</option>
               </select>
               <div id="current-star-fake" class="custom-select">
-                <div data-value="0" class="selected">
-                  <img
-                    src="icons/star-0.png"
-                  />
-                </div>
-                <div data-value="1">
-                  <img
-                    src="icons/star-1.png"
-                  />
-                </div>
-                <div data-value="2">
-                  <img
-                    src="icons/star-2.png"
-                  />
-                </div>
-                <div data-value="3">
-                  <img
-                    src="icons/star-3.png"
-                  />
-                </div>
-                <div data-value="4">
-                  <img
-                    src="icons/star-4.png"
-                  />
-                </div>
+                <div data-value="0" class="selected"><img src="icons/star-0.png" /></div>
+                <div data-value="1"><img src="icons/star-1.png" /></div>
+                <div data-value="2"><img src="icons/star-2.png" /></div>
+                <div data-value="3"><img src="icons/star-3.png" /></div>
+                <div data-value="4"><img src="icons/star-4.png" /></div>
               </div>
             </div>
           </div>
@@ -80,36 +59,12 @@
                 <option value="5">5</option>
               </select>
               <div id="current-tier-fake" class="custom-select">
-                <div data-value="0" class="selected">
-                  <img
-                    src="icons/star-0.png"
-                  />
-                </div>
-                <div data-value="1">
-                  <img
-                    src="icons/tier-1.png"
-                  />
-                </div>
-                <div data-value="2">
-                  <img
-                    src="icons/tier-2.png"
-                  />
-                </div>
-                <div data-value="3">
-                  <img
-                    src="icons/tier-3.png"
-                  />
-                </div>
-                <div data-value="4">
-                  <img
-                    src="icons/tier-4.png"
-                  />
-                </div>
-                <div data-value="5">
-                  <img
-                    src="icons/tier-5.png"
-                  />
-                </div>
+                <div data-value="0" class="selected"><img src="icons/star-0.png" /></div>
+                <div data-value="1"><img src="icons/tier-1.png" /></div>
+                <div data-value="2"><img src="icons/tier-2.png" /></div>
+                <div data-value="3"><img src="icons/tier-3.png" /></div>
+                <div data-value="4"><img src="icons/tier-4.png" /></div>
+                <div data-value="5"><img src="icons/tier-5.png" /></div>
               </div>
             </div>
           </div>
@@ -126,51 +81,25 @@
                 <option value="5">5</option>
               </select>
               <div id="target-star-fake" class="custom-select">
-                <div data-value="1" class="selected">
-                  <img
-                    src="icons/star-1.png"
-                  />
-                </div>
-                <div data-value="2">
-                  <img
-                    src="icons/star-2.png"
-                  />
-                </div>
-                <div data-value="3">
-                  <img
-                    src="icons/star-3.png"
-                  />
-                </div>
-                <div data-value="4">
-                  <img
-                    src="icons/star-4.png"
-                  />
-                </div>
-                <div data-value="5">
-                  <img
-                    src="icons/star-5.png"
-                  />
-                </div>
+                <div data-value="1" class="selected"><img src="icons/star-1.png" /></div>
+                <div data-value="2"><img src="icons/star-2.png" /></div>
+                <div data-value="3"><img src="icons/star-3.png" /></div>
+                <div data-value="4"><img src="icons/star-4.png" /></div>
+                <div data-value="5"><img src="icons/star-5.png" /></div>
               </div>
             </div>
           </div>
 
           <!-- === Progress Bar === -->
           <div class="shard-container">
-            <img
-              src="icons/shard-mythic.png"
-              alt="Shard Icon"
-              class="shard-icon"
-            />
+            <img src="icons/shard-mythic.png" alt="Shard Icon" class="shard-icon" />
             <div class="shard-info">
               <h2>Total shards needed: <span id="total-shards">0</span></h2>
               <label for="owned-shards">Owned shards:</label>
               <input type="number" id="owned-shards" value="0" min="0" />
               <div class="progress-bar-bg">
                 <div id="progress-fill" class="progress-bar-fill"></div>
-                <div id="progress-text" class="progress-bar-text">
-                  Missing: 0
-                </div>
+                <div id="progress-text" class="progress-bar-text">Missing: 0</div>
               </div>
             </div>
           </div>
