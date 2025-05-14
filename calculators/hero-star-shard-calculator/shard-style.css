@@ -212,14 +212,13 @@ h1 {
   }
 
   h1 {
-    font-size: 20px;
+    font-size: 24px;
   }
 
   .wrapper {
     margin: 8px;
     padding: 10px;
     max-width: 100%;
-    width: 100%;
     box-sizing: border-box;
   }
 
