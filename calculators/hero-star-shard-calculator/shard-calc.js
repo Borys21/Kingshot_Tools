@@ -88,7 +88,7 @@ function updateUpgradeTable(currentStar, currentTier, targetStar, ownedShards) {
     row.innerHTML = `
       ${getIconsFor(star, tier)}
       <div class="shard-wrapper">
-        <img src="/calculators/Hero Star Shard Calculator/icons/shard-mythic.png" />
+        <img src="icons/shard-mythic.png" />
         <div class="shard-count">${missing}</div>
       </div>`;
     container.appendChild(row);
@@ -98,13 +98,13 @@ function updateUpgradeTable(currentStar, currentTier, targetStar, ownedShards) {
 // === Icon Display Logic ===
 function getIconsFor(star, tier) {
   if (tier === 5) {
-    return `<img src="/calculators/Hero Star Shard Calculator/icons/star-${star + 1}.png" class="star" />`;
+    return `<img src="icons/star-${star + 1}.png" class="star" />`;
   } else if (star === 0 && tier < 5) {
-    return `<img src="/calculators/Hero Star Shard Calculator/icons/tier-${tier + 1}.png" class="star" />`;
+    return `<img src="icons/tier-${tier + 1}.png" class="star" />`;
   } else {
     return `
-      <img src="/calculators/Hero Star Shard Calculator/icons/star-${star}.png" class="star" />
-      <img src="/calculators/Hero Star Shard Calculator/icons/tier-${tier + 1}.png" class="star" />
+      <img src="icons/star-${star}.png" class="star" />
+      <img src="icons/tier-${tier + 1}.png" class="star" />
     `;
   }
 }
