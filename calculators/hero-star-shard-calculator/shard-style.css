@@ -229,7 +229,6 @@ h1 {
   .section-box,
   .upgrade-container,
   .shard-container {
-    width: 100%;
     box-sizing: border-box;
   }
 
