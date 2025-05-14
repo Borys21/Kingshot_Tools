@@ -165,7 +165,11 @@
             <div class="shard-info">
               <h2>Total shards needed: <span id="total-shards">0</span></h2>
               <label for="owned-shards">Owned shards:</label>
-              <input type="number" id="owned-shards" value="0" min="0" />
+              <div class="shard-input-wrapper">
+                <button id="shard-decrease">-</button>
+                <input type="number" id="owned-shards" value="0" min="0" />
+                <button id="shard-increase">+</button>
+              </div>
               <div class="progress-bar-bg">
                 <div id="progress-fill" class="progress-bar-fill"></div>
                 <div id="progress-text" class="progress-bar-text">
