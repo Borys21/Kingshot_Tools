@@ -74,6 +74,32 @@ h1 {
   display: block;
 }
 
+/* === Shard Input Buttons === */
+.shard-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+}
+.shard-input-wrapper input {
+  width: 50px;
+  text-align: center;
+}
+.shard-input-wrapper button {
+  background: #e0c18a;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: inset 0 -2px 0 #bba16b;
+  transition: background 0.2s;
+}
+.shard-input-wrapper button:hover {
+  background: #d1ae74;
+}
+
 /* === Progress Bar === */
 .shard-container {
   display: flex;
