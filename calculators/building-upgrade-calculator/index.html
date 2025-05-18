@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Building Upgrade Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="calculator-wrapper">
+    <!-- Section 1: Parameters -->
+    <section class="section parameters">
+      <div class="section-header">Upgrade Parameters</div>
+      <div class="icon-and-dropdown">
+        <img id="building-icon" src="icons/command-center.png" alt="Icon" />
+        <select id="building-select"></select>
+      </div>
+      <div class="level-selects">
+        <label>From: <select id="level-from"></select></label>
+        <label>To: <select id="level-to"></select></label>
+      </div>
+    </section>
+
+    <!-- Section 2: Requirements -->
+    <section class="section requirements">
+      <div class="section-header">Upgrade Requirements</div>
+      <div class="resource-list">
+        <div class="resource"><img src="icons/bread.png" /> <span id="req-bread">-</span></div>
+        <div class="resource"><img src="icons/wood.png" /> <span id="req-wood">-</span></div>
+        <div class="resource"><img src="icons/stone.png" /> <span id="req-stone">-</span></div>
+        <div class="resource"><img src="icons/iron.png" /> <span id="req-iron">-</span></div>
+        <div id="req-list" class="requirements-list"></div>
+      </div>
+    </section>
+
+    <!-- Section 3: Perks -->
+    <section class="section perks">
+      <div class="section-header">Upgrade Benefits</div>
+      <ul id="perk-list"></ul>
+      <div>Base Time: <span id="base-time">-</span></div>
+    </section>
+
+    <!-- Section 4: Base Speed -->
+    <section class="section base-speed">
+      <div class="section-header">Base Construction Speed</div>
+      <div class="cs-controls">
+        <button id="cs-decrease">-</button>
+        <input id="cs-value" type="number" step="0.1" value="0" />
+        <button id="cs-increase">+</button>
+      </div>
+    </section>
+
+    <!-- Section 5: Boosters -->
+    <section class="section boosters">
+      <div class="section-header">Boosters</div>
+      <label>Construction Aide:
+        <select id="booster-ca">
+          <option value="0">0%</option>
+          <option value="5">+5%</option>
+          <option value="7">+7%</option>
+          <option value="9">+9%</option>
+          <option value="12">+12%</option>
+          <option value="15">+15%</option>
+        </select>
+      </label>
+      <label>Resourceful Skill:
+        <select id="booster-rs">
+          <option value="0">0%</option>
+          <option value="3">+3%</option>
+          <option value="6">+6%</option>
+          <option value="9">+9%</option>
+          <option value="12">+12%</option>
+          <option value="15">+15%</option>
+        </select>
+      </label>
+      <label>Adaptive Tools:
+        <select id="booster-at">
+          <option value="0">0%</option>
+          <option value="1">+1%</option>
+          <option value="2">+2%</option>
+          <option value="3">+3%</option>
+          <option value="4">+4%</option>
+          <option value="5">+5%</option>
+          <option value="6">+6%</option>
+          <option value="7">+7%</option>
+          <option value="8">+8%</option>
+          <option value="9">+9%</option>
+          <option value="10">+10%</option>
+        </select>
+      </label>
+      <label><input type="checkbox" id="booster-dt" /> Double Time (+20%)</label>
+      <label><input type="checkbox" id="booster-gw" /> Ground Works (+10%)</label>
+      <label><input type="checkbox" id="booster-cm" /> Chief Minister (+10%)</label>
+    </section>
+  </div>
+  <script src="buildings.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
