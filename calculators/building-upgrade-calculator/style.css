@@ -177,6 +177,17 @@ select {
   color: #3a2e1f;
 }
 
+/* === Remove spin buttons in number inputs === */
+#cs-value::-webkit-outer-spin-button,
+#cs-value::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#cs-value {
+  -moz-appearance: textfield; /* Firefox */
+}
+
 /* === Boosters === */
 .boosters-grid {
   display: flex;
@@ -185,9 +196,9 @@ select {
 }
 
 .booster-selects {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
   gap: 1rem;
+  align-items: flex-end;
 }
 
 .booster-block {
