@@ -8,90 +8,124 @@
 </head>
 <body>
   <div class="calculator-wrapper">
+
     <!-- Section 1: Parameters -->
     <section class="section parameters">
       <div class="section-header">Upgrade Parameters</div>
-      <div class="icon-and-dropdown">
-        <img id="building-icon" src="icons/command-center.png" alt="Icon" />
-        <select id="building-select"></select>
-      </div>
-      <div class="level-selects">
-        <label>From: <select id="level-from"></select></label>
-        <label>To: <select id="level-to"></select></label>
+      <div class="section-body">
+        <div class="parameter-row">
+  <div class="icon-wrapper">
+    <img id="building-icon" src="icons/command-center.png" alt="Icon" />
+  </div>
+
+  <div class="select-group">
+    <label for="building-select">Choose building:</label>
+    <select id="building-select"></select>
+  </div>
+
+  <label>
+    From:
+    <select id="level-from"></select>
+  </label>
+
+  <label>
+    To:
+    <select id="level-to"></select>
+  </label>
+</div>
       </div>
     </section>
 
     <!-- Section 2: Requirements -->
     <section class="section requirements">
       <div class="section-header">Upgrade Requirements</div>
-      <div class="resource-list">
-        <div class="resource"><img src="icons/bread.png" /> <span id="req-bread">-</span></div>
-        <div class="resource"><img src="icons/wood.png" /> <span id="req-wood">-</span></div>
-        <div class="resource"><img src="icons/stone.png" /> <span id="req-stone">-</span></div>
-        <div class="resource"><img src="icons/iron.png" /> <span id="req-iron">-</span></div>
+      <div class="section-body">
+        <div class="resource-list">
+          <div class="resource"><img src="icons/bread.png" /> <span id="req-bread">-</span></div>
+          <div class="resource"><img src="icons/wood.png" /> <span id="req-wood">-</span></div>
+          <div class="resource"><img src="icons/stone.png" /> <span id="req-stone">-</span></div>
+          <div class="resource"><img src="icons/iron.png" /> <span id="req-iron">-</span></div>
+        </div>
         <div id="req-list" class="requirements-list"></div>
       </div>
     </section>
 
-    <!-- Section 3: Perks -->
-    <section class="section perks">
-      <div class="section-header">Upgrade Benefits</div>
-      <ul id="perk-list"></ul>
-      <div>Base Time: <span id="base-time">-</span></div>
-    </section>
-
-    <!-- Section 4: Base Speed -->
+    <!-- Section 3: Base Speed -->
     <section class="section base-speed">
       <div class="section-header">Base Construction Speed</div>
-      <div class="cs-controls">
-        <button id="cs-decrease">-</button>
-        <input id="cs-value" type="number" step="0.1" value="0" />
-        <button id="cs-increase">+</button>
+      <div class="section-body">
+        <div class="cs-base-time">Base Time: <span id="base-time">-</span></div>
+        <div class="cs-controls">
+          <button id="cs-decrease">-</button>
+          <input id="cs-value" type="number" step="0.1" value="0" />
+          <button id="cs-increase">+</button>
+        </div>
       </div>
     </section>
 
-    <!-- Section 5: Boosters -->
+    <!-- Section 4: Boosters -->
     <section class="section boosters">
       <div class="section-header">Boosters</div>
-      <label>Construction Aide:
-        <select id="booster-ca">
-          <option value="0">0%</option>
-          <option value="5">+5%</option>
-          <option value="7">+7%</option>
-          <option value="9">+9%</option>
-          <option value="12">+12%</option>
-          <option value="15">+15%</option>
-        </select>
-      </label>
-      <label>Resourceful Skill:
-        <select id="booster-rs">
-          <option value="0">0%</option>
-          <option value="3">+3%</option>
-          <option value="6">+6%</option>
-          <option value="9">+9%</option>
-          <option value="12">+12%</option>
-          <option value="15">+15%</option>
-        </select>
-      </label>
-      <label>Adaptive Tools:
-        <select id="booster-at">
-          <option value="0">0%</option>
-          <option value="1">+1%</option>
-          <option value="2">+2%</option>
-          <option value="3">+3%</option>
-          <option value="4">+4%</option>
-          <option value="5">+5%</option>
-          <option value="6">+6%</option>
-          <option value="7">+7%</option>
-          <option value="8">+8%</option>
-          <option value="9">+9%</option>
-          <option value="10">+10%</option>
-        </select>
-      </label>
-      <label><input type="checkbox" id="booster-dt" /> Double Time (+20%)</label>
-      <label><input type="checkbox" id="booster-gw" /> Ground Works (+10%)</label>
-      <label><input type="checkbox" id="booster-cm" /> Chief Minister (+10%)</label>
+      <div class="section-body"><div class="boosters-grid">
+  <div class="booster-selects">
+    <div class="booster-block">
+      <label for="booster-ca">Construction Aide:</label>
+      <select id="booster-ca">
+        <option value="0">0%</option>
+        <option value="5">5%</option>
+        <option value="7">7%</option>
+        <option value="9">9%</option>
+        <option value="12">12%</option>
+        <option value="15">15%</option>
+      </select>
+    </div>
+
+    <div class="booster-block">
+      <label for="booster-rs">Resourceful Skill:</label>
+      <select id="booster-rs">
+        <option value="0">0%</option>
+        <option value="3">3%</option>
+        <option value="6">6%</option>
+        <option value="9">9%</option>
+        <option value="12">12%</option>
+        <option value="15">15%</option>
+      </select>
+    </div>
+
+    <div class="booster-block">
+      <label for="booster-at">Adaptive Tools:</label>
+      <select id="booster-at">
+        <option value="0">0%</option>
+        <option value="1">1%</option>
+        <option value="2">2%</option>
+        <option value="3">3%</option>
+        <option value="4">4%</option>
+        <option value="5">5%</option>
+        <option value="6">6%</option>
+        <option value="7">7%</option>
+        <option value="8">8%</option>
+        <option value="9">9%</option>
+        <option value="10">10%</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="booster-check">
+    <label><input type="checkbox" id="booster-dt" /> Double Time (+20%)</label>
+    <label><input type="checkbox" id="booster-gw" /> Ground Works (+10%)</label>
+    <label><input type="checkbox" id="booster-cm" /> Chief Minister (+10%)</label>
+  </div>
+</div>
     </section>
+
+    <!-- Section 5: Perks -->
+    <section class="section perks">
+      <div class="section-header">Upgrade Benefits</div>
+      <div class="section-body">
+        <div id="perk-list" class="perks-list"></div>
+      </div>
+    </section>
+
   </div>
   <script src="buildings.js"></script>
   <script src="script.js"></script>
