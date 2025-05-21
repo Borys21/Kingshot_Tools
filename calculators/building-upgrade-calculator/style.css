@@ -224,3 +224,46 @@ select {
     margin: 0 auto;
   }
 }
+
+/* === Mobile tweaks without changing layout === */
+@media (max-width: 599px) {
+  html {
+    font-size: 14px; /* zmniejszenie bazowej czcionki */
+  }
+
+  select,
+  .cs-controls button,
+  #cs-value {
+    font-size: 0.9rem;
+    padding: 0.4rem;
+  }
+
+  .section-header {
+    font-size: 1rem;
+    padding: 0.6rem 0.75rem;
+  }
+
+  .section-body {
+    padding: 0.75rem;
+  }
+
+  .resource img {
+    width: 28px;
+    height: 28px;
+  }
+
+  #building-icon {
+    width: 52px;
+    height: 52px;
+  }
+
+  .perk,
+  .resource {
+    font-size: 0.85rem;
+  }
+
+  .booster-block,
+  .booster-check {
+    font-size: 0.85rem;
+  }
+}
