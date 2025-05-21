@@ -55,8 +55,17 @@ function capitalize(text) {
     .join(" ");
 }
 
+// === Capitalize helper ===
+function capitalize(text) {
+  // Converts text like "town_center" to "Town Center"
+  return text
+    .replace(/_/g, " ")
+    .split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
 
-// === Populate dropdowns ===
+// === Populate building dropdown ===
 function populateBuildingDropdown() {
   for (const key in buildingsData) {
     const option = document.createElement("option");
@@ -66,16 +75,45 @@ function populateBuildingDropdown() {
   }
 }
 
+// === Populate From/To dropdowns ===
 function populateLevelDropdowns() {
-  for (let i = 0; i <= 30; i++) {
-    const opt1 = document.createElement("option");
-    const opt2 = document.createElement("option");
-    opt1.value = opt2.value = i;
-    opt1.textContent = opt2.textContent = i;
-    levelFrom.appendChild(opt1);
-    levelTo.appendChild(opt2);
+  levelFrom.innerHTML = "";
+  levelTo.innerHTML = "";
+
+  for (let i = 0; i <= 29; i++) {
+    const opt = document.createElement("option");
+    opt.value = i;
+    opt.textContent = i;
+    levelFrom.appendChild(opt);
   }
+
+  for (let i = 1; i <= 30; i++) {
+    const opt = document.createElement("option");
+    opt.value = i;
+    opt.textContent = i;
+    levelTo.appendChild(opt);
+  }
+
+  // Set initial values
+  const from = 0;
+  const to = from + 1;
+
+  levelFrom.value = from;
+  levelTo.value = to;
 }
+
+// === Auto-set To = From + 1 on change ===
+levelFrom.addEventListener("change", () => {
+  const from = parseInt(levelFrom.value);
+  const next = from + 1;
+
+  const validToOption = [...levelTo.options].find(opt => parseInt(opt.value) === next);
+  if (validToOption) {
+    levelTo.value = next;
+  }
+
+  updateRangeDisplay();
+});
 
 // === Main Update Function ===
 function updateRangeDisplay() {
@@ -134,7 +172,6 @@ function updateRangeDisplay() {
   const cm = boosterCM.checked ? 10 : 0;
 
   let totalBoost = baseCS + ca + rs + at + dt + gw + cm;
-  totalBoost = Math.min(totalBoost, 99.9);
   const finalTime = Math.floor(totalTime / (1 + totalBoost / 100));
 
   // === Update DOM ===
@@ -175,17 +212,18 @@ for (let lvl = fromLevel + 1; lvl <= toLevel; lvl++) {
 }
 
 for (const value of effectMap.values()) {
-  const li = document.createElement("li");
+  const div = document.createElement("div");
+  div.className = "perk";
 
   const match = value.match(/^(\+?[\d,]+)(\s.+)$/); // tylko liczby całkowite
   if (match) {
     const formatted = formatNumber(parseInt(match[1].replace(/,/g, '')));
-    li.textContent = `${match[1].includes(",") ? match[1] : formatted}${match[2]}`;
+    div.textContent = `${match[1].includes(",") ? match[1] : formatted}${match[2]}`;
   } else {
-    li.textContent = value;
+    div.textContent = value;
   }
 
-  effectsList.appendChild(li);
+  effectsList.appendChild(div);
 }
 
   iconElement.src = `icons/${data.icon}`;
@@ -194,8 +232,34 @@ for (const value of effectMap.values()) {
 
 // === Event Listeners ===
 buildingSelect.addEventListener("change", updateRangeDisplay);
-levelFrom.addEventListener("change", updateRangeDisplay);
-levelTo.addEventListener("change", updateRangeDisplay);
+// === Auto-set To = From + 1 on change ===
+levelFrom.addEventListener("change", () => {
+  const from = parseInt(levelFrom.value);
+  const next = from + 1;
+
+  // Ustaw tylko jeśli To >= From + 1 oraz istnieje taka opcja
+  if ([...levelTo.options].some(opt => parseInt(opt.value) === next)) {
+    levelTo.value = next;
+  }
+
+  updateRangeDisplay();
+});
+// === Auto-correct From if To < From ===
+levelTo.addEventListener("change", () => {
+  const from = parseInt(levelFrom.value);
+  const to = parseInt(levelTo.value);
+
+  // Jeśli To < From, to ustaw From na To - 1, jeśli istnieje taka opcja
+  if (to < from) {
+    const prev = to - 1;
+    const validFromOption = [...levelFrom.options].find(opt => parseInt(opt.value) === prev);
+    if (validFromOption) {
+      levelFrom.value = prev;
+    }
+  }
+
+  updateRangeDisplay();
+});
 csValue.addEventListener("input", updateRangeDisplay);
 boosterCA.addEventListener("change", updateRangeDisplay);
 boosterRS.addEventListener("change", updateRangeDisplay);
@@ -204,10 +268,18 @@ boosterDT.addEventListener("change", updateRangeDisplay);
 boosterGW.addEventListener("change", updateRangeDisplay);
 boosterCM.addEventListener("change", updateRangeDisplay);
 
-// === Init ===
-populateBuildingDropdown();
-populateLevelDropdowns();
-updateRangeDisplay();
+// === Init after both DOM and buildingsData ===
+function tryInitCalculator() {
+  if (document.readyState === "complete" && typeof buildingsData !== "undefined") {
+    populateBuildingDropdown();
+    populateLevelDropdowns();
+    updateRangeDisplay();
+  } else {
+    setTimeout(tryInitCalculator, 50); // retry co 50ms
+  }
+}
+
+tryInitCalculator();
 
 // === CS Button Hold ===
 function setupCSButton(id, direction) {
