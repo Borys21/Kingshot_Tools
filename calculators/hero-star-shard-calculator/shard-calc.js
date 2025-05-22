@@ -118,7 +118,6 @@ function syncCustomSelect(wrapperId) {
 
   options.forEach(opt => {
     opt.addEventListener('click', () => {
-      const value = opt.getAttribute('data-value');
       options.forEach(o => o.classList.remove('selected'));
       opt.classList.add('selected');
       calculateShards();
@@ -166,10 +165,6 @@ function setupShardButton(id, direction) {
   btn.addEventListener("touchend", stopHold);
 }
 
-// === Init Shard Buttons ===
-setupShardButton("shard-decrease", -1);
-setupShardButton("shard-increase", +1);
-
 // === Send Frame Height to Parent ===
 function sendHeight() {
   const height = document.body.scrollHeight;
@@ -178,5 +173,16 @@ function sendHeight() {
 
 // === Send initial height on load ===
 document.addEventListener("DOMContentLoaded", () => {
+  sendHeight();
+});
+
+// === Init on load ===
+document.addEventListener("DOMContentLoaded", () => {
+  syncCustomSelect("current-star-fake");
+  syncCustomSelect("current-tier-fake");
+  syncCustomSelect("target-star-fake");
+  setupShardButton("shard-decrease", -1);
+  setupShardButton("shard-increase", +1);
+  calculateShards();
   sendHeight();
 });
