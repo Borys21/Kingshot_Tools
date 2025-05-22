@@ -222,7 +222,7 @@ body {
 /* === Mobile Adjustments === */
 @media (max-width: 600px) {
   .section-header {
-    font-size: 1rem;
+    font-size: 0.9rem;
     padding: 0.6rem 0.8rem;
   }
 
@@ -242,12 +242,12 @@ body {
   }
 
   .shard-info h2 {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   .shard-input-wrapper input {
     width: 42px;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     padding: 3px;
   }
 
