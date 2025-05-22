@@ -9,10 +9,10 @@ const tierShardCosts = {
 
 // === Main Calculation Function ===
 function calculateShards() {
-  const currentStar = parseInt(document.getElementById('current-star').value);
-  const currentTier = parseInt(document.getElementById('current-tier').value);
-  const targetStar = parseInt(document.getElementById('target-star').value);
-  const ownedShards = parseInt(document.getElementById('owned-shards').value) || 0;
+  const currentStar = parseInt(document.querySelector('#current-star-fake .selected')?.dataset.value || 0);
+  const currentTier = parseInt(document.querySelector('#current-tier-fake .selected')?.dataset.value || 0);
+  const targetStar = parseInt(document.querySelector('#target-star-fake .selected')?.dataset.value || 1);
+  const ownedShards = parseInt(document.getElementById('owned-shards')?.value || 0);
 
   const totalDisplay = document.getElementById('total-shards');
   const progressFill = document.getElementById('progress-fill');
@@ -47,6 +47,7 @@ function calculateShards() {
   progressText.className = "progress-bar-text";
 
   updateUpgradeTable(currentStar, currentTier, targetStar, ownedShards);
+  sendHeight();
 }
 
 // === Upgrade Status Display ===
@@ -82,7 +83,7 @@ function updateUpgradeTable(currentStar, currentTier, targetStar, ownedShards) {
   }
 
   if (nextUpgrade) {
-    const { star, tier, missing } = nextUpgrade;  
+    const { star, tier, missing } = nextUpgrade;
     const row = document.createElement('div');
     row.className = 'upgrade-table-entry';
     row.innerHTML = `
@@ -95,7 +96,7 @@ function updateUpgradeTable(currentStar, currentTier, targetStar, ownedShards) {
   }
 }
 
-// === Icon Display Logic ===
+// === Icon Display ===
 function getIconsFor(star, tier) {
   if (tier === 5) {
     return `<img src="icons/star-${star + 1}.png" class="star" />`;
@@ -109,16 +110,15 @@ function getIconsFor(star, tier) {
   }
 }
 
-// === Select UI Sync (Custom Selects) ===
-function syncCustomSelect(wrapperId, selectId) {
+// === Handle Custom Select Logic ===
+function syncCustomSelect(wrapperId) {
   const wrapper = document.getElementById(wrapperId);
-  const select = document.getElementById(selectId);
-  const options = wrapper.querySelectorAll('div[data-value]');
+  const options = wrapper?.querySelectorAll('div[data-value]');
+  if (!wrapper || !options) return;
 
   options.forEach(opt => {
     opt.addEventListener('click', () => {
       const value = opt.getAttribute('data-value');
-      select.value = value;
       options.forEach(o => o.classList.remove('selected'));
       opt.classList.add('selected');
       calculateShards();
@@ -126,29 +126,57 @@ function syncCustomSelect(wrapperId, selectId) {
   });
 }
 
-// === Init on DOM Ready ===
-document.addEventListener('readystatechange', () => {
-  if (document.readyState === "complete") {
-    syncCustomSelect('current-star-fake', 'current-star');
-    syncCustomSelect('target-star-fake', 'target-star');
-    syncCustomSelect('current-tier-fake', 'current-tier');
-    document.getElementById('owned-shards').addEventListener('input', calculateShards);
-    calculateShards();
-  }
-});
-
-document.addEventListener("DOMContentLoaded", () => {
+// === SHARD Button Hold ===
+function setupShardButton(id, direction) {
+  const btn = document.getElementById(id);
   const input = document.getElementById("owned-shards");
-  const btnInc = document.getElementById("shard-increase");
-  const btnDec = document.getElementById("shard-decrease");
+  let interval;
+  let delay = 400;
+  let stepCount = 0;
 
-  btnInc.addEventListener("click", () => {
-    input.stepUp();
+  const changeValue = () => {
+    let val = parseInt(input.value) || 0;
+    val += direction;
+    val = Math.max(0, val);
+    const max = parseInt(input.max || "9999");
+    val = Math.min(val, max);
+    input.value = val;
     calculateShards();
-  });
+  };
 
-  btnDec.addEventListener("click", () => {
-    input.stepDown();
-    calculateShards();
-  });
+  const startHold = () => {
+    changeValue();
+    stepCount = 0;
+    delay = 400;
+
+    interval = setInterval(() => {
+      stepCount++;
+      if (delay > 50) delay -= 100;
+      clearInterval(interval);
+      interval = setInterval(changeValue, delay);
+    }, delay);
+  };
+
+  const stopHold = () => clearInterval(interval);
+
+  btn.addEventListener("mousedown", startHold);
+  btn.addEventListener("mouseup", stopHold);
+  btn.addEventListener("mouseleave", stopHold);
+  btn.addEventListener("touchstart", startHold);
+  btn.addEventListener("touchend", stopHold);
+}
+
+// === Init Shard Buttons ===
+setupShardButton("shard-decrease", -1);
+setupShardButton("shard-increase", +1);
+
+// === Send Frame Height to Parent ===
+function sendHeight() {
+  const height = document.body.scrollHeight;
+  window.parent.postMessage({ type: 'resize-frame', height }, '*');
+}
+
+// === Send initial height on load ===
+document.addEventListener("DOMContentLoaded", () => {
+  sendHeight();
 });

@@ -4,164 +4,68 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hero Star Shard Calculator</title>
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-V8DN27T9RG"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-V8DN27T9RG');
     </script>
     <link rel="stylesheet" href="shard-style.css" />
     <script src="shard-calc.js" defer></script>
   </head>
   <body>
-    <!-- === Background Wrapper === -->
-    <div class="wrapper">
-      <!-- === Page Title === -->
-      <h1>Hero Star Shard Calculator</h1>
+    <div class="calculator-wrapper">
 
-      <!-- === Main Flex Layout: Selections + Upgrade Table === -->
-      <div class="main-wrapper">
-        <!-- === Left Panel: Selections + Progress === -->
-        <div style="flex: 1; min-width: 300px">
-          <!-- === Current Star === -->
-          <div class="section-box">
-            <label>Current star:</label>
-            <div class="custom-select-wrapper">
-              <select id="current-star" class="native-select">
-                <option value="0" selected>0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-              <div id="current-star-fake" class="custom-select">
-                <div data-value="0" class="selected">
-                  <img
-                    src="icons/star-0.png"
-                  />
-                </div>
-                <div data-value="1">
-                  <img
-                    src="icons/star-1.png"
-                  />
-                </div>
-                <div data-value="2">
-                  <img
-                    src="icons/star-2.png"
-                  />
-                </div>
-                <div data-value="3">
-                  <img
-                    src="icons/star-3.png"
-                  />
-                </div>
-                <div data-value="4">
-                  <img
-                    src="icons/star-4.png"
-                  />
-                </div>
-              </div>
+      <!-- === Section: Stars === -->
+      <section class="section">
+        <div class="section-header">Current Star</div>
+        <div class="section-body">
+            <div id="current-star-fake" class="custom-select">
+              <div data-value="0" class="selected"><img src="icons/star-0.png" /></div>
+              <div data-value="1"><img src="icons/star-1.png" /></div>
+              <div data-value="2"><img src="icons/star-2.png" /></div>
+              <div data-value="3"><img src="icons/star-3.png" /></div>
+              <div data-value="4"><img src="icons/star-4.png" /></div>
             </div>
           </div>
+      </section>
 
-          <!-- === Current Tier === -->
-          <div class="section-box">
-            <label>Current tier:</label>
-            <div class="custom-select-wrapper">
-              <select id="current-tier" class="native-select">
-                <option value="0" selected>0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </select>
-              <div id="current-tier-fake" class="custom-select">
-                <div data-value="0" class="selected">
-                  <img
-                    src="icons/star-0.png"
-                  />
-                </div>
-                <div data-value="1">
-                  <img
-                    src="icons/tier-1.png"
-                  />
-                </div>
-                <div data-value="2">
-                  <img
-                    src="icons/tier-2.png"
-                  />
-                </div>
-                <div data-value="3">
-                  <img
-                    src="icons/tier-3.png"
-                  />
-                </div>
-                <div data-value="4">
-                  <img
-                    src="icons/tier-4.png"
-                  />
-                </div>
-                <div data-value="5">
-                  <img
-                    src="icons/tier-5.png"
-                  />
-                </div>
-              </div>
+      <!-- === Section: Tier === -->
+      <section class="section">
+        <div class="section-header">Current Tier</div>
+        <div class="section-body">
+            <div id="current-tier-fake" class="custom-select">
+              <div data-value="0" class="selected"><img src="icons/star-0.png" /></div>
+              <div data-value="1"><img src="icons/tier-1.png" /></div>
+              <div data-value="2"><img src="icons/tier-2.png" /></div>
+              <div data-value="3"><img src="icons/tier-3.png" /></div>
+              <div data-value="4"><img src="icons/tier-4.png" /></div>
+              <div data-value="5"><img src="icons/tier-5.png" /></div>
             </div>
           </div>
+      </section>
 
-          <!-- === Target Star === -->
-          <div class="section-box">
-            <label>Target star:</label>
-            <div class="custom-select-wrapper">
-              <select id="target-star" class="native-select">
-                <option value="1" selected>1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </select>
-              <div id="target-star-fake" class="custom-select">
-                <div data-value="1" class="selected">
-                  <img
-                    src="icons/star-1.png"
-                  />
-                </div>
-                <div data-value="2">
-                  <img
-                    src="icons/star-2.png"
-                  />
-                </div>
-                <div data-value="3">
-                  <img
-                    src="icons/star-3.png"
-                  />
-                </div>
-                <div data-value="4">
-                  <img
-                    src="icons/star-4.png"
-                  />
-                </div>
-                <div data-value="5">
-                  <img
-                    src="icons/star-5.png"
-                  />
-                </div>
-              </div>
+      <!-- === Section: Target Star === -->
+      <section class="section">
+        <div class="section-header">Target Star</div>
+        <div class="section-body">
+            <div id="target-star-fake" class="custom-select">
+              <div data-value="1" class="selected"><img src="icons/star-1.png" /></div>
+              <div data-value="2"><img src="icons/star-2.png" /></div>
+              <div data-value="3"><img src="icons/star-3.png" /></div>
+              <div data-value="4"><img src="icons/star-4.png" /></div>
+              <div data-value="5"><img src="icons/star-5.png" /></div>
             </div>
           </div>
+      </section>
 
-          <!-- === Progress Bar === -->
+      <!-- === Section: Shard Progress === -->
+      <section class="section">
+        <div class="section-header">Shard Progress</div>
+        <div class="section-body">
           <div class="shard-container">
-            <img
-              src="icons/shard-mythic.png"
-              alt="Shard Icon"
-              class="shard-icon"
-            />
+            <img src="icons/shard-mythic.png" alt="Shard Icon" class="shard-icon" />
             <div class="shard-info">
               <h2>Total shards needed: <span id="total-shards">0</span></h2>
               <label for="owned-shards">Owned shards:</label>
@@ -172,20 +76,21 @@
               </div>
               <div class="progress-bar-bg">
                 <div id="progress-fill" class="progress-bar-fill"></div>
-                <div id="progress-text" class="progress-bar-text">
-                  Missing: 0
-                </div>
+                <div id="progress-text" class="progress-bar-text">Missing: 0</div>
               </div>
             </div>
           </div>
         </div>
+      </section>
 
-        <!-- === Right Panel: Upgrade Info === -->
-        <div class="upgrade-container">
-          <h3>Upgrade status:</h3>
+      <!-- === Section: Upgrade Info === -->
+      <section class="section">
+        <div class="section-header">Upgrade Status</div>
+        <div class="section-body">
           <div id="upgrade-table"></div>
         </div>
-      </div>
+      </section>
+
     </div>
   </body>
 </html>

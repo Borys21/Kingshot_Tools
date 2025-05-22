@@ -1,149 +1,134 @@
-/* === Base Layout === */
+/* === General === */
 body {
-  font-family: sans-serif;
   margin: 0;
-  padding: 0;
-  background: #725a44;
+  font-family: 'Arial', sans-serif;
+  background-color: #f8e3b7;
+  color: #3a2e1f;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
-/* === Main Container === */
-.wrapper {
-  background: #d6c2aa; /* Beżowy panel zawartości */
-  border-radius: 12px;
-  margin: 20px;
-  padding: 15px 20px;
-  max-width: 600px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-/* === Heading === */
-h1 {
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 20px;
-}
-
-/* === Section Boxes (Stars, Tiers, Target) === */
-.section-box {
-  background: #fff1e8;
-  border-radius: 12px;
-  padding: 12px 10px;
-  margin-bottom: 10px;
-  box-shadow: inset 0 0 4px #bbb;
+.calculator-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-}
-.section-box label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 5px;
+  gap: 1.5rem;
+  max-width: 100%;
 }
 
-/* === Selectable Icons === */
-.custom-select-wrapper {
-  position: relative;
+/* === Section Layout === */
+.section {
+  background-color: #f6eddc;
+  border-radius: 12px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  padding: 0;
 }
-.native-select {
-  position: absolute;
-  left: -9999px;
+
+.section-header {
+  background-color: #b98c5b;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #d5b893;
 }
+
+.section-body {
+  padding: 1rem;
+  padding-top: 0.5rem;
+}
+
+/* === Stars/Tiers === */
+.select-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.select-label {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
 .custom-select {
   display: flex;
+  gap: 0.5rem;
   flex-wrap: wrap;
-  gap: 10px;
 }
+
 .custom-select div {
   border-radius: 8px;
-  padding: 5px;
+  padding: 6px;
+  background-color: #eee3c8;
+  box-shadow: inset 0 -3px 0 #cbb89f;
   cursor: pointer;
-  opacity: 1;
-  background: #f4ddbe;
-  box-shadow: inset 0 -3px 0 #bba88d;
-  transition: 0.2s;
   border: 2px solid transparent;
+  transition: 0.2s;
 }
+
 .custom-select div.selected {
-  background: #fff4d4;
+  background-color: #fff4d4;
   border: 2px solid #e8b93e;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), inset 0 -3px 0 #d9a72c;
 }
+
 .custom-select img {
   width: 42px;
   height: 42px;
-  display: block;
 }
 
-/* === Shard Input Buttons === */
+/* === Input Buttons === */
 .shard-input-wrapper {
   display: flex;
   align-items: center;
-  gap: 4px;
-  margin-top: 4px;
+  gap: 6px;
+  margin-top: 0.5rem;
 }
+
 .shard-input-wrapper input {
   width: 50px;
   text-align: center;
-}
-.shard-input-wrapper button {
-  background: #e0c18a;
-  border: none;
-  padding: 4px 10px;
+  font-size: 1rem;
+  background-color: #eee3c8;
+  border: 1px solid #cbb89f;
   border-radius: 6px;
+  padding: 4px;
+}
+
+.shard-input-wrapper button {
+  background-color: #b98c5b;
+  color: white;
+  border: none;
+  padding: 6px 10px;
   font-size: 16px;
+  border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
-  box-shadow: inset 0 -2px 0 #bba16b;
-  transition: background 0.2s;
 }
+
 .shard-input-wrapper button:hover {
-  background: #d1ae74;
+  background-color: #cfa470;
 }
 
 /* === Progress Bar === */
-.shard-container {
-  display: flex;
-  align-items: center;
-  background: #fff1e8;
-  border-radius: 12px;
-  padding: 10px 12px;
-  margin-top: 20px;
-  box-shadow: inset 0 0 4px #bbb;
-  max-width: 94%;
-  width: 100%;
-}
-.shard-icon {
-  width: 80px;
-  height: 80px;
-  margin-right: 10px;
-}
-.shard-info {
-  flex-grow: 1;
-}
-.shard-info h2 {
-  margin: 0 0 6px;
-  font-size: 18px;
-}
-.shard-info input {
-  width: 50px;
-  padding: 2px;
-  font-size: 14px;
-}
 .progress-bar-bg {
   width: 100%;
   height: 20px;
-  background: #a38c6a;
+  background-color: #a38c6a;
   border-radius: 10px;
   overflow: hidden;
   margin-top: 6px;
   position: relative;
 }
+
 .progress-bar-fill {
   height: 100%;
-  background: #00e676;
+  background-color: #00e676;
   width: 0%;
   transition: width 0.3s;
 }
+
 .progress-bar-text {
   position: absolute;
   top: 0;
@@ -159,47 +144,53 @@ h1 {
   text-shadow: 1px 1px 2px #000000aa;
 }
 
-/* === Upgrade Box === */
-.upgrade-container {
-  background: #fff1e8;
-  border-radius: 12px;
-  padding: 10px 15px;
-  box-shadow: inset 0 0 4px #bbb;
-  min-width: 50px;
-  text-align: center;
-  margin-top: 5px;
-}
-.upgrade-container h3 {
-  margin-top: 0;
-  font-size: 16px;
-  margin-bottom: 12px;
+/* === Shard Icon in Progress === */
+/* === Shard Container === */
+.shard-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;  /* mniej miejsca */
 }
 
-/* === Upgrade Status Entries === */
+/* === Shard Icon === */
+.shard-icon {
+  width: 90px;
+  height: 90px;
+}
+
+/* === Shard Info Text === */
+.shard-info h2 {
+  font-size: 1.1rem;
+  margin: 0 0 0.3rem;  /* mniej miejsca pod spodem */
+}
+
+/* === Upgrade Table === */
 .upgrade-table-entry {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
+  padding: 0.4rem;
+  background-color: #eee3c8;
+  border-radius: 8px;
   margin-bottom: 6px;
 }
-.upgrade-table-entry:not(:last-child) {
-  border-bottom: 1px solid #d1c7b7;
-  padding-bottom: 6px;
-  margin-bottom: 6px;
+
+.upgrade-table-entry img {
+  width: 34px;
 }
-.upgrade-table-entry img.star {
-  width: 32px;
-  margin-right: 10px;
-}
+
 .upgrade-table-entry .shard-wrapper {
   position: relative;
-  width: 42px;
-  height: 42px;
-  margin-right: 2px;
+  width: 36px;
+  height: 36px;
 }
+
 .upgrade-table-entry .shard-wrapper img {
   width: 100%;
 }
+
 .upgrade-table-entry .shard-count {
   position: absolute;
   bottom: 0;
@@ -209,87 +200,29 @@ h1 {
   color: white;
   text-shadow: 1px 1px 2px #000000aa;
 }
+
 .upgrade-table-entry .checkmark {
-  font-size: 31px;
-  font-weight: bold;
+  font-size: 26px;
   color: #00e676;
-  text-shadow: 1px 1px 2px #000000aa;
+  font-weight: bold;
   margin-left: 4px;
 }
 
-/* === Responsive Layout Adjustments === */
-.main-wrapper {
-  display: flex;
-  gap: 30px;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  max-width: 820px;
-  margin: 0 auto;
+/* === Responsive === */
+@media (min-width: 600px) {
+  .calculator-wrapper {
+    max-width: 500px;
+    margin: 0 auto;
+  }
 }
 
-/* === Mobile Layout Fixes (Pionowe dopasowanie) === */
-@media screen and (max-width: 768px) {
-  body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-  }
+/* === Remove spin buttons in number input === */
+#owned-shards::-webkit-outer-spin-button,
+#owned-shards::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
-  h1 {
-    font-size: 24px;
-  }
-
-  .wrapper {
-    margin: 8px;
-    padding: 10px;
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-
-  .main-wrapper {
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .section-box,
-  .upgrade-container,
-  .shard-container {
-    box-sizing: border-box;
-  }
-
-  .custom-select img {
-    width: 36px;
-    height: 36px;
-  }
-
-  .shard-icon {
-    width: 58px;
-    height: 58px;
-  }
-
-  .shard-info h2 {
-    font-size: 16px;
-  }
-
-  .shard-info input {
-    width: 50px;
-    font-size: 14px;
-  }
-
-  .progress-bar-text {
-    font-size: 12px;
-  }
-
-  .upgrade-table-entry img.star {
-    width: 28px;
-    margin-right: 6px;
-  }
-
-  .upgrade-table-entry .shard-wrapper {
-    width: 34px;
-    height: 34px;
-  }
+#owned-shards {
+  -moz-appearance: textfield; /* Firefox */
 }

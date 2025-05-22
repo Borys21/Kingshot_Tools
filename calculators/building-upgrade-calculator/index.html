@@ -144,5 +144,18 @@
   </div>
   <script src="buildings.js"></script>
   <script src="script.js"></script>
+  <script>
+  function reportHeight() {
+    const height = document.documentElement.scrollHeight;
+    parent.postMessage({ type: 'resize-frame', height: height }, '*');
+  }
+
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+
+  // Opcjonalnie: wyślij też po krótkim czasie, gdyby coś doładowywało się po czasie
+  setTimeout(reportHeight, 500);
+</script>
+
 </body>
 </html>
