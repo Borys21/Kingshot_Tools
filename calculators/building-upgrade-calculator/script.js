@@ -281,13 +281,14 @@ function tryInitCalculator() {
 
 tryInitCalculator();
 
-// === CS Button Hold ===
+// === CS Button Hold (mobile-safe) ===
 function setupCSButton(id, direction) {
   const btn = document.getElementById(id);
   const input = document.getElementById("cs-value");
   let interval;
   let delay = 400;
   let stepCount = 0;
+  let isHeld = false;
 
   const changeValue = () => {
     let val = parseFloat(input.value.replace('%', '')) || 0;
@@ -297,7 +298,10 @@ function setupCSButton(id, direction) {
     updateRangeDisplay();
   };
 
-  const startHold = () => {
+  const startHold = (e) => {
+    e.preventDefault(); // zapobiega podwójnym eventom na mobilkach
+    if (isHeld) return;
+    isHeld = true;
     changeValue();
     stepCount = 0;
     delay = 400;
@@ -310,13 +314,15 @@ function setupCSButton(id, direction) {
     }, delay);
   };
 
-  const stopHold = () => clearInterval(interval);
+  const stopHold = () => {
+    clearInterval(interval);
+    isHeld = false;
+  };
 
-  btn.addEventListener("mousedown", startHold);
-  btn.addEventListener("mouseup", stopHold);
-  btn.addEventListener("mouseleave", stopHold);
-  btn.addEventListener("touchstart", startHold);
-  btn.addEventListener("touchend", stopHold);
+  btn.addEventListener("pointerdown", startHold);
+  btn.addEventListener("pointerup", stopHold);
+  btn.addEventListener("pointerleave", stopHold);
+  btn.addEventListener("pointercancel", stopHold);
 }
 
 setupCSButton("cs-decrease", -1);
