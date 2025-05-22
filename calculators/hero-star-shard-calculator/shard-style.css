@@ -208,14 +208,6 @@ body {
   margin-left: 4px;
 }
 
-/* === Responsive === */
-@media (min-width: 600px) {
-  .calculator-wrapper {
-    max-width: 500px;
-    margin: 0 auto;
-  }
-}
-
 /* === Remove spin buttons in number input === */
 #owned-shards::-webkit-outer-spin-button,
 #owned-shards::-webkit-inner-spin-button {
@@ -225,4 +217,68 @@ body {
 
 #owned-shards {
   -moz-appearance: textfield; /* Firefox */
+}
+
+/* === Mobile Adjustments === */
+@media (max-width: 600px) {
+  .section-header {
+    font-size: 1rem;
+    padding: 0.6rem 0.8rem;
+  }
+
+  .custom-select img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .custom-select div {
+    padding: 4px;
+    border-radius: 6px;
+  }
+
+  .shard-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .shard-info h2 {
+    font-size: 1rem;
+  }
+
+  .shard-input-wrapper input {
+    width: 42px;
+    font-size: 0.9rem;
+    padding: 3px;
+  }
+
+  .shard-input-wrapper button {
+    padding: 5px 9px;
+    font-size: 14px;
+  }
+
+  .progress-bar-text {
+    font-size: 12px;
+  }
+
+  .upgrade-table-entry {
+    padding: 0.3rem;
+    gap: 6px;
+  }
+
+  .upgrade-table-entry img {
+    width: 28px;
+  }
+
+  .upgrade-table-entry .shard-wrapper {
+    width: 30px;
+    height: 30px;
+  }
+
+  .upgrade-table-entry .shard-count {
+    font-size: 10px;
+  }
+
+  .upgrade-table-entry .checkmark {
+    font-size: 22px;
+  }
 }
