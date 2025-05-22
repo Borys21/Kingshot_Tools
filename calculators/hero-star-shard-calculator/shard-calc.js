@@ -125,13 +125,14 @@ function syncCustomSelect(wrapperId) {
   });
 }
 
-// === SHARD Button Hold ===
+// === SHARD Button Hold (fixed for mobile) ===
 function setupShardButton(id, direction) {
   const btn = document.getElementById(id);
   const input = document.getElementById("owned-shards");
   let interval;
   let delay = 400;
   let stepCount = 0;
+  let isHeld = false;
 
   const changeValue = () => {
     let val = parseInt(input.value) || 0;
@@ -143,7 +144,10 @@ function setupShardButton(id, direction) {
     calculateShards();
   };
 
-  const startHold = () => {
+  const startHold = (e) => {
+    e.preventDefault(); // zapobiega podwójnym eventom na mobilkach
+    if (isHeld) return;
+    isHeld = true;
     changeValue();
     stepCount = 0;
     delay = 400;
@@ -156,13 +160,15 @@ function setupShardButton(id, direction) {
     }, delay);
   };
 
-  const stopHold = () => clearInterval(interval);
+  const stopHold = () => {
+    clearInterval(interval);
+    isHeld = false;
+  };
 
-  btn.addEventListener("mousedown", startHold);
-  btn.addEventListener("mouseup", stopHold);
-  btn.addEventListener("mouseleave", stopHold);
-  btn.addEventListener("touchstart", startHold);
-  btn.addEventListener("touchend", stopHold);
+  btn.addEventListener("pointerdown", startHold);
+  btn.addEventListener("pointerup", stopHold);
+  btn.addEventListener("pointerleave", stopHold);
+  btn.addEventListener("pointercancel", stopHold);
 }
 
 // === Send Frame Height to Parent ===
