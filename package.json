@@ -1,0 +1,14 @@
+{
+  "name": "kingshot_tools",
+  "version": "1.0.0",
+  "scripts": {
+    "start-bot": "node bot/bot.js",
+    "dev-bot": "nodemon bot/bot.js"
+  },
+  "dependencies": {
+    "@iframe-resizer/child": "^5.4.6",
+    "@iframe-resizer/parent": "^5.4.6",
+    "discord.js": "^14.7.1",
+    "dotenv": "^16.0.0"
+  }
+}

@@ -1,47 +1,7 @@
-/* === General === */
-body {
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-  background-color: #f8e3b7;
-  color: #3a2e1f;
-  padding: 1rem;
-  box-sizing: border-box;
-}
-
-.calculator-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  max-width: 100%;
-}
-
-/* === Section Layout === */
-.section {
-  background-color: #f6eddc;
-  border-radius: 12px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-  padding: 0;
-}
-
-.section-header {
-  background-color: #b98c5b;
-  color: white;
-  font-size: 1.1rem;
-  font-weight: bold;
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid #d5b893;
-}
-
-.section-body {
-  padding: 1rem;
-  padding-top: 0.5rem;
-}
-
 /* === Stars/Tiers === */
 .select-row {
   display: flex;
-  gap: 0.75rem;
+  gap: 1rem; /* dopasowane do Building Calc */
   flex-wrap: wrap;
   align-items: center;
 }
@@ -82,29 +42,37 @@ body {
 .shard-input-wrapper {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 0.5rem; /* dopasowane do Building Calc (.cs-controls) */
   margin-top: 0.5rem;
 }
 
 .shard-input-wrapper input {
-  width: 50px;
+  width: 60px;              /* pod #cs-value */
+  flex: 1;
   text-align: center;
   font-size: 1rem;
   background-color: #eee3c8;
+  color: #3a2e1f;
   border: 1px solid #cbb89f;
   border-radius: 6px;
-  padding: 4px;
+  padding: 0.5rem;
 }
 
 .shard-input-wrapper button {
+  width: 36px;
+  height: 36px;
+  font-size: 1.2rem;
   background-color: #b98c5b;
   color: white;
   border: none;
-  padding: 6px 10px;
-  font-size: 16px;
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.15s;
 }
 
 .shard-input-wrapper button:hover {
@@ -149,19 +117,19 @@ body {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 0.5rem;  /* mniej miejsca */
+  margin-bottom: 0.5rem;
 }
 
 /* === Shard Icon === */
 .shard-icon {
-  width: 90px;
-  height: 90px;
+  width: 64px; /* Dla spójności, sugeruję tak jak #building-icon (jeśli wymaga) */
+  height: 64px;
 }
 
 /* === Shard Info Text === */
 .shard-info h2 {
   font-size: 1.1rem;
-  margin: 0 0 0.3rem;  /* mniej miejsca pod spodem */
+  margin: 0 0 0.3rem;
 }
 
 /* === Upgrade Table === */
@@ -213,70 +181,54 @@ body {
   -webkit-appearance: none;
   margin: 0;
 }
-
 #owned-shards {
-  -moz-appearance: textfield; /* Firefox */
+  -moz-appearance: textfield;
 }
 
-/* === Mobile Adjustments === */
-@media (max-width: 600px) {
-  .section-header {
-    font-size: 0.9rem;
-    padding: 0.6rem 0.8rem;
-  }
-
+@media (max-width: 599px) {
   .custom-select img {
     width: 32px;
     height: 32px;
   }
-
   .custom-select div {
     padding: 4px;
     border-radius: 6px;
   }
-
   .shard-icon {
-    width: 60px;
-    height: 60px;
+    width: 52px;
+    height: 52px;
   }
-
   .shard-info h2 {
     font-size: 1rem;
   }
-
   .shard-input-wrapper input {
-    width: 42px;
+    width: 52px;
     font-size: 0.85rem;
-    padding: 3px;
+    padding: 0.4rem;
   }
-
   .shard-input-wrapper button {
-    padding: 5px 9px;
-    font-size: 14px;
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+    padding: 0;
   }
-
   .progress-bar-text {
     font-size: 12px;
   }
-
   .upgrade-table-entry {
     padding: 0.3rem;
     gap: 6px;
   }
-
   .upgrade-table-entry img {
     width: 28px;
   }
-
   .upgrade-table-entry .shard-wrapper {
     width: 30px;
     height: 30px;
   }
-
   .upgrade-table-entry .shard-count {
     font-size: 10px;
   }
-
   .upgrade-table-entry .checkmark {
     font-size: 22px;
   }

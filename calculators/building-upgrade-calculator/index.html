@@ -15,7 +15,8 @@
   gtag('config', 'G-V8DN27T9RG');
 </script>
 
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="../../main.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="calculator-wrapper">
@@ -144,18 +145,6 @@
   </div>
   <script src="buildings.js"></script>
   <script src="script.js"></script>
-  <script>
-  function reportHeight() {
-    const height = document.documentElement.scrollHeight;
-    parent.postMessage({ type: 'resize-frame', height: height }, '*');
-  }
-
-  window.addEventListener('load', reportHeight);
-  window.addEventListener('resize', reportHeight);
-
-  // Opcjonalnie: wyślij też po krótkim czasie, gdyby coś doładowywało się po czasie
-  setTimeout(reportHeight, 500);
-</script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.contentWindow.min.js"></script>
 </body>
 </html>

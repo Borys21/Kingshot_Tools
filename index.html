@@ -102,6 +102,7 @@
   <div class="tab-container">
     <div class="tab-link active" data-tab="tab-shard">Shard Calc</div>
     <div class="tab-link" data-tab="tab-building">Building Calc</div>
+    <div class="tab-link" data-tab="tab-academy">Academy Calc</div>
   </div>
 
   <!-- Treść zakładek -->
@@ -121,45 +122,64 @@
     ></iframe>
   </div>
 
+  <div id="tab-academy" class="tab-content">
+    <iframe
+      src="calculators/academy-research-calculator/index.html"
+      class="embedded-frame"
+      data-frame="academy"
+    ></iframe>
+
   <script>
-    const tabs = document.querySelectorAll('.tab-link');
-    const contents = document.querySelectorAll('.tab-content');
+  const tabs = document.querySelectorAll('.tab-link');
+  const contents = document.querySelectorAll('.tab-content');
 
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        contents.forEach(c => c.classList.remove('active'));
-
-        tab.classList.add('active');
-        const tabId = tab.dataset.tab;
-        const content = document.getElementById(tabId);
-        content.classList.add('active');
-
-        // Poproś iframe o przesłanie wysokości
-        const iframe = content.querySelector('.embedded-frame');
-        iframe?.contentWindow?.postMessage({ type: 'request-resize' }, '*');
-      });
+  // === Activate tab by name ===
+  function activateTab(tabName) {
+    tabs.forEach(t => {
+      const isActive = t.dataset.tab === `tab-${tabName}`;
+      t.classList.toggle('active', isActive);
     });
 
-    // Nasłuch na wiadomości z iframe
-    window.addEventListener('message', (event) => {
-      if (event.data.type === 'resize-frame') {
-        const iframes = document.querySelectorAll('.embedded-frame');
-        for (const frame of iframes) {
-          try {
-            if (frame.contentWindow === event.source) {
-              frame.style.height = event.data.height + 'px';
-            }
-          } catch (e) {}
-        }
+    contents.forEach(c => {
+      const isActive = c.id === `tab-${tabName}`;
+      c.classList.toggle('active', isActive);
+      if (isActive) {
+        const iframe = c.querySelector('.embedded-frame');
+        iframe?.contentWindow?.postMessage({ type: 'request-resize' }, '*');
       }
     });
+  }
 
-    // Poproś aktywne iframe o wysokość po załadowaniu
-    window.addEventListener('DOMContentLoaded', () => {
-      const active = document.querySelector('.tab-content.active .embedded-frame');
-      active?.contentWindow?.postMessage({ type: 'request-resize' }, '*');
+  // === Handle tab click ===
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const tabName = tab.dataset.tab.replace('tab-', '');
+      location.hash = tabName; // Zmienia #hash w URL
+      activateTab(tabName);
     });
-  </script>
+  });
+
+  // === On load, activate tab from #hash ===
+  window.addEventListener('DOMContentLoaded', () => {
+    const hash = location.hash.replace('#', '') || 'shard';
+    activateTab(hash);
+  });
+
+  // === On hash change (np. ręcznie wklejony w URL) ===
+  window.addEventListener('hashchange', () => {
+    const hash = location.hash.replace('#', '') || 'shard';
+    activateTab(hash);
+  });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    iFrameResize({
+      log: false,
+      license: 'GPLv3',
+      heightCalculationMethod: 'bodyScroll'
+    }, '.embedded-frame');
+  });
+</script>
 </body>
 </html>
