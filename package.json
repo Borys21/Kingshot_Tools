@@ -2,6 +2,7 @@
   "name": "kingshot_tools",
   "version": "1.0.0",
   "scripts": {
+    "start": "node bot/bot.js",
     "start-bot": "node bot/bot.js",
     "dev-bot": "nodemon bot/bot.js"
   },
