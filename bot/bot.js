@@ -65,17 +65,14 @@ const commands = [
     .setDescription('Calculate shards using interactive menu'),
   new SlashCommandBuilder()
     .setName('addtag')
-    .setDescription('Add an alliance tag to a member')
-    .addUserOption(option => 
+    .setDescription('Add your alliance tag to a member')
+    .addUserOption(option =>
       option.setName('target').setDescription('User to give the tag to').setRequired(true)
-    )
-    .addStringOption(option => 
-      option.setName('tag').setDescription('Tag to give').setRequired(true)
     ),
   new SlashCommandBuilder()
     .setName('addr4')
     .setDescription('Add the R4 role to a member')
-    .addUserOption(option => 
+    .addUserOption(option =>
       option.setName('target').setDescription('User to give R4 to').setRequired(true)
     )
 ];
@@ -99,7 +96,6 @@ client.once('ready', () => {
   console.log(`Logged in as ${client.user.tag}`);
 });
 
-// === Helper ===
 async function replyE(interaction, options) {
   options.ephemeral = true;
   return interaction.reply(options);
@@ -139,7 +135,7 @@ function calculateNeededShards(currentStar, currentTier, targetStar, ownedShards
 function createResultEmbed(selection) {
   const shardIcon = baseIconUrl + 'shard-mythic.png';
   const calc = calculateNeededShards(selection.currentStar, selection.currentTier, selection.targetStar, selection.ownedShards);
-  const embed = new EmbedBuilder()
+  return new EmbedBuilder()
     .setTitle('Kingshot Shard Calculator')
     .setThumbnail(shardIcon)
     .addFields(
@@ -149,14 +145,14 @@ function createResultEmbed(selection) {
       { name: 'Owned Shards', value: `${selection.ownedShards}`, inline: true },
       { name: 'Total Shards Needed', value: `${calc.total}`, inline: true },
       { name: 'Missing Shards', value: `${calc.missing}`, inline: true },
-      { name: 'Progress', value: `${calc.percent.toFixed(2)}%`, inline: true },
+      { name: 'Progress', value: `${calc.percent.toFixed(2)}%`, inline: true }
     )
     .setColor(0xFFC857);
-  return embed;
 }
 
 client.on('interactionCreate', async interaction => {
   if (interaction.isChatInputCommand()) {
+
     if (interaction.commandName === 'cshards') {
       const row1 = new ActionRowBuilder().addComponents(createSelectMenu('currentStar', 'Select Current Star', currentStarOptions));
       const row2 = new ActionRowBuilder().addComponents(createSelectMenu('currentTier', 'Select Current Tier', tierOptions));
@@ -170,6 +166,37 @@ client.on('interactionCreate', async interaction => {
         components: [row1, row2, row3, buttonRow]
       });
     }
+
+    if (interaction.commandName === 'addtag') {
+      const target = interaction.options.getUser('target');
+      const member = await interaction.guild.members.fetch(target.id);
+
+      const leaderRole = interaction.member.roles.cache.find(r => r.name.match(/^\[.+\] R5$/));
+      if (!leaderRole) return replyE(interaction, { content: 'You must have a leader role ([TAG] R5).' });
+
+      const tag = leaderRole.name.match(/^\[(.+)\] R5$/)[1];
+      const tagRole = interaction.guild.roles.cache.find(r => r.name === `[${tag}]`);
+      if (!tagRole) return replyE(interaction, { content: `Role [${tag}] not found.` });
+
+      await member.roles.add(tagRole);
+      await replyE(interaction, { content: `✅ Added [${tag}] to ${member.user.tag}` });
+    }
+
+    if (interaction.commandName === 'addr4') {
+      const target = interaction.options.getUser('target');
+      const member = await interaction.guild.members.fetch(target.id);
+
+      const leaderRole = interaction.member.roles.cache.find(r => r.name.match(/^\[.+\] R5$/));
+      if (!leaderRole) return replyE(interaction, { content: 'You must have a leader role ([TAG] R5).' });
+
+      const tag = leaderRole.name.match(/^\[(.+)\] R5$/)[1];
+      const r4Role = interaction.guild.roles.cache.find(r => r.name === `[${tag}] R4`);
+      if (!r4Role) return replyE(interaction, { content: `Role [${tag}] R4 not found.` });
+
+      await member.roles.add(r4Role);
+      await replyE(interaction, { content: `✅ Added [${tag}] R4 to ${member.user.tag}` });
+    }
+
   } else if (interaction.isStringSelectMenu()) {
     const selection = userSelections.get(interaction.user.id) || { currentStar: null, currentTier: null, targetStar: null, ownedShards: 0 };
     if (interaction.customId === 'currentStar') selection.currentStar = interaction.values[0];
@@ -188,11 +215,12 @@ client.on('interactionCreate', async interaction => {
       if (parseInt(selection.targetStar) <= parseInt(selection.currentStar))
         return replyE(interaction, { content: 'Target Star must be **greater** than Current Star!' });
       const modal = new ModalBuilder().setCustomId('shardsModal').setTitle('Enter Owned Shards');
-      const shardsInput = new TextInputBuilder()
-        .setCustomId('ownedShardsInput').setLabel('Number of Owned Shards')
-        .setStyle(TextInputStyle.Short).setPlaceholder('Enter number here').setRequired(true);
-      modal.addComponents(new ActionRowBuilder().addComponents(shardsInput));
-      await interaction.showModal(modal); // Modal nie ma ephemeral — działa inaczej
+      modal.addComponents(new ActionRowBuilder().addComponents(
+        new TextInputBuilder()
+          .setCustomId('ownedShardsInput').setLabel('Number of Owned Shards')
+          .setStyle(TextInputStyle.Short).setPlaceholder('Enter number here').setRequired(true)
+      ));
+      await interaction.showModal(modal);
     }
   } else if (interaction.type === InteractionType.ModalSubmit) {
     if (interaction.customId === 'shardsModal') {
