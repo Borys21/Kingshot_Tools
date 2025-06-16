@@ -128,8 +128,11 @@
       class="embedded-frame"
       data-frame="academy"
     ></iframe>
+  </div>
 
-  <script>
+  <!-- === SCRIPTS === -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.min.js"></script>
+<script>
   const tabs = document.querySelectorAll('.tab-link');
   const contents = document.querySelectorAll('.tab-content');
 
@@ -154,31 +157,40 @@
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       const tabName = tab.dataset.tab.replace('tab-', '');
-      location.hash = tabName; // Zmienia #hash w URL
+      location.hash = tabName;
       activateTab(tabName);
     });
   });
 
-  // === On load, activate tab from #hash ===
+  // === Handle iframe resize fallback ===
+  window.addEventListener('message', (event) => {
+    if (event.data.type === 'resize-frame') {
+      const iframes = document.querySelectorAll('.embedded-frame');
+      for (const frame of iframes) {
+        try {
+          if (frame.contentWindow === event.source) {
+            frame.style.height = event.data.height + 'px';
+          }
+        } catch (e) {}
+      }
+    }
+  });
+
+  // === On load, activate tab from #hash + init iframeResizer ===
   window.addEventListener('DOMContentLoaded', () => {
     const hash = location.hash.replace('#', '') || 'shard';
     activateTab(hash);
-  });
-
-  // === On hash change (np. ręcznie wklejony w URL) ===
-  window.addEventListener('hashchange', () => {
-    const hash = location.hash.replace('#', '') || 'shard';
-    activateTab(hash);
-  });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
     iFrameResize({
       log: false,
       license: 'GPLv3',
       heightCalculationMethod: 'bodyScroll'
     }, '.embedded-frame');
+  });
+
+  // === On hash change ===
+  window.addEventListener('hashchange', () => {
+    const hash = location.hash.replace('#', '') || 'shard';
+    activateTab(hash);
   });
 </script>
 </body>
