@@ -132,7 +132,21 @@
   <script>
   const tabs = document.querySelectorAll('.tab-link');
   const contents = document.querySelectorAll('.tab-content');
+  const tabs = document.querySelectorAll('.tab-link');
+  const contents = document.querySelectorAll('.tab-content');
 
+  // === Activate tab by name ===
+  function activateTab(tabName) {
+    tabs.forEach(t => {
+      const isActive = t.dataset.tab === `tab-${tabName}`;
+      t.classList.toggle('active', isActive);
+    });
+
+    contents.forEach(c => {
+      const isActive = c.id === `tab-${tabName}`;
+      c.classList.toggle('active', isActive);
+      if (isActive) {
+        const iframe = c.querySelector('.embedded-frame');
   // === Activate tab by name ===
   function activateTab(tabName) {
     tabs.forEach(t => {
