@@ -62,8 +62,22 @@ const userSelections = new Map();
 const commands = [
   new SlashCommandBuilder()
     .setName('cshards')
-    .setDescription('Calculate shards using interactive menu')
-    .toJSON()
+    .setDescription('Calculate shards using interactive menu'),
+  new SlashCommandBuilder()
+    .setName('addtag')
+    .setDescription('Add an alliance tag to a member')
+    .addUserOption(option => 
+      option.setName('target').setDescription('User to give the tag to').setRequired(true)
+    )
+    .addStringOption(option => 
+      option.setName('tag').setDescription('Tag to give').setRequired(true)
+    ),
+  new SlashCommandBuilder()
+    .setName('addr4')
+    .setDescription('Add the R4 role to a member')
+    .addUserOption(option => 
+      option.setName('target').setDescription('User to give R4 to').setRequired(true)
+    )
 ];
 
 const rest = new REST({ version: '10' }).setToken(token);
