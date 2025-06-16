@@ -171,31 +171,40 @@ client.on('interactionCreate', async interaction => {
       const target = interaction.options.getUser('target');
       const member = await interaction.guild.members.fetch(target.id);
 
-      const leaderRole = interaction.member.roles.cache.find(r => r.name.match(/^\[.+\] R5$/));
-      if (!leaderRole) return replyE(interaction, { content: 'You must have a leader role ([TAG] R5).' });
+      if (!interaction.member.roles.cache.some(r => r.name === 'Leader'))
+        return replyE(interaction, { content: 'You must have the Leader role.' });
 
-      const tag = leaderRole.name.match(/^\[(.+)\] R5$/)[1];
-      const tagRole = interaction.guild.roles.cache.find(r => r.name === `[${tag}]`);
-      if (!tagRole) return replyE(interaction, { content: `Role [${tag}] not found.` });
+      const tagRole = interaction.member.roles.cache.find(r => r.name.match(/^\[.+\]$/));
+      if (!tagRole) return replyE(interaction, { content: 'You must have a [TAG] role.' });
 
       await member.roles.add(tagRole);
-      await replyE(interaction, { content: `✅ Added [${tag}] to ${member.user.tag}` });
+      await replyE(interaction, { content: `✅ Added ${tagRole.name} to ${member.user.tag}` });
     }
 
-    if (interaction.commandName === 'addr4') {
-      const target = interaction.options.getUser('target');
-      const member = await interaction.guild.members.fetch(target.id);
+   if (interaction.commandName === 'addr4') {
+  const target = interaction.options.getUser('target');
+  const member = await interaction.guild.members.fetch(target.id);
 
-      const leaderRole = interaction.member.roles.cache.find(r => r.name.match(/^\[.+\] R5$/));
-      if (!leaderRole) return replyE(interaction, { content: 'You must have a leader role ([TAG] R5).' });
+  if (!interaction.member.roles.cache.some(r => r.name === 'Leader'))
+    return replyE(interaction, { content: 'You must have the Leader role.' });
 
-      const tag = leaderRole.name.match(/^\[(.+)\] R5$/)[1];
-      const r4Role = interaction.guild.roles.cache.find(r => r.name === `[${tag}] R4`);
-      if (!r4Role) return replyE(interaction, { content: `Role [${tag}] R4 not found.` });
+  const tagRole = interaction.member.roles.cache.find(r => r.name.match(/^\[.+\]$/));
+  if (!tagRole) return replyE(interaction, { content: 'You must have a [TAG] role.' });
 
-      await member.roles.add(r4Role);
-      await replyE(interaction, { content: `✅ Added [${tag}] R4 to ${member.user.tag}` });
-    }
+  // Szukamy [TAG] i R4 — OSOBNO
+  const pureTagRole = interaction.guild.roles.cache.find(r => r.name === `${tagRole.name}`);
+  const r4Role = interaction.guild.roles.cache.find(r => r.name === `R4`);
+
+  if (!pureTagRole) return replyE(interaction, { content: `Role ${tagRole.name} not found.` });
+  if (!r4Role) return replyE(interaction, { content: 'Role R4 not found.' });
+
+  // Dodaj oba na raz: [TAG] + R4
+  await member.roles.add([pureTagRole, r4Role]);
+
+  await replyE(interaction, {
+    content: `✅ Added ${pureTagRole.name} and R4 to ${member.user.tag}`
+  });
+}
 
   } else if (interaction.isStringSelectMenu()) {
     const selection = userSelections.get(interaction.user.id) || { currentStar: null, currentTier: null, targetStar: null, ownedShards: 0 };
