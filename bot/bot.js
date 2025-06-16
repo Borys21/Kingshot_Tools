@@ -20,28 +20,28 @@ const tierShardCosts = {
 
 // Oddzielne listy opcji gwiazdek
 const currentStarOptions = [
-  { label: '‎', value: '0', emoji: { id: '1378770593389744218', name: 'star0' } },
-  { label: '‎', value: '1', emoji: { id: '1378770594719469641', name: 'star1' } },
-  { label: '‎', value: '2', emoji: { id: '1378770597332517025', name: 'star2' } },
-  { label: '‎', value: '3', emoji: { id: '1378770599740047662', name: 'star3' } },
-  { label: '‎', value: '4', emoji: { id: '1378770602185195622', name: 'star4' } },
+  { label: '‎', value: '0', emoji: { id: '1384252667345244190', name: 'star0' } },
+  { label: '‎', value: '1', emoji: { id: '1384252667613675661', name: 'star1' } },
+  { label: '‎', value: '2', emoji: { id: '1384252667613675661', name: 'star2' } },
+  { label: '‎', value: '3', emoji: { id: '1384252668259733524', name: 'star3' } },
+  { label: '‎', value: '4', emoji: { id: '1384252691236130967', name: 'star4' } },
 ];
 
 const targetStarOptions = [
-  { label: '‎', value: '1', emoji: { id: '1378770594719469641', name: 'star1' } },
-  { label: '‎', value: '2', emoji: { id: '1378770597332517025', name: 'star2' } },
-  { label: '‎', value: '3', emoji: { id: '1378770599740047662', name: 'star3' } },
-  { label: '‎', value: '4', emoji: { id: '1378770602185195622', name: 'star4' } },
-  { label: '‎', value: '5', emoji: { id: '1378770604479610970', name: 'star5' } },
+  { label: '‎', value: '1', emoji: { id: '1384252667345244190', name: 'star1' } },
+  { label: '‎', value: '2', emoji: { id: '1384252667613675661', name: 'star2' } },
+  { label: '‎', value: '3', emoji: { id: '1384252668259733524', name: 'star3' } },
+  { label: '‎', value: '4', emoji: { id: '1384252691236130967', name: 'star4' } },
+  { label: '‎', value: '5', emoji: { id: '1384252691487658144', name: 'star5' } },
 ];
 
 const tierOptions = [
-  { label: '‎', value: '0', emoji: { id: '1378770593389744218', name: 'star0' } },
-  { label: '‎', value: '1', emoji: { id: '1378770606417514507', name: 'tier1' } },
-  { label: '‎', value: '2', emoji: { id: '1378770608200093898', name: 'tier2' } },
-  { label: '‎', value: '3', emoji: { id: '1378770609873490091', name: 'tier3' } },
-  { label: '‎', value: '4', emoji: { id: '1378770611807191040', name: 'tier4' } },
-  { label: '‎', value: '5', emoji: { id: '1378770613271007233', name: 'tier5' } },
+  { label: '‎', value: '0', emoji: { id: '1384252667345244190', name: 'star0' } },
+  { label: '‎', value: '1', emoji: { id: '1384252691768934461', name: 'tier1' } },
+  { label: '‎', value: '2', emoji: { id: '1384252691978522815', name: 'tier2' } },
+  { label: '‎', value: '3', emoji: { id: '1384252719107412029', name: 'tier3' } },
+  { label: '‎', value: '4', emoji: { id: '1384252719543488552', name: 'tier4' } },
+  { label: '‎', value: '5', emoji: { id: '1384252720252321892', name: 'tier5' } },
 ];
 
 // Cache wyborów użytkowników
