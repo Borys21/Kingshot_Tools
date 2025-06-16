@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academy Research Calculator</title>
+
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V8DN27T9RG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-V8DN27T9RG');
+</script>
+
+  <link rel="stylesheet" href="../../main.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="calculator-wrapper">
+
+    <!-- === Section 1: Parameters === -->
+    <section class="section parameters">
+      <div class="section-header">Research Parameters</div>
+      <div class="section-body">
+        <div class="category-buttons">
+          <button type="button" id="btn-growth">Growth</button>
+          <button type="button" id="btn-economy">Economy</button>
+          <button type="button" id="btn-battle">Battle</button>
+        </div>
+        <div class="parameter-row">
+
+          <div class="icon-wrapper">
+            <img id="research-icon" src="icons/tooling-up.png" alt="Icon" />
+            <div class="roman-wrapper">
+              <span id="roman-output">I</span>
+            </div>
+          </div>
+
+          <div class="select-group">
+            <label for="research-select">Choose research:</label>
+            <select id="research-select"></select>
+          </div>
+
+          <label>
+            From:
+            <select id="level-from"></select>
+          </label>
+
+          <label>
+            To:
+            <select id="level-to"></select>
+          </label>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- === Section 2: Requirements === -->
+    <section class="section requirements">
+      <div class="section-header">Research Requirements</div>
+      <div class="section-body">
+        <div class="resource-list">
+          <div class="resource"><img src="icons/bread.png" /> <span id="req-bread">-</span></div>
+          <div class="resource"><img src="icons/wood.png" /> <span id="req-wood">-</span></div>
+          <div class="resource"><img src="icons/stone.png" /> <span id="req-stone">-</span></div>
+          <div class="resource"><img src="icons/iron.png" /> <span id="req-iron">-</span></div>
+          <div class="resource"><img src="icons/gold.png" /> <span id="req-gold">-</span></div>
+        </div>
+        <div id="req-list" class="requirements-list"></div>
+      </div>
+    </section>
+
+    <!-- === Section 3: Base Speed === -->
+    <section class="section base-speed">
+      <div class="section-header">Base Research Speed</div>
+      <div class="section-body">
+        <div class="cs-controls-row">
+          <div class="cs-controls">
+            <button id="cs-decrease">-</button>
+            <input id="cs-value" type="number" step="0.1" value="0" />
+            <button id="cs-increase">+</button>
+          </div>
+          <div class="cs-time-display">
+            <span id="base-time">0s → 0s</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- === Section 4: Boosters === -->
+    <section class="section boosters">
+      <div class="section-header">Boosters</div>
+      <div class="section-body">
+        <div class="boosters-grid">
+
+          <div class="booster-selects">
+            <div class="booster-block">
+              <label for="booster-ca">Construction Aide:</label>
+              <select id="booster-ca">
+                <option value="0">0%</option>
+                <option value="5">5%</option>
+                <option value="7">7%</option>
+                <option value="9">9%</option>
+                <option value="12">12%</option>
+                <option value="15">15%</option>
+              </select>
+            </div>
+
+            <div class="booster-block">
+              <label for="booster-rs">Resourceful Skill:</label>
+              <select id="booster-rs">
+                <option value="0">0%</option>
+                <option value="3">3%</option>
+                <option value="6">6%</option>
+                <option value="9">9%</option>
+                <option value="12">12%</option>
+                <option value="15">15%</option>
+              </select>
+            </div>
+
+            <div class="booster-block">
+              <label for="booster-at">Adaptive Tools:</label>
+              <select id="booster-at">
+                <option value="0">0%</option>
+                <option value="1">1%</option>
+                <option value="2">2%</option>
+                <option value="3">3%</option>
+                <option value="4">4%</option>
+                <option value="5">5%</option>
+                <option value="6">6%</option>
+                <option value="7">7%</option>
+                <option value="8">8%</option>
+                <option value="9">9%</option>
+                <option value="10">10%</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="booster-check">
+            <label><input type="checkbox" id="booster-dt" /> Double Time (+20%)</label>
+            <label><input type="checkbox" id="booster-gw" /> Ground Works (+10%)</label>
+            <label><input type="checkbox" id="booster-cm" /> Chief Minister (+10%)</label>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- === Section 5: Perks === -->
+    <section class="section perks">
+      <div class="section-header">Research Benefits</div>
+      <div class="section-body">
+        <div id="perk-list" class="perks-list"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- === Scripts === -->
+  <script src="growth-tree.js"></script>
+  <script src="economy-tree.js"></script>
+  <script src="battle-tree.js"></script>
+  <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.contentWindow.min.js"></script>
+</body>
+</html>

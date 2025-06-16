@@ -1,4 +1,4 @@
-/* === Parameters === */
+/* === Parameters (unique to Academy Research Calculator) === */
 .parameter-row {
   display: flex;
   gap: 1rem;
@@ -7,12 +7,21 @@
 
 .icon-wrapper {
   display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
-#building-icon {
+#research-icon {
   width: 64px;
-  height: 64px;
+  height: 76px;
+}
+
+.roman-wrapper {
+  margin-top: -14px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  text-align: center;
+  color: white;
 }
 
 .select-group,
@@ -33,19 +42,7 @@ select {
   border-radius: 6px;
 }
 
-.icon-and-dropdown {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.building-group {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 200px;
-}
-
-/* === Resource Icons Row === */
+/* === Resource Costs === */
 .resource-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -70,7 +67,7 @@ select {
   height: 36px;
 }
 
-/* === Upgrade Requirements === */
+/* === Requirements List === */
 .requirements-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -88,7 +85,15 @@ select {
   box-shadow: none;
 }
 
-/* === Base Construction Speed === */
+/* === Base Research Speed === */
+.cs-controls-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
 .cs-controls {
   display: flex;
   align-items: center;
@@ -103,14 +108,6 @@ select {
   color: white;
   border: none;
   border-radius: 6px;
-}
-
-.cs-controls-row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-top: 0.5rem;
 }
 
 #cs-value {
@@ -143,7 +140,6 @@ select {
   -webkit-appearance: none;
   margin: 0;
 }
-
 #cs-value {
   -moz-appearance: textfield;
 }
@@ -187,7 +183,7 @@ select {
   transform: scale(1.2);
 }
 
-/* === Upgrade Benefits === */
+/* === Research Benefits === */
 .perks-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -205,29 +201,54 @@ select {
   border-radius: 6px;
   font-size: 0.9rem;
   color: #3a2e1f;
-  box-shadow: none;
 }
 
+/* === Responsive (unique mobile styles for Academy Research Calc) === */
 @media (max-width: 599px) {
-  #building-icon {
+  .resource img {
+    width: 28px;
+    height: 28px;
+  }
+
+  #research-icon {
     width: 52px;
     height: 52px;
   }
+
   .perk,
   .resource {
     font-size: 0.85rem;
   }
+
   .booster-block,
   .booster-check {
     font-size: 0.85rem;
   }
+
   .cs-time-display {
     font-size: 0.85rem;
     padding: 0.3rem 0.5rem;
   }
-  #building-select {
-    min-width: 0;
-    width: 12rem;
-    max-width: 100%;
-  }
+}
+
+.category-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+.category-buttons button {
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  background: #b98c5b;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.category-buttons button:hover,
+.category-buttons button.active {
+  background: #a0763c;
 }

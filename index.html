@@ -102,6 +102,7 @@
   <div class="tab-container">
     <div class="tab-link active" data-tab="tab-shard">Shard Calc</div>
     <div class="tab-link" data-tab="tab-building">Building Calc</div>
+    <div class="tab-link" data-tab="tab-academy">Academy Calc</div>
   </div>
 
   <!-- Treść zakładek -->
@@ -121,61 +122,78 @@
     ></iframe>
   </div>
 
+  <div id="tab-academy" class="tab-content">
+    <iframe
+      src="calculators/academy-research-calculator/index.html"
+      class="embedded-frame"
+      data-frame="academy"
+    ></iframe>
+  </div>
+
+  <!-- === SCRIPTS === -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.min.js"></script>
   <script>
-  const tabs = document.querySelectorAll('.tab-link');
-  const contents = document.querySelectorAll('.tab-content');
+    const tabs = document.querySelectorAll('.tab-link');
+    const contents = document.querySelectorAll('.tab-content');
 
-  // === Activate tab by name ===
-  function activateTab(tabName) {
-    tabs.forEach(t => {
-      const isActive = t.dataset.tab === `tab-${tabName}`;
-      t.classList.toggle('active', isActive);
-    });
+    // === Activate tab by name ===
+    function activateTab(tabName) {
+      tabs.forEach(t => {
+        const isActive = t.dataset.tab === `tab-${tabName}`;
+        t.classList.toggle('active', isActive);
+      });
 
-    contents.forEach(c => {
-      const isActive = c.id === `tab-${tabName}`;
-      c.classList.toggle('active', isActive);
-      if (isActive) {
-        const iframe = c.querySelector('.embedded-frame');
-        iframe?.contentWindow?.postMessage({ type: 'request-resize' }, '*');
-      }
-    });
-  }
-
-  // === Handle tab click ===
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const tabName = tab.dataset.tab.replace('tab-', '');
-      location.hash = tabName; // Zmienia #hash w URL
-      activateTab(tabName);
-    });
-  });
-
-  // === Handle iframe resize messages ===
-  window.addEventListener('message', (event) => {
-    if (event.data.type === 'resize-frame') {
-      const iframes = document.querySelectorAll('.embedded-frame');
-      for (const frame of iframes) {
-        try {
-          if (frame.contentWindow === event.source) {
-            frame.style.height = event.data.height + 'px';
-          }
-        } catch (e) {}
-      }
+      contents.forEach(c => {
+        const isActive = c.id === `tab-${tabName}`;
+        c.classList.toggle('active', isActive);
+        if (isActive) {
+          const iframe = c.querySelector('.embedded-frame');
+          iframe?.contentWindow?.postMessage({ type: 'request-resize' }, '*');
+        }
+      });
     }
-  });
 
-  // === On load, activate tab from #hash ===
-  window.addEventListener('DOMContentLoaded', () => {
-    const hash = location.hash.replace('#', '') || 'shard';
-    activateTab(hash);
-  });
+    // === Handle tab click ===
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const tabName = tab.dataset.tab.replace('tab-', '');
+        location.hash = tabName;
+        activateTab(tabName);
+      });
+    });
 
-  // === On hash change (np. ręcznie wklejony w URL) ===
-  window.addEventListener('hashchange', () => {
-    const hash = location.hash.replace('#', '') || 'shard';
-    activateTab(hash);
-  });
-</script>
+    // === Handle iframe resize fallback ===
+    window.addEventListener('message', (event) => {
+      if (event.data.type === 'resize-frame') {
+        const iframes = document.querySelectorAll('.embedded-frame');
+        for (const frame of iframes) {
+          try {
+            if (frame.contentWindow === event.source) {
+              frame.style.height = event.data.height + 'px';
+            }
+          } catch (e) {}
+        }
+      }
+    });
+
+    // === On load, activate tab from #hash ===
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = location.hash.replace('#', '') || 'shard';
+      activateTab(hash);
+
+      // === Init iframeResizer ===
+      iFrameResize({
+        log: false,
+        license: 'GPLv3',
+        heightCalculationMethod: 'bodyScroll'
+      }, '.embedded-frame');
+    });
+
+    // === On hash change ===
+    window.addEventListener('hashchange', () => {
+      const hash = location.hash.replace('#', '') || 'shard';
+      activateTab(hash);
+    });
+  </script>
 </body>
 </html>
