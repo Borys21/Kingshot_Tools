@@ -15,6 +15,7 @@ const {
   InteractionType
 } = require('discord.js');
 require('dotenv').config();
+const fs = require('node:fs');
 
 const token = process.env.DISCORD_TOKEN;
 const clientId = process.env.CLIENT_ID;
@@ -74,7 +75,10 @@ const commands = [
     .setDescription('Add the R4 role to a member')
     .addUserOption(option =>
       option.setName('target').setDescription('User to give R4 to').setRequired(true)
-    )
+    ),
+  new SlashCommandBuilder()
+    .setName('heroes')
+    .setDescription('Show hero gallery')
 ];
 
 const rest = new REST({ version: '10' }).setToken(token);
@@ -168,44 +172,86 @@ client.on('interactionCreate', async interaction => {
     }
 
     if (interaction.commandName === 'addtag') {
-  const target = interaction.options.getUser('target');
-  const member = await interaction.guild.members.fetch(target.id);
+      const target = interaction.options.getUser('target');
+      const member = await interaction.guild.members.fetch(target.id);
 
-  // Zmienione: R5 OR R4 mogą nadawać tag
-  if (!interaction.member.roles.cache.some(r => r.name === 'R5' || r.name === 'R4'))
-    return replyE(interaction, { content: 'You must have the R5 or R4 role.' });
+      if (!interaction.member.roles.cache.some(r => r.name === 'R5' || r.name === 'R4'))
+        return replyE(interaction, { content: 'You must have the R5 or R4 role.' });
 
-  const tagRole = interaction.member.roles.cache.find(r => r.name.match(/^\[.+\]$/));
-  if (!tagRole) return replyE(interaction, { content: 'You must have a [TAG] role.' });
+      const tagRole = interaction.member.roles.cache.find(r => r.name.match(/^\[.+\]$/));
+      if (!tagRole) return replyE(interaction, { content: 'You must have a [TAG] role.' });
 
-  await member.roles.add(tagRole);
-  await replyE(interaction, { content: `✅ Added ${tagRole.name} to ${member.user.tag}` });
-}
+      await member.roles.add(tagRole);
+      await replyE(interaction, { content: `✅ Added ${tagRole.name} to ${member.user.tag}` });
+    }
 
-   if (interaction.commandName === 'addr4') {
-  const target = interaction.options.getUser('target');
-  const member = await interaction.guild.members.fetch(target.id);
+    if (interaction.commandName === 'addr4') {
+      const target = interaction.options.getUser('target');
+      const member = await interaction.guild.members.fetch(target.id);
 
-  // Tylko R5 ma prawo nadawać R4
-  if (!interaction.member.roles.cache.some(r => r.name === 'R5'))
-    return replyE(interaction, { content: 'You must have the R5 role.' });
+      if (!interaction.member.roles.cache.some(r => r.name === 'R5'))
+        return replyE(interaction, { content: 'You must have the R5 role.' });
 
-  const tagRole = interaction.member.roles.cache.find(r => r.name.match(/^\[.+\]$/));
-  if (!tagRole) return replyE(interaction, { content: 'You must have a [TAG] role.' });
+      const tagRole = interaction.member.roles.cache.find(r => r.name.match(/^\[.+\]$/));
+      if (!tagRole) return replyE(interaction, { content: 'You must have a [TAG] role.' });
 
-  const pureTagRole = interaction.guild.roles.cache.find(r => r.name === `${tagRole.name}`);
-  const r4Role = interaction.guild.roles.cache.find(r => r.name === `R4`);
+      const pureTagRole = interaction.guild.roles.cache.find(r => r.name === `${tagRole.name}`);
+      const r4Role = interaction.guild.roles.cache.find(r => r.name === `R4`);
 
-  if (!pureTagRole) return replyE(interaction, { content: `Role ${tagRole.name} not found.` });
-  if (!r4Role) return replyE(interaction, { content: 'Role R4 not found.' });
+      if (!pureTagRole) return replyE(interaction, { content: `Role ${tagRole.name} not found.` });
+      if (!r4Role) return replyE(interaction, { content: 'Role R4 not found.' });
 
-  await member.roles.add([pureTagRole, r4Role]);
+      await member.roles.add([pureTagRole, r4Role]);
 
-  await replyE(interaction, {
-    content: `✅ Added ${pureTagRole.name} and R4 to ${member.user.tag}`
-  });
-}
+      await replyE(interaction, {
+        content: `✅ Added ${pureTagRole.name} and R4 to ${member.user.tag}`
+      });
+    }
 
+    if (interaction.commandName === 'heroes') {
+      const gen1 = ['Amadeus', 'Saul', 'Helga', 'Jabel'];
+      const gen2 = ['Marlin', 'Hilde', 'Zoe'];
+
+      const gen1Buttons = gen1.map(name =>
+        new ButtonBuilder()
+          .setCustomId(`hero_${name.toLowerCase()}`)
+          .setLabel(name)
+          .setStyle(ButtonStyle.Primary)
+      );
+
+      const gen2Buttons = gen2.map(name =>
+        new ButtonBuilder()
+          .setCustomId(`hero_${name.toLowerCase()}`)
+          .setLabel(name)
+          .setStyle(ButtonStyle.Secondary)
+      );
+
+      const row1 = new ActionRowBuilder().addComponents(gen1Buttons);
+      const row2 = new ActionRowBuilder().addComponents(gen2Buttons);
+
+      await replyE(interaction, {
+        content: 'Choose a hero:',
+        components: [row1, row2]
+      });
+    }
+
+  } else if (interaction.isButton() && interaction.customId.startsWith('hero_')) {
+    const heroName = interaction.customId.replace('hero_', '');
+    const filePath = `./heroes/${heroName}.png`;
+
+    if (!fs.existsSync(filePath)) {
+      return replyE(interaction, { content: 'Image not found.' });
+    }
+
+    const embed = new EmbedBuilder()
+      .setTitle(heroName.charAt(0).toUpperCase() + heroName.slice(1))
+      .setImage(`attachment://${heroName}.png`)
+      .setColor(0x5865F2);
+
+    await replyE(interaction, {
+      embeds: [embed],
+      files: [{ attachment: filePath, name: `${heroName}.png` }]
+    });
   } else if (interaction.isStringSelectMenu()) {
     const selection = userSelections.get(interaction.user.id) || { currentStar: null, currentTier: null, targetStar: null, ownedShards: 0 };
     if (interaction.customId === 'currentStar') selection.currentStar = interaction.values[0];
@@ -216,34 +262,30 @@ client.on('interactionCreate', async interaction => {
       content: `Selection updated! Current Star: ${selection.currentStar || '-'}, Current Tier: ${selection.currentTier || '-'}, Target Star: ${selection.targetStar || '-'}. Now press Calculate and enter owned shards.`,
       components: interaction.message.components
     });
-  } else if (interaction.isButton()) {
-    if (interaction.customId === 'calculateShards') {
-      const selection = userSelections.get(interaction.user.id);
-      if (!selection || !selection.currentStar || !selection.currentTier || !selection.targetStar)
-        return replyE(interaction, { content: 'Please make all selections first.' });
-      if (parseInt(selection.targetStar) <= parseInt(selection.currentStar))
-        return replyE(interaction, { content: 'Target Star must be **greater** than Current Star!' });
-      const modal = new ModalBuilder().setCustomId('shardsModal').setTitle('Enter Owned Shards');
-      modal.addComponents(new ActionRowBuilder().addComponents(
-        new TextInputBuilder()
-          .setCustomId('ownedShardsInput').setLabel('Number of Owned Shards')
-          .setStyle(TextInputStyle.Short).setPlaceholder('Enter number here').setRequired(true)
-      ));
-      await interaction.showModal(modal);
-    }
-  } else if (interaction.type === InteractionType.ModalSubmit) {
-    if (interaction.customId === 'shardsModal') {
-      const ownedShards = parseInt(interaction.fields.getTextInputValue('ownedShardsInput'), 10);
-      if (isNaN(ownedShards) || ownedShards < 0) return replyE(interaction, { content: 'Please enter a valid non-negative number.' });
-      const selection = userSelections.get(interaction.user.id);
-      if (!selection || !selection.currentStar || !selection.currentTier || !selection.targetStar)
-        return replyE(interaction, { content: 'Please make all selections first.' });
-      if (parseInt(selection.targetStar) <= parseInt(selection.currentStar))
-        return replyE(interaction, { content: 'Target Star must be **greater** than Current Star!' });
-      selection.ownedShards = ownedShards;
-      userSelections.set(interaction.user.id, selection);
-      await replyE(interaction, { embeds: [createResultEmbed(selection)] });
-    }
+  } else if (interaction.isButton() && interaction.customId === 'calculateShards') {
+    const selection = userSelections.get(interaction.user.id);
+    if (!selection || !selection.currentStar || !selection.currentTier || !selection.targetStar)
+      return replyE(interaction, { content: 'Please make all selections first.' });
+    if (parseInt(selection.targetStar) <= parseInt(selection.currentStar))
+      return replyE(interaction, { content: 'Target Star must be **greater** than Current Star!' });
+    const modal = new ModalBuilder().setCustomId('shardsModal').setTitle('Enter Owned Shards');
+    modal.addComponents(new ActionRowBuilder().addComponents(
+      new TextInputBuilder()
+        .setCustomId('ownedShardsInput').setLabel('Number of Owned Shards')
+        .setStyle(TextInputStyle.Short).setPlaceholder('Enter number here').setRequired(true)
+    ));
+    await interaction.showModal(modal);
+  } else if (interaction.type === InteractionType.ModalSubmit && interaction.customId === 'shardsModal') {
+    const ownedShards = parseInt(interaction.fields.getTextInputValue('ownedShardsInput'), 10);
+    if (isNaN(ownedShards) || ownedShards < 0) return replyE(interaction, { content: 'Please enter a valid non-negative number.' });
+    const selection = userSelections.get(interaction.user.id);
+    if (!selection || !selection.currentStar || !selection.currentTier || !selection.targetStar)
+      return replyE(interaction, { content: 'Please make all selections first.' });
+    if (parseInt(selection.targetStar) <= parseInt(selection.currentStar))
+      return replyE(interaction, { content: 'Target Star must be **greater** than Current Star!' });
+    selection.ownedShards = ownedShards;
+    userSelections.set(interaction.user.id, selection);
+    await replyE(interaction, { embeds: [createResultEmbed(selection)] });
   }
 });
 
