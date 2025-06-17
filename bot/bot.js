@@ -208,7 +208,7 @@ client.on('interactionCreate', async interaction => {
       });
     }
 
-    iif (interaction.commandName === 'heroes') {
+    if (interaction.commandName === 'heroes') {
   const gen1 = ['Amadeus', 'Saul', 'Helga', 'Jabel'];
   const gen2 = ['Marlin', 'Hilde', 'Zoe'];
 
@@ -238,11 +238,9 @@ client.on('interactionCreate', async interaction => {
   const heroName = interaction.customId.replace('hero_', '');
   const heroBaseUrl = 'https://borys21.github.io/Kingshot_Tools/bot/heroes/';
 
-  // Capitalize first letter for exact filename match
   const heroFile = heroName.charAt(0).toUpperCase() + heroName.slice(1) + '.png';
   const imageUrl = `${heroBaseUrl}${heroFile}`;
 
-  // Nie próbuj fs.existsSync bo to pliki online — nie ma sensu
   const embed = new EmbedBuilder()
     .setTitle(heroFile.replace('.png', ''))
     .setImage(imageUrl)
