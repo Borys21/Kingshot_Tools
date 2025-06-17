@@ -209,50 +209,44 @@ client.on('interactionCreate', async interaction => {
     }
 
     if (interaction.commandName === 'heroes') {
-      const gen1 = ['Amadeus', 'Saul', 'Helga', 'Jabel'];
-      const gen2 = ['Marlin', 'Hilde', 'Zoe'];
+  const gen1 = ['Amadeus', 'Saul', 'Helga', 'Jabel'];
+  const gen2 = ['Marlin', 'Hilde', 'Zoe'];
 
-      const gen1Buttons = gen1.map(name =>
-        new ButtonBuilder()
-          .setCustomId(`hero_${name.toLowerCase()}`)
-          .setLabel(name)
-          .setStyle(ButtonStyle.Primary)
-      );
+  const gen1Buttons = gen1.map(name =>
+    new ButtonBuilder()
+      .setCustomId(`hero_${name.toLowerCase()}`)
+      .setLabel(name)
+      .setStyle(ButtonStyle.Primary)
+  );
 
-      const gen2Buttons = gen2.map(name =>
-        new ButtonBuilder()
-          .setCustomId(`hero_${name.toLowerCase()}`)
-          .setLabel(name)
-          .setStyle(ButtonStyle.Secondary)
-      );
+  const gen2Buttons = gen2.map(name =>
+    new ButtonBuilder()
+      .setCustomId(`hero_${name.toLowerCase()}`)
+      .setLabel(name)
+      .setStyle(ButtonStyle.Secondary)
+  );
 
-      const row1 = new ActionRowBuilder().addComponents(gen1Buttons);
-      const row2 = new ActionRowBuilder().addComponents(gen2Buttons);
+  const row1 = new ActionRowBuilder().addComponents(gen1Buttons);
+  const row2 = new ActionRowBuilder().addComponents(gen2Buttons);
 
-      await replyE(interaction, {
-        content: 'Choose a hero:',
-        components: [row1, row2]
-      });
-    }
+  await replyE(interaction, {
+    content: 'Choose a hero:',
+    components: [row1, row2]
+  });
 
-  } else if (interaction.isButton() && interaction.customId.startsWith('hero_')) {
-    const heroName = interaction.customId.replace('hero_', '');
-    const filePath = `./heroes/${heroName}.png`;
+} else if (interaction.isButton() && interaction.customId.startsWith('hero_')) {
+  const heroName = interaction.customId.replace('hero_', '');
+  const heroBaseUrl = 'https://borys21.github.io/Kingshot_Tools/bot/heroes/';
+  const imageUrl = `${heroBaseUrl}${heroName.charAt(0).toUpperCase() + heroName.slice(1)}.png`;
 
-    if (!fs.existsSync(filePath)) {
-      return replyE(interaction, { content: 'Image not found.' });
-    }
+  const embed = new EmbedBuilder()
+    .setTitle(heroName.charAt(0).toUpperCase() + heroName.slice(1))
+    .setImage(imageUrl)
+    .setColor(0x5865F2);
 
-    const embed = new EmbedBuilder()
-      .setTitle(heroName.charAt(0).toUpperCase() + heroName.slice(1))
-      .setImage(`attachment://${heroName}.png`)
-      .setColor(0x5865F2);
-
-    await replyE(interaction, {
-      embeds: [embed],
-      files: [{ attachment: filePath, name: `${heroName}.png` }]
-    });
-  } else if (interaction.isStringSelectMenu()) {
+  await replyE(interaction, { embeds: [embed] });
+}
+ else if (interaction.isStringSelectMenu()) {
     const selection = userSelections.get(interaction.user.id) || { currentStar: null, currentTier: null, targetStar: null, ownedShards: 0 };
     if (interaction.customId === 'currentStar') selection.currentStar = interaction.values[0];
     else if (interaction.customId === 'currentTier') selection.currentTier = interaction.values[0];
