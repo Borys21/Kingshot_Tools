@@ -209,44 +209,48 @@ client.on('interactionCreate', async interaction => {
     }
 
     else if (interaction.commandName === 'heroes') {
-      const gen1 = ['Amadeus', 'Saul', 'Helga', 'Jabel'];
-      const gen2 = ['Marlin', 'Hilde', 'Zoe'];
+  const gen1 = ['Amadeus', 'Saul', 'Helga', 'Jabel'];
+  const gen2 = ['Marlin', 'Hilde', 'Zoe'];
 
-      const gen1Buttons = gen1.map(name =>
-        new ButtonBuilder()
-          .setCustomId(`hero_${name.toLowerCase()}`)
-          .setLabel(name)
-          .setStyle(ButtonStyle.Primary)
-      );
+  const gen1Buttons = gen1.map(name =>
+    new ButtonBuilder()
+      .setCustomId(`hero_${name.toLowerCase()}`)
+      .setLabel(name)
+      .setStyle(ButtonStyle.Success) // Zielony styl dla GEN1
+  );
 
-      const gen2Buttons = gen2.map(name =>
-        new ButtonBuilder()
-          .setCustomId(`hero_${name.toLowerCase()}`)
-          .setLabel(name)
-          .setStyle(ButtonStyle.Secondary)
-      );
+  const gen2Buttons = gen2.map(name =>
+    new ButtonBuilder()
+      .setCustomId(`hero_${name.toLowerCase()}`)
+      .setLabel(name)
+      .setStyle(ButtonStyle.Primary) // Niebieski styl dla GEN2
+  );
 
-      const row1 = new ActionRowBuilder().addComponents(gen1Buttons);
-      const row2 = new ActionRowBuilder().addComponents(gen2Buttons);
+  const row1 = new ActionRowBuilder().addComponents(gen1Buttons);
+  const row2 = new ActionRowBuilder().addComponents(gen2Buttons);
 
-      await replyE(interaction, {
-        content: 'Choose a hero:',
-        components: [row1, row2]
-      });
-    }
+  await replyE(interaction, {
+    content: '🧙 **Heroes Knowledgebase**\nChoose a hero below:',
+    components: [row1, row2]
+  });
+}
 
-  } else if (interaction.isButton() && interaction.customId.startsWith('hero_')) {
-    const heroName = interaction.customId.replace('hero_', '');
-    const heroFile = heroName.charAt(0).toUpperCase() + heroName.slice(1) + '.png';
-    const imageUrl = `${heroBaseUrl}${heroFile}`;
+else if (interaction.isButton() && interaction.customId.startsWith('hero_')) {
+  const heroName = interaction.customId.replace('hero_', '');
+  const heroFile = heroName.charAt(0).toUpperCase() + heroName.slice(1) + '.png';
+  const imageUrl = `${heroBaseUrl}${heroFile}`;
 
-    const embed = new EmbedBuilder()
-      .setTitle(heroFile.replace('.png', ''))
-      .setImage(imageUrl)
-      .setColor(0x5865F2);
+  // Determine GEN for display:
+  const gen = ['amadeus', 'saul', 'helga', 'jabel'].includes(heroName) ? 'GEN 1' : 'GEN 2';
 
-    await replyE(interaction, { embeds: [embed] });
-  }
+  const embed = new EmbedBuilder()
+    .setTitle(`${heroFile.replace('.png', '')} — ${gen}`)
+    .setDescription(`Here is some info for **${heroFile.replace('.png', '')}**.`)
+    .setImage(imageUrl)
+    .setColor(gen === 'GEN 1' ? 0x57F287 : 0x5865F2); // Zielony dla GEN1, Niebieski dla GEN2
+
+  await replyE(interaction, { embeds: [embed] });
+}
 
   else if (interaction.isStringSelectMenu()) {
     const selection = userSelections.get(interaction.user.id) || { currentStar: null, currentTier: null, targetStar: null, ownedShards: 0 };
