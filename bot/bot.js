@@ -208,7 +208,7 @@ client.on('interactionCreate', async interaction => {
       });
     }
 
-    if (interaction.commandName === 'heroes') {
+    iif (interaction.commandName === 'heroes') {
   const gen1 = ['Amadeus', 'Saul', 'Helga', 'Jabel'];
   const gen2 = ['Marlin', 'Hilde', 'Zoe'];
 
@@ -237,15 +237,20 @@ client.on('interactionCreate', async interaction => {
 } else if (interaction.isButton() && interaction.customId.startsWith('hero_')) {
   const heroName = interaction.customId.replace('hero_', '');
   const heroBaseUrl = 'https://borys21.github.io/Kingshot_Tools/bot/heroes/';
-  const imageUrl = `${heroBaseUrl}${heroName.charAt(0).toUpperCase() + heroName.slice(1)}.png`;
 
+  // Capitalize first letter for exact filename match
+  const heroFile = heroName.charAt(0).toUpperCase() + heroName.slice(1) + '.png';
+  const imageUrl = `${heroBaseUrl}${heroFile}`;
+
+  // Nie próbuj fs.existsSync bo to pliki online — nie ma sensu
   const embed = new EmbedBuilder()
-    .setTitle(heroName.charAt(0).toUpperCase() + heroName.slice(1))
+    .setTitle(heroFile.replace('.png', ''))
     .setImage(imageUrl)
     .setColor(0x5865F2);
 
   await replyE(interaction, { embeds: [embed] });
 }
+
  else if (interaction.isStringSelectMenu()) {
     const selection = userSelections.get(interaction.user.id) || { currentStar: null, currentTier: null, targetStar: null, ownedShards: 0 };
     if (interaction.customId === 'currentStar') selection.currentStar = interaction.values[0];
