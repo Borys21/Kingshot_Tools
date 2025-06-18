@@ -9,6 +9,7 @@ const breadCost = document.getElementById("req-bread");
 const woodCost = document.getElementById("req-wood");
 const stoneCost = document.getElementById("req-stone");
 const ironCost = document.getElementById("req-iron");
+const tgoldCost = document.getElementById("req-tgold");
 const buildTime = document.getElementById("base-time");
 const effectsList = document.getElementById("perk-list");
 
@@ -77,29 +78,35 @@ function populateBuildingDropdown() {
 
 // === Populate From/To dropdowns ===
 function populateLevelDropdowns() {
+  const selectedBuilding = buildingSelect.value || Object.keys(buildingsData)[0];
+  const data = buildingsData[selectedBuilding];
+  const levels = data.levels;
+  const levelNumbers = Object.keys(levels).map(Number).sort((a, b) => a - b);
+  const minLevel = Math.min(...levelNumbers);
+  const maxLevel = Math.max(...levelNumbers);
+
   levelFrom.innerHTML = "";
   levelTo.innerHTML = "";
 
-  for (let i = 0; i <= 29; i++) {
+  // From: od minLevel do maxLevel-1
+  for (let i = minLevel; i < maxLevel; i++) {
     const opt = document.createElement("option");
     opt.value = i;
     opt.textContent = i;
     levelFrom.appendChild(opt);
   }
 
-  for (let i = 1; i <= 30; i++) {
+  // To: od minLevel+1 do maxLevel
+  for (let i = minLevel + 1; i <= maxLevel; i++) {
     const opt = document.createElement("option");
     opt.value = i;
     opt.textContent = i;
     levelTo.appendChild(opt);
   }
 
-  // Set initial values
-  const from = 0;
-  const to = from + 1;
-
-  levelFrom.value = from;
-  levelTo.value = to;
+  // Ustaw domyślne wartości
+  levelFrom.value = minLevel;
+  levelTo.value = minLevel + 1;
 }
 
 // === Auto-set To = From + 1 on change ===
@@ -130,6 +137,7 @@ function updateRangeDisplay() {
   let totalWood = 0;
   let totalStone = 0;
   let totalIron = 0;
+  let totalTgold = 0;
   let totalTime = 0;
   let allEffects = [];
   const allRequirements = {};
@@ -145,6 +153,7 @@ function updateRangeDisplay() {
     totalWood += Math.ceil((levelData.costs?.wood ?? 0) * costMultiplier);
     totalStone += Math.ceil((levelData.costs?.stone ?? 0) * costMultiplier);
     totalIron += Math.ceil((levelData.costs?.iron ?? 0) * costMultiplier);
+    totalTgold += Math.ceil((levelData.costs?.tgold ?? 0) * costMultiplier);
 
     totalTime += timeArrayToSeconds(levelData.time ?? [0, 0, 0, 0]);
 
@@ -179,6 +188,7 @@ function updateRangeDisplay() {
   woodCost.textContent = formatNumber(totalWood);
   stoneCost.textContent = formatNumber(totalStone);
   ironCost.textContent = formatNumber(totalIron);
+  tgoldCost.textContent = formatNumber(totalTgold);
   buildTime.textContent = `${formatTime(totalTime)} → ${formatTime(finalTime)}`;
 
   // Requirements
@@ -231,7 +241,10 @@ for (const value of effectMap.values()) {
 }
 
 // === Event Listeners ===
-buildingSelect.addEventListener("change", updateRangeDisplay);
+buildingSelect.addEventListener("change", () => {
+  populateLevelDropdowns();
+  updateRangeDisplay();
+});
 // === Auto-set To = From + 1 on change ===
 levelFrom.addEventListener("change", () => {
   const from = parseInt(levelFrom.value);

@@ -519,6 +519,261 @@ const buildingsData = {
         effects: [
           "1523500 Power"
         ]
+      },
+      31: {
+        requirements: {
+          embassy: 30,
+          research_center: 30
+        },
+        costs: {
+          bread: 67000000,
+          wood: 67000000,
+          stone: 13000000,
+          iron: 3300000,
+          tgold: 132,
+        },
+        time: [7, 0, 0, 0],
+        effects: [
+          "1523500 Power"
+        ]
+      },
+      32: {
+        requirements: {
+          embassy: 30,
+          research_center: 30
+        },
+        costs: {
+          bread: 67000000,
+          wood: 67000000,
+          stone: 13000000,
+          iron: 3300000,
+          tgold: 132,
+        },
+        time: [7, 0, 0, 0],
+        effects: [
+          "1523500 Power"
+        ]
+      },
+      33: {
+        requirements: {
+          embassy: 30,
+          research_center: 30
+        },
+        costs: {
+          bread: 67000000,
+          wood: 67000000,
+          stone: 13000000,
+          iron: 3300000,
+          tgold: 132,
+        },
+        time: [7, 0, 0, 0],
+        effects: [
+          "1523500 Power"
+        ]
+      },
+      34: {
+        requirements: {
+          embassy: 30,
+          research_center: 30
+        },
+        costs: {
+          bread: 67000000,
+          wood: 67000000,
+          stone: 13000000,
+          iron: 3300000,
+          tgold: 132,
+        },
+        time: [7, 0, 0, 0],
+        effects: [
+          "1523500 Power"
+        ]
+      },
+      35: {
+        requirements: {
+          embassy: 30,
+          research_center: 30
+        },
+        costs: {
+          bread: 67000000,
+          wood: 67000000,
+          stone: 13000000,
+          iron: 3300000,
+          tgold: 132,
+        },
+        time: [7, 0, 0, 0],
+        effects: [
+          "1523500 Power"
+        ]
+      },
+      36: {
+        requirements: {
+          embassy: 31,
+          stable: 31
+        },
+        costs: {
+          bread: 72000000,
+          wood: 72000000,
+          stone: 14000000,
+          iron: 3600000,
+          tgold: 158,
+        },
+        time: [9, 0, 0, 0],
+        effects: [
+          "1810500 Power"
+        ]
+      },
+      37: {
+        requirements: {
+          embassy: 31,
+          stable: 31
+        },
+        costs: {
+          bread: 72000000,
+          wood: 72000000,
+          stone: 14000000,
+          iron: 3600000,
+          tgold: 158,
+        },
+        time: [9, 0, 0, 0],
+        effects: [
+          "1810500 Power"
+        ]
+      },
+      38: {
+        requirements: {
+          embassy: 31,
+          stable: 31
+        },
+        costs: {
+          bread: 72000000,
+          wood: 72000000,
+          stone: 14000000,
+          iron: 3600000,
+          tgold: 158,
+        },
+        time: [9, 0, 0, 0],
+        effects: [
+          "1810500 Power"
+        ]
+      },
+      39: {
+        requirements: {
+          embassy: 31,
+          stable: 31
+        },
+        costs: {
+          bread: 72000000,
+          wood: 72000000,
+          stone: 14000000,
+          iron: 3600000,
+          tgold: 158,
+        },
+        time: [9, 0, 0, 0],
+        effects: [
+          "1810500 Power"
+        ]
+      },
+      40: {
+        requirements: {
+          embassy: 31,
+          stable: 31
+        },
+        costs: {
+          bread: 72000000,
+          wood: 72000000,
+          stone: 14000000,
+          iron: 3600000,
+          tgold: 158,
+        },
+        time: [9, 0, 0, 0],
+        effects: [
+          "1810500 Power"
+        ]
+      },
+      41: {
+        requirements: {
+          embassy: 32,
+          barracks: 32
+        },
+        costs: {
+          bread: 79000000,
+          wood: 79000000,
+          stone: 15000000,
+          iron: 3900000,
+          tgold: 238,
+        },
+        time: [11, 0, 0, 0],
+        effects: [
+          "2097500 Power"
+        ]
+      },
+      42: {
+        requirements: {
+          embassy: 32,
+          barracks: 32
+        },
+        costs: {
+          bread: 79000000,
+          wood: 79000000,
+          stone: 15000000,
+          iron: 3900000,
+          tgold: 238,
+        },
+        time: [11, 0, 0, 0],
+        effects: [
+          "2097500 Power"
+        ]
+      },
+      43: {
+        requirements: {
+          embassy: 32,
+          barracks: 32
+        },
+        costs: {
+          bread: 79000000,
+          wood: 79000000,
+          stone: 15000000,
+          iron: 3900000,
+          tgold: 238,
+        },
+        time: [11, 0, 0, 0],
+        effects: [
+          "2097500 Power"
+        ]
+      },
+      44: {
+        requirements: {
+          embassy: 32,
+          barracks: 32
+        },
+        costs: {
+          bread: 79000000,
+          wood: 79000000,
+          stone: 15000000,
+          iron: 3900000,
+          tgold: 238,
+        },
+        time: [11, 0, 0, 0],
+        effects: [
+          "2097500 Power"
+        ]
+      },
+      45: {
+        requirements: {
+          embassy: 32,
+          barracks: 32
+        },
+        costs: {
+          bread: 79000000,
+          wood: 79000000,
+          stone: 15000000,
+          iron: 3900000,
+          tgold: 238,
+        },
+        time: [11, 0, 0, 0],
+        effects: [
+          "2097500 Power"
+        ]
       }
     }
   },
@@ -1079,6 +1334,276 @@ const buildingsData = {
           "840000 Reinforcement Capacity",
           "335172 Power"
         ]
+      },
+      31: {
+        requirements: {
+          town_center: 31
+        },
+        costs: {
+          bread: 13000000,
+          wood: 13000000,
+          stone: 2700000,
+          iron: 670000,
+          tgold: 33,
+        },
+        time: [4, 14, 52, 0],
+        effects: [
+          "30 Ally Assist",
+          "97 Ally Help Time",
+          "845000 Reinforcement Capacity",
+        ]
+      },
+      32: {
+        requirements: {
+          town_center: 31
+        },
+        costs: {
+          bread: 13000000,
+          wood: 13000000,
+          stone: 2700000,
+          iron: 670000,
+          tgold: 33,
+        },
+        time: [4, 14, 52, 0],
+        effects: [
+          "30 Ally Assist",
+          "97 Ally Help Time",
+          "850000 Reinforcement Capacity",
+        ]
+      },
+      33: {
+        requirements: {
+          town_center: 31
+        },
+        costs: {
+          bread: 13000000,
+          wood: 13000000,
+          stone: 2700000,
+          iron: 670000,
+          tgold: 33,
+        },
+        time: [4, 14, 52, 0],
+        effects: [
+          "30 Ally Assist",
+          "97 Ally Help Time",
+          "855000 Reinforcement Capacity",
+        ]
+      },
+      34: {
+        requirements: {
+          town_center: 31
+        },
+        costs: {
+          bread: 13000000,
+          wood: 13000000,
+          stone: 2700000,
+          iron: 670000,
+          tgold: 33,
+        },
+        time: [4, 14, 52, 0],
+        effects: [
+          "30 Ally Assist",
+          "97 Ally Help Time",
+          "860000 Reinforcement Capacity",
+        ]
+      },
+      35: {
+        requirements: {
+          town_center: 31
+        },
+        costs: {
+          bread: 13000000,
+          wood: 13000000,
+          stone: 2700000,
+          iron: 670000,
+          tgold: 33,
+        },
+        time: [4, 14, 52, 0],
+        effects: [
+          "30 Ally Assist",
+          "97 Ally Help Time",
+          "865000 Reinforcement Capacity",
+        ]
+      },
+      36: {
+        requirements: {
+          town_center: 32
+        },
+        costs: {
+          bread: 14000000,
+          wood: 14000000,
+          stone: 2900000,
+          iron: 720000,
+          tgold: 39,
+        },
+        time: [5, 22, 33, 0],
+        effects: [
+          "30 Ally Assist",
+          "97 Ally Help Time",
+          "870000 Reinforcement Capacity",
+        ]
+      },
+      37: {
+        requirements: {
+          town_center: 32
+        },
+        costs: {
+          bread: 14000000,
+          wood: 14000000,
+          stone: 2900000,
+          iron: 720000,
+          tgold: 39,
+        },
+        time: [5, 22, 33, 0],
+        effects: [
+          "30 Ally Assist",
+          "97 Ally Help Time",
+          "875000 Reinforcement Capacity",
+        ]
+      },
+      38: {
+        requirements: {
+          town_center: 32
+        },
+        costs: {
+          bread: 14000000,
+          wood: 14000000,
+          stone: 2900000,
+          iron: 720000,
+          tgold: 39,
+        },
+        time: [5, 22, 33, 0],
+        effects: [
+          "30 Ally Assist",
+          "97 Ally Help Time",
+          "880000 Reinforcement Capacity",
+        ]
+      },
+      39: {
+        requirements: {
+          town_center: 32
+        },
+        costs: {
+          bread: 14000000,
+          wood: 14000000,
+          stone: 2900000,
+          iron: 720000,
+          tgold: 39,
+        },
+        time: [5, 22, 33, 0],
+        effects: [
+          "30 Ally Assist",
+          "97 Ally Help Time",
+          "885000 Reinforcement Capacity",
+        ]
+      },
+      40: {
+        requirements: {
+          town_center: 32
+        },
+        costs: {
+          bread: 14000000,
+          wood: 14000000,
+          stone: 2900000,
+          iron: 720000,
+          tgold: 39,
+        },
+        time: [5, 22, 33, 0],
+        effects: [
+          "30 Ally Assist",
+          "97 Ally Help Time",
+          "890000 Reinforcement Capacity",
+        ]
+      },
+      41: {
+        requirements: {
+          town_center: 33
+        },
+        costs: {
+          bread: 15000000,
+          wood: 15000000,
+          stone: 3100000,
+          iron: 790000,
+          tgold: 59,
+        },
+        time: [7, 6, 14, 0],
+        effects: [
+          "30 Ally Assist",
+          "97 Ally Help Time",
+          "895000 Reinforcement Capacity",
+        ]
+      },
+      42: {
+        requirements: {
+          town_center: 33
+        },
+        costs: {
+          bread: 15000000,
+          wood: 15000000,
+          stone: 3100000,
+          iron: 790000,
+          tgold: 59,
+        },
+        time: [7, 6, 14, 0],
+        effects: [
+          "30 Ally Assist",
+          "97 Ally Help Time",
+          "900000 Reinforcement Capacity",
+        ]
+      },
+      43: {
+        requirements: {
+          town_center: 33
+        },
+        costs: {
+          bread: 15000000,
+          wood: 15000000,
+          stone: 3100000,
+          iron: 790000,
+          tgold: 59,
+        },
+        time: [7, 6, 14, 0],
+        effects: [
+          "30 Ally Assist",
+          "97 Ally Help Time",
+          "905000 Reinforcement Capacity",
+        ]
+      },
+      44: {
+        requirements: {
+          town_center: 33
+        },
+        costs: {
+          bread: 15000000,
+          wood: 15000000,
+          stone: 3100000,
+          iron: 790000,
+          tgold: 59,
+        },
+        time: [7, 6, 14, 0],
+        effects: [
+          "30 Ally Assist",
+          "97 Ally Help Time",
+          "910000 Reinforcement Capacity",
+        ]
+      },
+      45: {
+        requirements: {
+          town_center: 33
+        },
+        costs: {
+          bread: 15000000,
+          wood: 15000000,
+          stone: 3100000,
+          iron: 790000,
+          tgold: 59,
+        },
+        time: [7, 6, 14, 0],
+        effects: [
+          "30 Ally Assist",
+          "97 Ally Help Time",
+          "915000 Reinforcement Capacity",
+        ]
       }
     }
   },
@@ -1619,6 +2144,264 @@ const buildingsData = {
           "8.0% Training Speed",
           "10 lvl Infantry",
           "304700 Power"
+        ]
+      },
+      31: {
+        requirements: {
+          town_center: 31
+        },
+        costs: {
+          bread: 23000000,
+          wood: 23000000,
+          stone: 4700000,
+          iron: 1100000,
+          tgold: 59,
+        },
+        time: [1, 1, 12, 0],
+        effects: [
+          "214 Traning Capacity",
+          "8.0% Training Speed"
+        ]
+      },
+      32: {
+        requirements: {
+          town_center: 31
+        },
+        costs: {
+          bread: 23000000,
+          wood: 23000000,
+          stone: 4700000,
+          iron: 1100000,
+          tgold: 59,
+        },
+        time: [1, 1, 12, 0],
+        effects: [
+          "219 Traning Capacity",
+          "8.0% Training Speed"
+        ]
+      },
+      33: {
+        requirements: {
+          town_center: 31
+        },
+        costs: {
+          bread: 23000000,
+          wood: 23000000,
+          stone: 4700000,
+          iron: 1100000,
+          tgold: 59,
+        },
+        time: [1, 1, 12, 0],
+        effects: [
+          "224 Traning Capacity",
+          "8.0% Training Speed"
+        ]
+      },
+      34: {
+        requirements: {
+          town_center: 31
+        },
+        costs: {
+          bread: 23000000,
+          wood: 23000000,
+          stone: 4700000,
+          iron: 1100000,
+          tgold: 59,
+        },
+        time: [1, 1, 12, 0],
+        effects: [
+          "229 Traning Capacity",
+          "8.0% Training Speed"
+        ]
+      },
+      35: {
+        requirements: {
+          town_center: 31
+        },
+        costs: {
+          bread: 23000000,
+          wood: 23000000,
+          stone: 4700000,
+          iron: 1100000,
+          tgold: 59,
+        },
+        time: [1, 1, 12, 0],
+        effects: [
+          "234 Traning Capacity",
+          "8.3% Training Speed",
+          "True Gold 1 Troops"
+        ]
+      },
+      36: {
+        requirements: {
+          town_center: 32
+        },
+        costs: {
+          bread: 25000000,
+          wood: 25000000,
+          stone: 5000000,
+          iron: 1200000,
+          tgold: 71,
+        },
+        time: [1, 8, 24, 0],
+        effects: [
+          "239 Traning Capacity",
+          "8.3% Training Speed"
+        ]
+      },
+      37: {
+        requirements: {
+          town_center: 32
+        },
+        costs: {
+          bread: 25000000,
+          wood: 25000000,
+          stone: 5000000,
+          iron: 1200000,
+          tgold: 71,
+        },
+        time: [1, 8, 24, 0],
+        effects: [
+          "244 Traning Capacity",
+          "8.3% Training Speed"
+        ]
+      },
+      38: {
+        requirements: {
+          town_center: 32
+        },
+        costs: {
+          bread: 25000000,
+          wood: 25000000,
+          stone: 5000000,
+          iron: 1200000,
+          tgold: 71,
+        },
+        time: [1, 8, 24, 0],
+        effects: [
+          "249 Traning Capacity",
+          "8.3% Training Speed"
+        ]
+      },
+      39: {
+        requirements: {
+          town_center: 32
+        },
+        costs: {
+          bread: 25000000,
+          wood: 25000000,
+          stone: 5000000,
+          iron: 1200000,
+          tgold: 71,
+        },
+        time: [1, 8, 24, 0],
+        effects: [
+          "254 Traning Capacity",
+          "8.3% Training Speed"
+        ]
+      },
+      40: {
+        requirements: {
+          town_center: 32
+        },
+        costs: {
+          bread: 25000000,
+          wood: 25000000,
+          stone: 5000000,
+          iron: 1200000,
+          tgold: 71,
+        },
+        time: [1, 8, 24, 0],
+        effects: [
+          "259 Traning Capacity",
+          "8.6% Training Speed",
+          "True Gold 2 Troops"
+        ]
+      },
+      41: {
+        requirements: {
+          town_center: 33
+        },
+        costs: {
+          bread: 27000000,
+          wood: 27000000,
+          stone: 5500000,
+          iron: 1300000,
+          tgold: 107,
+        },
+        time: [1, 15, 36, 0],
+        effects: [
+          "264 Traning Capacity",
+          "8.6% Training Speed"
+        ]
+      },
+      42: {
+        requirements: {
+          town_center: 33
+        },
+        costs: {
+          bread: 27000000,
+          wood: 27000000,
+          stone: 5500000,
+          iron: 1300000,
+          tgold: 107,
+        },
+        time: [1, 15, 36, 0],
+        effects: [
+          "269 Traning Capacity",
+          "8.6% Training Speed"
+        ]
+      },
+      43: {
+        requirements: {
+          town_center: 33
+        },
+        costs: {
+          bread: 27000000,
+          wood: 27000000,
+          stone: 5500000,
+          iron: 1300000,
+          tgold: 107,
+        },
+        time: [1, 15, 36, 0],
+        effects: [
+          "274 Traning Capacity",
+          "8.6% Training Speed"
+        ]
+      },
+      44: {
+        requirements: {
+          town_center: 33
+        },
+        costs: {
+          bread: 27000000,
+          wood: 27000000,
+          stone: 5500000,
+          iron: 1300000,
+          tgold: 107,
+        },
+        time: [1, 15, 36, 0],
+        effects: [
+          "279 Traning Capacity",
+          "8.6% Training Speed"
+        ]
+      },
+      45: {
+        requirements: {
+          town_center: 33
+        },
+        costs: {
+          bread: 27000000,
+          wood: 27000000,
+          stone: 5500000,
+          iron: 1300000,
+          tgold: 107,
+        },
+        time: [1, 15, 36, 0],
+        effects: [
+          "284 Traning Capacity",
+          "8.9% Training Speed",
+          "True Gold 3 Troops"
         ]
       }
     }
@@ -2161,6 +2944,264 @@ const buildingsData = {
           "10 lvl Archers",
           "304700 Power"
         ]
+      },
+      31: {
+        requirements: {
+          town_center: 31
+        },
+        costs: {
+          bread: 23000000,
+          wood: 23000000,
+          stone: 4700000,
+          iron: 1100000,
+          tgold: 59,
+        },
+        time: [1, 1, 12, 0],
+        effects: [
+          "214 Traning Capacity",
+          "8.0% Training Speed"
+        ]
+      },
+      32: {
+        requirements: {
+          town_center: 31
+        },
+        costs: {
+          bread: 23000000,
+          wood: 23000000,
+          stone: 4700000,
+          iron: 1100000,
+          tgold: 59,
+        },
+        time: [1, 1, 12, 0],
+        effects: [
+          "219 Traning Capacity",
+          "8.0% Training Speed"
+        ]
+      },
+      33: {
+        requirements: {
+          town_center: 31
+        },
+        costs: {
+          bread: 23000000,
+          wood: 23000000,
+          stone: 4700000,
+          iron: 1100000,
+          tgold: 59,
+        },
+        time: [1, 1, 12, 0],
+        effects: [
+          "224 Traning Capacity",
+          "8.0% Training Speed"
+        ]
+      },
+      34: {
+        requirements: {
+          town_center: 31
+        },
+        costs: {
+          bread: 23000000,
+          wood: 23000000,
+          stone: 4700000,
+          iron: 1100000,
+          tgold: 59,
+        },
+        time: [1, 1, 12, 0],
+        effects: [
+          "229 Traning Capacity",
+          "8.0% Training Speed"
+        ]
+      },
+      35: {
+        requirements: {
+          town_center: 31
+        },
+        costs: {
+          bread: 23000000,
+          wood: 23000000,
+          stone: 4700000,
+          iron: 1100000,
+          tgold: 59,
+        },
+        time: [1, 1, 12, 0],
+        effects: [
+          "234 Traning Capacity",
+          "8.3% Training Speed",
+          "True Gold 1 Troops"
+        ]
+      },
+      36: {
+        requirements: {
+          town_center: 32
+        },
+        costs: {
+          bread: 25000000,
+          wood: 25000000,
+          stone: 5000000,
+          iron: 1200000,
+          tgold: 71,
+        },
+        time: [1, 8, 24, 0],
+        effects: [
+          "239 Traning Capacity",
+          "8.3% Training Speed"
+        ]
+      },
+      37: {
+        requirements: {
+          town_center: 32
+        },
+        costs: {
+          bread: 25000000,
+          wood: 25000000,
+          stone: 5000000,
+          iron: 1200000,
+          tgold: 71,
+        },
+        time: [1, 8, 24, 0],
+        effects: [
+          "244 Traning Capacity",
+          "8.3% Training Speed"
+        ]
+      },
+      38: {
+        requirements: {
+          town_center: 32
+        },
+        costs: {
+          bread: 25000000,
+          wood: 25000000,
+          stone: 5000000,
+          iron: 1200000,
+          tgold: 71,
+        },
+        time: [1, 8, 24, 0],
+        effects: [
+          "249 Traning Capacity",
+          "8.3% Training Speed"
+        ]
+      },
+      39: {
+        requirements: {
+          town_center: 32
+        },
+        costs: {
+          bread: 25000000,
+          wood: 25000000,
+          stone: 5000000,
+          iron: 1200000,
+          tgold: 71,
+        },
+        time: [1, 8, 24, 0],
+        effects: [
+          "254 Traning Capacity",
+          "8.3% Training Speed"
+        ]
+      },
+      40: {
+        requirements: {
+          town_center: 32
+        },
+        costs: {
+          bread: 25000000,
+          wood: 25000000,
+          stone: 5000000,
+          iron: 1200000,
+          tgold: 71,
+        },
+        time: [1, 8, 24, 0],
+        effects: [
+          "259 Traning Capacity",
+          "8.6% Training Speed",
+          "True Gold 2 Troops"
+        ]
+      },
+      41: {
+        requirements: {
+          town_center: 33
+        },
+        costs: {
+          bread: 27000000,
+          wood: 27000000,
+          stone: 5500000,
+          iron: 1300000,
+          tgold: 107,
+        },
+        time: [1, 15, 36, 0],
+        effects: [
+          "264 Traning Capacity",
+          "8.6% Training Speed"
+        ]
+      },
+      42: {
+        requirements: {
+          town_center: 33
+        },
+        costs: {
+          bread: 27000000,
+          wood: 27000000,
+          stone: 5500000,
+          iron: 1300000,
+          tgold: 107,
+        },
+        time: [1, 15, 36, 0],
+        effects: [
+          "269 Traning Capacity",
+          "8.6% Training Speed"
+        ]
+      },
+      43: {
+        requirements: {
+          town_center: 33
+        },
+        costs: {
+          bread: 27000000,
+          wood: 27000000,
+          stone: 5500000,
+          iron: 1300000,
+          tgold: 107,
+        },
+        time: [1, 15, 36, 0],
+        effects: [
+          "274 Traning Capacity",
+          "8.6% Training Speed"
+        ]
+      },
+      44: {
+        requirements: {
+          town_center: 33
+        },
+        costs: {
+          bread: 27000000,
+          wood: 27000000,
+          stone: 5500000,
+          iron: 1300000,
+          tgold: 107,
+        },
+        time: [1, 15, 36, 0],
+        effects: [
+          "279 Traning Capacity",
+          "8.6% Training Speed"
+        ]
+      },
+      45: {
+        requirements: {
+          town_center: 33
+        },
+        costs: {
+          bread: 27000000,
+          wood: 27000000,
+          stone: 5500000,
+          iron: 1300000,
+          tgold: 107,
+        },
+        time: [1, 15, 36, 0],
+        effects: [
+          "284 Traning Capacity",
+          "8.9% Training Speed",
+          "True Gold 3 Troops"
+        ]
       }
     }
   },
@@ -2702,6 +3743,264 @@ const buildingsData = {
           "10 lvl Cavalry",
           "304700 Power"
         ]
+      },
+      31: {
+        requirements: {
+          town_center: 31
+        },
+        costs: {
+          bread: 23000000,
+          wood: 23000000,
+          stone: 4700000,
+          iron: 1100000,
+          tgold: 59,
+        },
+        time: [1, 1, 12, 0],
+        effects: [
+          "214 Traning Capacity",
+          "8.0% Training Speed"
+        ]
+      },
+      32: {
+        requirements: {
+          town_center: 31
+        },
+        costs: {
+          bread: 23000000,
+          wood: 23000000,
+          stone: 4700000,
+          iron: 1100000,
+          tgold: 59,
+        },
+        time: [1, 1, 12, 0],
+        effects: [
+          "219 Traning Capacity",
+          "8.0% Training Speed"
+        ]
+      },
+      33: {
+        requirements: {
+          town_center: 31
+        },
+        costs: {
+          bread: 23000000,
+          wood: 23000000,
+          stone: 4700000,
+          iron: 1100000,
+          tgold: 59,
+        },
+        time: [1, 1, 12, 0],
+        effects: [
+          "224 Traning Capacity",
+          "8.0% Training Speed"
+        ]
+      },
+      34: {
+        requirements: {
+          town_center: 31
+        },
+        costs: {
+          bread: 23000000,
+          wood: 23000000,
+          stone: 4700000,
+          iron: 1100000,
+          tgold: 59,
+        },
+        time: [1, 1, 12, 0],
+        effects: [
+          "229 Traning Capacity",
+          "8.0% Training Speed"
+        ]
+      },
+      35: {
+        requirements: {
+          town_center: 31
+        },
+        costs: {
+          bread: 23000000,
+          wood: 23000000,
+          stone: 4700000,
+          iron: 1100000,
+          tgold: 59,
+        },
+        time: [1, 1, 12, 0],
+        effects: [
+          "234 Traning Capacity",
+          "8.3% Training Speed",
+          "True Gold 1 Troops"
+        ]
+      },
+      36: {
+        requirements: {
+          town_center: 32
+        },
+        costs: {
+          bread: 25000000,
+          wood: 25000000,
+          stone: 5000000,
+          iron: 1200000,
+          tgold: 71,
+        },
+        time: [1, 8, 24, 0],
+        effects: [
+          "239 Traning Capacity",
+          "8.3% Training Speed"
+        ]
+      },
+      37: {
+        requirements: {
+          town_center: 32
+        },
+        costs: {
+          bread: 25000000,
+          wood: 25000000,
+          stone: 5000000,
+          iron: 1200000,
+          tgold: 71,
+        },
+        time: [1, 8, 24, 0],
+        effects: [
+          "244 Traning Capacity",
+          "8.3% Training Speed"
+        ]
+      },
+      38: {
+        requirements: {
+          town_center: 32
+        },
+        costs: {
+          bread: 25000000,
+          wood: 25000000,
+          stone: 5000000,
+          iron: 1200000,
+          tgold: 71,
+        },
+        time: [1, 8, 24, 0],
+        effects: [
+          "249 Traning Capacity",
+          "8.3% Training Speed"
+        ]
+      },
+      39: {
+        requirements: {
+          town_center: 32
+        },
+        costs: {
+          bread: 25000000,
+          wood: 25000000,
+          stone: 5000000,
+          iron: 1200000,
+          tgold: 71,
+        },
+        time: [1, 8, 24, 0],
+        effects: [
+          "254 Traning Capacity",
+          "8.3% Training Speed"
+        ]
+      },
+      40: {
+        requirements: {
+          town_center: 32
+        },
+        costs: {
+          bread: 25000000,
+          wood: 25000000,
+          stone: 5000000,
+          iron: 1200000,
+          tgold: 71,
+        },
+        time: [1, 8, 24, 0],
+        effects: [
+          "259 Traning Capacity",
+          "8.6% Training Speed",
+          "True Gold 2 Troops"
+        ]
+      },
+      41: {
+        requirements: {
+          town_center: 33
+        },
+        costs: {
+          bread: 27000000,
+          wood: 27000000,
+          stone: 5500000,
+          iron: 1300000,
+          tgold: 107,
+        },
+        time: [1, 15, 36, 0],
+        effects: [
+          "264 Traning Capacity",
+          "8.6% Training Speed"
+        ]
+      },
+      42: {
+        requirements: {
+          town_center: 33
+        },
+        costs: {
+          bread: 27000000,
+          wood: 27000000,
+          stone: 5500000,
+          iron: 1300000,
+          tgold: 107,
+        },
+        time: [1, 15, 36, 0],
+        effects: [
+          "269 Traning Capacity",
+          "8.6% Training Speed"
+        ]
+      },
+      43: {
+        requirements: {
+          town_center: 33
+        },
+        costs: {
+          bread: 27000000,
+          wood: 27000000,
+          stone: 5500000,
+          iron: 1300000,
+          tgold: 107,
+        },
+        time: [1, 15, 36, 0],
+        effects: [
+          "274 Traning Capacity",
+          "8.6% Training Speed"
+        ]
+      },
+      44: {
+        requirements: {
+          town_center: 33
+        },
+        costs: {
+          bread: 27000000,
+          wood: 27000000,
+          stone: 5500000,
+          iron: 1300000,
+          tgold: 107,
+        },
+        time: [1, 15, 36, 0],
+        effects: [
+          "279 Traning Capacity",
+          "8.6% Training Speed"
+        ]
+      },
+      45: {
+        requirements: {
+          town_center: 33
+        },
+        costs: {
+          bread: 27000000,
+          wood: 27000000,
+          stone: 5500000,
+          iron: 1300000,
+          tgold: 107,
+        },
+        time: [1, 15, 36, 0],
+        effects: [
+          "284 Traning Capacity",
+          "8.9% Training Speed",
+          "True Gold 3 Troops"
+        ]
       }
     }
   },
@@ -3232,6 +4531,261 @@ const buildingsData = {
           "67000 Troop Deployment Capacity",
           "213290 Power"
         ]
+      },
+      31: {
+        requirements: {
+          embassy: 31
+        },
+        costs: {
+          bread: 20000000,
+          wood: 20000000,
+          stone: 4000000,
+          iron: 1000000,
+          tgold: 26,
+        },
+        time: [0, 20, 9, 30],
+        effects: [
+          "845000 Rally Capacity",
+          "67700 Troop Deployment Capacity"
+        ]
+      },
+      32: {
+        requirements: {
+          embassy: 32
+        },
+        costs: {
+          bread: 20000000,
+          wood: 20000000,
+          stone: 4000000,
+          iron: 1000000,
+          tgold: 26,
+        },
+        time: [0, 20, 9, 30],
+        effects: [
+          "850000 Rally Capacity",
+          "68400 Troop Deployment Capacity"
+        ]
+      },
+      33: {
+        requirements: {
+          embassy: 33
+        },
+        costs: {
+          bread: 20000000,
+          wood: 20000000,
+          stone: 4000000,
+          iron: 1000000,
+          tgold: 26,
+        },
+        time: [0, 20, 9, 30],
+        effects: [
+          "855000 Rally Capacity",
+          "69100 Troop Deployment Capacity"
+        ]
+      },
+      34: {
+        requirements: {
+          embassy: 34
+        },
+        costs: {
+          bread: 20000000,
+          wood: 20000000,
+          stone: 4000000,
+          iron: 1000000,
+          tgold: 26,
+        },
+        time: [0, 20, 9, 30],
+        effects: [
+          "860000 Rally Capacity",
+          "69800 Troop Deployment Capacity"
+        ]
+      },
+      35: {
+        requirements: {
+          embassy: 35
+        },
+        costs: {
+          bread: 20000000,
+          wood: 20000000,
+          stone: 4000000,
+          iron: 1000000,
+          tgold: 26,
+        },
+        time: [0, 20, 9, 30],
+        effects: [
+          "865000 Rally Capacity",
+          "70500 Troop Deployment Capacity"
+        ]
+      },
+      36: {
+        requirements: {
+          embassy: 32
+        },
+        costs: {
+          bread: 21000000,
+          wood: 21000000,
+          stone: 4300000,
+          iron: 1000000,
+          tgold: 31,
+        },
+        time: [1, 1, 55, 0],
+        effects: [
+          "870000 Rally Capacity",
+          "71200 Troop Deployment Capacity"
+        ]
+      },
+      37: {
+        requirements: {
+          embassy: 33
+        },
+        costs: {
+          bread: 21000000,
+          wood: 21000000,
+          stone: 4300000,
+          iron: 1000000,
+          tgold: 31,
+        },
+        time: [1, 1, 55, 0],
+        effects: [
+          "875000 Rally Capacity",
+          "71900 Troop Deployment Capacity"
+        ]
+      },
+      38: {
+        requirements: {
+          embassy: 34
+        },
+        costs: {
+          bread: 21000000,
+          wood: 21000000,
+          stone: 4300000,
+          iron: 1000000,
+          tgold: 31,
+        },
+        time: [1, 1, 55, 0],
+        effects: [
+          "880000 Rally Capacity",
+          "72600 Troop Deployment Capacity"
+        ]
+      },
+      39: {
+        requirements: {
+          embassy: 35
+        },
+        costs: {
+          bread: 21000000,
+          wood: 21000000,
+          stone: 4300000,
+          iron: 1000000,
+          tgold: 31,
+        },
+        time: [1, 1, 55, 0],
+        effects: [
+          "885000 Rally Capacity",
+          "73300 Troop Deployment Capacity"
+        ]
+      },
+      40: {
+        requirements: {
+          embassy: 36
+        },
+        costs: {
+          bread: 21000000,
+          wood: 21000000,
+          stone: 4300000,
+          iron: 1000000,
+          tgold: 31,
+        },
+        time: [1, 1, 55, 0],
+        effects: [
+          "890000 Rally Capacity",
+          "74000 Troop Deployment Capacity"
+        ]
+      },
+      41: {
+        requirements: {
+          embassy: 33
+        },
+        costs: {
+          bread: 23000000,
+          wood: 23000000,
+          stone: 4700000,
+          iron: 1100000,
+          tgold: 47,
+        },
+        time: [1, 7, 40, 0],
+        effects: [
+          "895000 Rally Capacity",
+          "74700 Troop Deployment Capacity"
+        ]
+      },
+      42: {
+        requirements: {
+          embassy: 34
+        },
+        costs: {
+          bread: 23000000,
+          wood: 23000000,
+          stone: 4700000,
+          iron: 1100000,
+          tgold: 47,
+        },
+        time: [1, 7, 40, 0],
+        effects: [
+          "900000 Rally Capacity",
+          "75400 Troop Deployment Capacity"
+        ]
+      },
+      43: {
+        requirements: {
+          embassy: 35
+        },
+        costs: {
+          bread: 23000000,
+          wood: 23000000,
+          stone: 4700000,
+          iron: 1100000,
+          tgold: 47,
+        },
+        time: [1, 7, 40, 0],
+        effects: [
+          "905000 Rally Capacity",
+          "76100 Troop Deployment Capacity"
+        ]
+      },
+      44: {
+        requirements: {
+          embassy: 36
+        },
+        costs: {
+          bread: 23000000,
+          wood: 23000000,
+          stone: 4700000,
+          iron: 1100000,
+          tgold: 47,
+        },
+        time: [1, 7, 40, 0],
+        effects: [
+          "910000 Rally Capacity",
+          "76800 Troop Deployment Capacity"
+        ]
+      },
+      45: {
+        requirements: {
+          embassy: 37
+        },
+        costs: {
+          bread: 23000000,
+          wood: 23000000,
+          stone: 4700000,
+          iron: 1100000,
+          tgold: 47,
+        },
+        time: [1, 7, 40, 0],
+        effects: [
+          "915000 Rally Capacity",
+          "77500 Troop Deployment Capacity"
+        ]
       }
     }
   },
@@ -3731,6 +5285,246 @@ const buildingsData = {
         effects: [
           "66500 Infirmary Capacity",
           "228525 Power"
+        ]
+      },
+      31: {
+        requirements: {
+          embassy: 31
+        },
+        costs: {
+          bread: 16000000,
+          wood: 16000000,
+          stone: 3300000,
+          iron: 840000,
+          tgold: 26,
+        },
+        time: [0, 23, 31, 0],
+        effects: [
+          "67600 Infirmary Capacity"
+        ]
+      },
+      32: {
+        requirements: {
+          embassy: 31
+        },
+        costs: {
+          bread: 16000000,
+          wood: 16000000,
+          stone: 3300000,
+          iron: 840000,
+          tgold: 26,
+        },
+        time: [0, 23, 31, 0],
+        effects: [
+          "68700 Infirmary Capacity"
+        ]
+      },
+      33: {
+        requirements: {
+          embassy: 31
+        },
+        costs: {
+          bread: 16000000,
+          wood: 16000000,
+          stone: 3300000,
+          iron: 840000,
+          tgold: 26,
+        },
+        time: [0, 23, 31, 0],
+        effects: [
+          "69800 Infirmary Capacity"
+        ]
+      },
+      34: {
+        requirements: {
+          embassy: 31
+        },
+        costs: {
+          bread: 16000000,
+          wood: 16000000,
+          stone: 3300000,
+          iron: 840000,
+          tgold: 26,
+        },
+        time: [0, 23, 31, 0],
+        effects: [
+          "70900 Infirmary Capacity"
+        ]
+      },
+      35: {
+        requirements: {
+          embassy: 31
+        },
+        costs: {
+          bread: 16000000,
+          wood: 16000000,
+          stone: 3300000,
+          iron: 840000,
+          tgold: 26,
+        },
+        time: [0, 23, 31, 0],
+        effects: [
+          "72000 Infirmary Capacity"
+        ]
+      },
+      36: {
+        requirements: {
+          embassy: 32
+        },
+        costs: {
+          bread: 18000000,
+          wood: 18000000,
+          stone: 3600000,
+          iron: 900000,
+          tgold: 31,
+        },
+        time: [1, 6, 14, 0],
+        effects: [
+          "73100 Infirmary Capacity"
+        ]
+      },
+      37: {
+        requirements: {
+          embassy: 32
+        },
+        costs: {
+          bread: 18000000,
+          wood: 18000000,
+          stone: 3600000,
+          iron: 900000,
+          tgold: 31,
+        },
+        time: [1, 6, 14, 0],
+        effects: [
+          "74200 Infirmary Capacity"
+        ]
+      },
+      38: {
+        requirements: {
+          embassy: 32
+        },
+        costs: {
+          bread: 18000000,
+          wood: 18000000,
+          stone: 3600000,
+          iron: 900000,
+          tgold: 31,
+        },
+        time: [1, 6, 14, 0],
+        effects: [
+          "75300 Infirmary Capacity"
+        ]
+      },
+      39: {
+        requirements: {
+          embassy: 32
+        },
+        costs: {
+          bread: 18000000,
+          wood: 18000000,
+          stone: 3600000,
+          iron: 900000,
+          tgold: 31,
+        },
+        time: [1, 6, 14, 0],
+        effects: [
+          "76400 Infirmary Capacity"
+        ]
+      },
+      40: {
+        requirements: {
+          embassy: 32
+        },
+        costs: {
+          bread: 18000000,
+          wood: 18000000,
+          stone: 3600000,
+          iron: 900000,
+          tgold: 31,
+        },
+        time: [1, 6, 14, 0],
+        effects: [
+          "77500 Infirmary Capacity"
+        ]
+      },
+      41: {
+        requirements: {
+          embassy: 33
+        },
+        costs: {
+          bread: 19000000,
+          wood: 19000000,
+          stone: 3900000,
+          iron: 990000,
+          tgold: 47,
+        },
+        time: [1, 12, 57, 0],
+        effects: [
+          "78600 Infirmary Capacity"
+        ]
+      },
+      42: {
+        requirements: {
+          embassy: 33
+        },
+        costs: {
+          bread: 19000000,
+          wood: 19000000,
+          stone: 3900000,
+          iron: 990000,
+          tgold: 47,
+        },
+        time: [1, 12, 57, 0],
+        effects: [
+          "79700 Infirmary Capacity"
+        ]
+      },
+      43: {
+        requirements: {
+          embassy: 33
+        },
+        costs: {
+          bread: 19000000,
+          wood: 19000000,
+          stone: 3900000,
+          iron: 990000,
+          tgold: 47,
+        },
+        time: [1, 12, 57, 0],
+        effects: [
+          "80800 Infirmary Capacity"
+        ]
+      },
+      44: {
+        requirements: {
+          embassy: 33
+        },
+        costs: {
+          bread: 19000000,
+          wood: 19000000,
+          stone: 3900000,
+          iron: 990000,
+          tgold: 47,
+        },
+        time: [1, 12, 57, 0],
+        effects: [
+          "81900 Infirmary Capacity"
+        ]
+      },
+      45: {
+        requirements: {
+          embassy: 33
+        },
+        costs: {
+          bread: 19000000,
+          wood: 19000000,
+          stone: 3900000,
+          iron: 990000,
+          tgold: 47,
+        },
+        time: [1, 12, 57, 0],
+        effects: [
+          "83000 Infirmary Capacity"
         ]
       }
     }
