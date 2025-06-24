@@ -15,10 +15,9 @@ const {
   InteractionType
 } = require('discord.js');
 require('dotenv').config();
-
-const token = process.env.DISCORD_TOKEN;
-const clientId = process.env.CLIENT_ID;
-const guildId = process.env.GUILD_ID;
+console.log('TOKEN:', process.env.DISCORD_TOKEN);
+console.log('CLIENT_ID:', process.env.CLIENT_ID);
+console.log('GUILD_ID:', process.env.GUILD_ID);
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -297,13 +296,20 @@ client.on('interactionCreate', async interaction => {
   }
 });
 
-// dashboardApi.js
+// dashboard
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const app = express();
-app.use(cors());
+const app = express(); // najpierw deklarujesz app
+
+const corsOptions = {
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions)); // potem dopiero używasz app
 app.use(bodyParser.json());
 
 // --- Wysyłka embeda na wybrany kanał ---
@@ -377,7 +383,7 @@ app.get('/api/fetch-embed', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3030;
+const PORT = process.env.PORT || 3030
 app.listen(PORT, () => {
   console.log('Dashboard API listening on port ' + PORT);
 });
