@@ -9,7 +9,10 @@
   "dependencies": {
     "@iframe-resizer/child": "^5.4.6",
     "@iframe-resizer/parent": "^5.4.6",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
     "discord.js": "^14.7.1",
-    "dotenv": "^16.0.0"
+    "dotenv": "^16.0.0",
+    "express": "^5.1.0"
   }
 }
