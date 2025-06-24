@@ -297,4 +297,89 @@ client.on('interactionCreate', async interaction => {
   }
 });
 
+// dashboardApi.js
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
+const app = express();
+app.use(cors());
+app.use(bodyParser.json());
+
+// --- Wysyłka embeda na wybrany kanał ---
+app.post('/api/send-embed', async (req, res) => {
+  try {
+    const { channelId, embed } = req.body;
+    const channel = await client.channels.fetch(channelId);
+    if (!channel || !channel.isTextBased()) return res.status(404).send({ error: "Channel not found" });
+    const builder = EmbedBuilder.from(embed);
+    const message = await channel.send({ embeds: [builder] });
+    res.send({ messageId: message.id });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ error: "Failed to send embed" });
+  }
+});
+
+// --- Edycja embeda po messageId ---
+app.post('/api/edit-embed', async (req, res) => {
+  try {
+    const { channelId, messageId, embed } = req.body;
+    const channel = await client.channels.fetch(channelId);
+    if (!channel || !channel.isTextBased()) return res.status(404).send({ error: "Channel not found" });
+
+    const message = await channel.messages.fetch(messageId);
+    if (!message) return res.status(404).send({ error: "Message not found" });
+
+    const builder = EmbedBuilder.from(embed);
+    await message.edit({ embeds: [builder] });
+    res.send({ status: "ok" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ error: "Failed to edit embed" });
+  }
+});
+
+// --- Nowość: Pobieranie listy kanałów tekstowych ---
+app.get('/api/channels', async (req, res) => {
+  try {
+    const guild = await client.guilds.fetch(guildId);
+    const channels = await guild.channels.fetch();
+    const textChannels = [];
+    channels.forEach(channel => {
+      if (channel && channel.isTextBased && channel.isTextBased()) {
+        textChannels.push({ id: channel.id, name: channel.name });
+      }
+    });
+    textChannels.sort((a, b) => a.name.localeCompare(b.name));
+    res.json({ channels: textChannels });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch channels" });
+  }
+});
+
+// --- Nowość: Pobieranie embeda po messageId i channelId ---
+app.get('/api/fetch-embed', async (req, res) => {
+  try {
+    const { channelId, messageId } = req.query;
+    if (!channelId || !messageId) return res.status(400).json({ error: "Missing params" });
+    const channel = await client.channels.fetch(channelId);
+    if (!channel || !channel.isTextBased()) return res.status(404).json({ error: "Channel not found" });
+    const message = await channel.messages.fetch(messageId);
+    if (!message) return res.status(404).json({ error: "Message not found" });
+    const embed = message.embeds && message.embeds[0] ? message.embeds[0].toJSON() : null;
+    if (!embed) return res.status(404).json({ error: "Embed not found" });
+    res.json({ embed });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch embed" });
+  }
+});
+
+const PORT = process.env.PORT || 3030;
+app.listen(PORT, () => {
+  console.log('Dashboard API listening on port ' + PORT);
+});
+
 client.login(token);
