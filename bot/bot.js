@@ -20,6 +20,14 @@ const token = process.env.DISCORD_TOKEN;
 const clientId = process.env.CLIENT_ID;
 const guildId = process.env.GUILD_ID;
 
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent // (jeśli potrzebujesz)
+  ]
+});
+
 const baseIconUrl = 'https://borys21.github.io/Kingshot_Tools/calculators/hero-star-shard-calculator/icons/';
 const heroBaseUrl = 'https://borys21.github.io/Kingshot_Tools/bot/heroes/';
 
