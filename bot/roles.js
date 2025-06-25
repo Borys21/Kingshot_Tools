@@ -35,13 +35,16 @@ async function handleRankAssignment(interaction, target, newRank) {
   // Odczekaj, aż Discord odświeży role
   await sleep(500);
 
+  // Pobierz target member na świeżo z API
+  const freshTarget = await interaction.guild.members.fetch(target.id);
+
   // Usuń wszystkie inne role sojuszowe poza właśnie nadanymi
   const rolesToRemove = [];
   for (const name of ['R1', 'R2', 'R3', 'R4']) {
     const role = interaction.guild.roles.cache.find(r => r.name === name);
-    if (role && target.roles.cache.has(role.id) && role.id !== rankRole.id) rolesToRemove.push(role.id);
+    if (role && freshTarget.roles.cache.has(role.id) && role.id !== rankRole.id) rolesToRemove.push(role.id);
   }
-  target.roles.cache.forEach(r => {
+  freshTarget.roles.cache.forEach(r => {
     if (
       (/^\[.+\]$/.test(r.name) || /^\[.+\] Marshal$/.test(r.name)) &&
       r.id !== tagRole.id
@@ -50,11 +53,11 @@ async function handleRankAssignment(interaction, target, newRank) {
     }
   });
   if (rolesToRemove.length > 0) {
-    await target.roles.remove(rolesToRemove);
+    await freshTarget.roles.remove(rolesToRemove);
   }
 
   // Odczytaj starą rangę (najwyższą posiadaną przed zmianą)
-  let oldRank = ['R4', 'R3', 'R2', 'R1'].find(rank => target.roles.cache.some(r => r.name === rank)) || null;
+  let oldRank = ['R4', 'R3', 'R2', 'R1'].find(rank => freshTarget.roles.cache.some(r => r.name === rank)) || null;
 
   let actionStr = '';
   if (!oldRank) actionStr = 'Assigned';
@@ -65,7 +68,7 @@ async function handleRankAssignment(interaction, target, newRank) {
   const embed = new EmbedBuilder()
     .setTitle('Alliance Rank Updated')
     .setDescription(
-      `**${target.user.tag}**\n` +
+      `**${freshTarget.user.tag}**\n` +
       `**Tag:** [${tagName}]\n` +
       `**${actionStr} to:** ${newRank}${newRank === 'R4' ? ' Marshal' : ''}\n\n` +
       `All previous alliance tag/rank roles removed (except the new ones).`
