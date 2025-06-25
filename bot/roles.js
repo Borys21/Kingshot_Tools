@@ -6,6 +6,7 @@ function hasPermissionForRank(member, targetRank) {
   return false;
 }
 
+// Dodawanie rangi i tagu (na twardo)
 async function handleRankAssignment(interaction, target, newRank) {
   const authorTagMatch = interaction.member.roles.cache.find(r => /^\[.+\]$/.test(r.name));
   if (!authorTagMatch)
@@ -41,7 +42,6 @@ async function handleRankAssignment(interaction, target, newRank) {
 
   await target.roles.add([rankRole, tagRole]);
 
-  // Prosta informacja zwrotna
   const embed = new EmbedBuilder()
     .setTitle('Alliance Rank Updated')
     .setDescription(
@@ -59,6 +59,45 @@ async function handleRankAssignment(interaction, target, newRank) {
   return interaction.update({ embeds: [embed], components: [] });
 }
 
+// Usuwanie rangi i tagu według logiki wyboru
+async function handleRankRemoval(interaction, target, rankToRemove) {
+  const authorTagMatch = interaction.member.roles.cache.find(r => /^\[.+\]$/.test(r.name));
+  if (!authorTagMatch)
+    return interaction.update({ content: 'You must have a [TAG] role to use this command.', components: [] });
+
+  const tagName = authorTagMatch.name.replace(/^\[(.+)\]$/, '$1').replace(/ Marshal$/, '');
+
+  // Usuń wybraną rangę
+  const rankRole = interaction.guild.roles.cache.find(r => r.name === rankToRemove);
+  if (rankRole && target.roles.cache.has(rankRole.id)) {
+    await target.roles.remove(rankRole);
+  }
+
+  // Usuń odpowiedni tag
+  let tagRoleName;
+  if (rankToRemove === 'R4') {
+    tagRoleName = `[${tagName}]`;
+  } else {
+    tagRoleName = `[${tagName}] Marshal`;
+  }
+  const tagRole = interaction.guild.roles.cache.find(r => r.name === tagRoleName);
+  if (tagRole && target.roles.cache.has(tagRole.id)) {
+    await target.roles.remove(tagRole);
+  }
+
+  const embed = new EmbedBuilder()
+    .setTitle('Alliance Rank Removed')
+    .setDescription(
+      `**${target.user.tag}**\n` +
+      `Usunięto: ${rankToRemove} oraz ${tagRoleName}`
+    )
+    .setColor(0xED4245)
+    .setTimestamp();
+
+  return interaction.update({ embeds: [embed], components: [] });
+}
+
 module.exports = {
-  handleRankAssignment
+  handleRankAssignment,
+  handleRankRemoval
 };
