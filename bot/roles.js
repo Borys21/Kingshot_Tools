@@ -6,22 +6,6 @@ function hasPermissionForRank(member, targetRank) {
   return false;
 }
 
-// Usuwanie WSZYSTKICH sojuszowych ról (nie używaj tej funkcji w flow nadawania rangi!)
-// Pozostawiam dla innych zastosowań administracyjnych
-async function removeAllAllianceRoles(member, guild) {
-  const rolesToRemove = [];
-  for (const name of ['R1', 'R2', 'R3', 'R4']) {
-    const role = guild.roles.cache.find(r => r.name === name);
-    if (role && member.roles.cache.has(role.id)) rolesToRemove.push(role.id);
-  }
-  member.roles.cache.forEach(r => {
-    if (/^\[.+\]$/.test(r.name) || /^\[.+\] Marshal$/.test(r.name)) rolesToRemove.push(r.id);
-  });
-  if (rolesToRemove.length > 0) {
-    await member.roles.remove(rolesToRemove);
-  }
-}
-
 // Uniwersalny sleep (Promise)
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
