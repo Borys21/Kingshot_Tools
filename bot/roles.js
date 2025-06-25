@@ -39,19 +39,18 @@ async function handleRankAssignment(interaction, target, newRank) {
   const freshTarget = await interaction.guild.members.fetch(target.id);
 
   // Usuń wszystkie inne role sojuszowe poza właśnie nadanymi
-  const rolesToRemove = [];
-  for (const name of ['R1', 'R2', 'R3', 'R4']) {
-    const role = interaction.guild.roles.cache.find(r => r.name === name);
-    if (role && freshTarget.roles.cache.has(role.id) && role.id !== rankRole.id) rolesToRemove.push(role.id);
-  }
-  freshTarget.roles.cache.forEach(r => {
-    if (
-      (/^\[.+\]$/.test(r.name) || /^\[.+\] Marshal$/.test(r.name)) &&
+  const rolesToRemove = freshTarget.roles.cache
+    .filter(r =>
+      (
+        ['R1', 'R2', 'R3', 'R4'].includes(r.name) ||
+        /^\[.+\]$/.test(r.name) ||
+        /^\[.+\] Marshal$/.test(r.name)
+      ) &&
+      r.id !== rankRole.id &&
       r.id !== tagRole.id
-    ) {
-      rolesToRemove.push(r.id);
-    }
-  });
+    )
+    .map(r => r.id);
+
   if (rolesToRemove.length > 0) {
     await freshTarget.roles.remove(rolesToRemove);
   }
