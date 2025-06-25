@@ -291,16 +291,31 @@ client.on('interactionCreate', async interaction => {
       return;
     }
 
-    // ---- Obsługa select menu dla /addrank ----
+    // ---- Obsługa select menu dla /rank ----
     if (interaction.customId.startsWith('rank_select_')) {
       const rank = interaction.values[0];
       const targetId = interaction.customId.split('_').pop();
-      userSelections.set(interaction.user.id, { rank, targetId });
-      await updateE(interaction, {
-        content: `Selected rank: ${rank}. Now choose an action below.`,
-        components: interaction.message.components,
-        ephemeral: true
-      });
+      const target = await interaction.guild.members.fetch(targetId);
+      if (!target) return updateE(interaction, { content: 'User not found.', components: [] });
+
+      // 1. Remove all alliance roles
+      const rolesToRemove = target.roles.cache
+        .filter(r =>
+          ['R1', 'R2', 'R3', 'R4'].includes(r.name) ||
+          /^\[.+\]$/.test(r.name) ||
+          /^\[.+\] Marshal$/.test(r.name)
+        )
+        .map(r => r.id);
+
+      if (rolesToRemove.length > 0) {
+        await target.roles.remove(rolesToRemove);
+      }
+
+      // 2. Wait 700ms
+      await new Promise(res => setTimeout(res, 700));
+
+      // 3. Add selected rank and tag
+      await roles.handleRankAssignment(interaction, target, rank);
     }
   }
 
