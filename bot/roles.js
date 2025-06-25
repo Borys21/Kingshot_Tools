@@ -38,21 +38,6 @@ async function handleRankAssignment(interaction, target, newRank) {
   if (!hasPermissionForRank(interaction.member, newRank))
     return interaction.update({ content: 'You do not have permission to assign this rank.', components: [] });
 
-  // Odczytaj starą rangę
-  let oldRank = null;
-  for (const rank of ['R1', 'R2', 'R3', 'R4']) {
-    if (target.roles.cache.some(r => r.name === rank)) oldRank = rank;
-  }
-
-  // Usuwamy wszystkie stare rangi/tagi
-  await removeAllAllianceRoles(target, interaction.guild);
-
-  // Odczekaj, aż Discord odświeży role (ważne!)
-  await sleep(500);
-
-  // POBIERZ usera na świeżo z API (nie z cache!)
-  const freshTarget = await interaction.guild.members.fetch(target.id);
-
   // Przygotuj role do nadania
   const rankRole = interaction.guild.roles.cache.find(r => r.name === newRank);
   if (!rankRole)
@@ -63,7 +48,32 @@ async function handleRankAssignment(interaction, target, newRank) {
   if (!tagRole)
     return interaction.update({ content: `Role "${tagRoleName}" not found. Inform the admin.`, components: [] });
 
-  await freshTarget.roles.add([rankRole, tagRole]);
+  // Najpierw nadaj nowe role
+  await target.roles.add([rankRole, tagRole]);
+
+  // Odczekaj, aż Discord odświeży role
+  await sleep(500);
+
+  // Usuń wszystkie inne role sojuszowe poza właśnie nadanymi
+  const rolesToRemove = [];
+  for (const name of ['R1', 'R2', 'R3', 'R4']) {
+    const role = interaction.guild.roles.cache.find(r => r.name === name);
+    if (role && target.roles.cache.has(role.id) && role.id !== rankRole.id) rolesToRemove.push(role.id);
+  }
+  target.roles.cache.forEach(r => {
+    if (
+      (/^\[.+\]$/.test(r.name) || /^\[.+\] Marshal$/.test(r.name)) &&
+      r.id !== tagRole.id
+    ) {
+      rolesToRemove.push(r.id);
+    }
+  });
+  if (rolesToRemove.length > 0) {
+    await target.roles.remove(rolesToRemove);
+  }
+
+  // Odczytaj starą rangę (najwyższą posiadaną przed zmianą)
+  let oldRank = ['R4', 'R3', 'R2', 'R1'].find(rank => target.roles.cache.some(r => r.name === rank)) || null;
 
   let actionStr = '';
   if (!oldRank) actionStr = 'Assigned';
@@ -74,10 +84,10 @@ async function handleRankAssignment(interaction, target, newRank) {
   const embed = new EmbedBuilder()
     .setTitle('Alliance Rank Updated')
     .setDescription(
-      `**${freshTarget.user.tag}**\n` +
+      `**${target.user.tag}**\n` +
       `**Tag:** [${tagName}]\n` +
       `**${actionStr} to:** ${newRank}${newRank === 'R4' ? ' Marshal' : ''}\n\n` +
-      `All previous alliance tag/rank roles removed.`
+      `All previous alliance tag/rank roles removed (except the new ones).`
     )
     .addFields(
       { name: 'New Roles', value: `${rankRole.name}, ${tagRole.name}`, inline: true }
