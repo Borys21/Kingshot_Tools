@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js');
 
 function hasPermissionForRank(member, targetRank) {
   if (member.roles.cache.some(r => r.name === 'R5')) return true;
@@ -73,7 +73,8 @@ async function handleRankRemoval(interaction, target, rankToRemove) {
     await target.roles.remove(rankRole);
   }
 
-  // Usuń odpowiedni tag
+  // Usuń odpowiedni tag według logiki:
+  // Jeśli usuwasz R4 -> usuń [TAG], jeśli usuwasz R1-R3 -> usuń [TAG] Marshal
   let tagRoleName;
   if (rankToRemove === 'R4') {
     tagRoleName = `[${tagName}]`;
@@ -96,6 +97,38 @@ async function handleRankRemoval(interaction, target, rankToRemove) {
 
   return interaction.update({ embeds: [embed], components: [] });
 }
+
+// Przykład do użycia w obsłudze interakcji (np. w bot.js)
+// Select menu do wyboru akcji
+const actionRow = new ActionRowBuilder().addComponents(
+  new StringSelectMenuBuilder()
+    .setCustomId('rankAction')
+    .setPlaceholder('Wybierz akcję')
+    .addOptions([
+      { label: 'Dodaj rangę', value: 'add', emoji: '➕' },
+      { label: 'Usuń rangę', value: 'remove', emoji: '➖' }
+    ])
+);
+
+// Select menu do wyboru rangi
+const rankRow = new ActionRowBuilder().addComponents(
+  new StringSelectMenuBuilder()
+    .setCustomId('rankSelect')
+    .setPlaceholder('Select rank')
+    .addOptions([
+      { label: 'R1', value: 'R1' },
+      { label: 'R2', value: 'R2' },
+      { label: 'R3', value: 'R3' },
+      { label: 'R4', value: 'R4' }
+    ])
+);
+
+// Wysyłasz oba selecty w jednej wiadomości
+await interaction.reply({
+  content: `Choose what you want to do for <@${target.id}> (uses your [TAG]):`,
+  components: [actionRow, rankRow],
+  ephemeral: true
+});
 
 module.exports = {
   handleRankAssignment,
