@@ -6,20 +6,17 @@ function hasPermissionForRank(member, targetRank) {
   return false;
 }
 
+// Usuwanie WSZYSTKICH sojuszowych ról (nie używaj tej funkcji w flow nadawania rangi!)
+// Pozostawiam dla innych zastosowań administracyjnych
 async function removeAllAllianceRoles(member, guild) {
-  // Zbierz role sojuszowe do usunięcia
   const rolesToRemove = [];
-
-  // Rangi R1-R4
   for (const name of ['R1', 'R2', 'R3', 'R4']) {
     const role = guild.roles.cache.find(r => r.name === name);
     if (role && member.roles.cache.has(role.id)) rolesToRemove.push(role.id);
   }
-  // Wszystkie [TAG] i [TAG] Marshal
   member.roles.cache.forEach(r => {
     if (/^\[.+\]$/.test(r.name) || /^\[.+\] Marshal$/.test(r.name)) rolesToRemove.push(r.id);
   });
-
   if (rolesToRemove.length > 0) {
     await member.roles.remove(rolesToRemove);
   }
@@ -48,7 +45,7 @@ async function handleRankAssignment(interaction, target, newRank) {
   if (!tagRole)
     return interaction.update({ content: `Role "${tagRoleName}" not found. Inform the admin.`, components: [] });
 
-  // Najpierw nadaj nowe role
+  // Nadaj nowe role
   await target.roles.add([rankRole, tagRole]);
 
   // Odczekaj, aż Discord odświeży role
