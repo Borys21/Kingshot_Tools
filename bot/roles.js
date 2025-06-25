@@ -12,25 +12,38 @@ function hasPermissionForRank(member, targetRank) {
 /**
  * Zwraca wszystkie możliwe role tagowe dla danego tagu
  */
-function getAllTagRankNames(tag) {
+function getAllTagRoles(tag) {
   return [
-    `R1 ${tag}`,
-    `R2 ${tag}`,
-    `R3 ${tag}`,
-    `R4 ${tag} Marshal`
+    `[${tag}]`,
+    `[${tag}] Marshal`
   ];
 }
 
 /**
- * Usuwa wszystkie role R1-R4 + [TAG] Marshal z targeta
+ * Zwraca wszystkie role rangi (R1-R4) — bez taga
  */
-async function removeAllTagRanks(member, tag, guild) {
-  const names = getAllTagRankNames(tag);
-  for (const roleName of names) {
-    const role = guild.roles.cache.find(r => r.name === roleName);
-    if (role && member.roles.cache.has(role.id)) {
-      await member.roles.remove(role);
-    }
+function getAllRankRoles() {
+  return ['R1', 'R2', 'R3', 'R4'];
+}
+
+/**
+ * Usuwa wszystkie role [TAG], [TAG] Marshal oraz R1-R4 z targeta
+ */
+async function removeAllAllianceRoles(member, tag, guild) {
+  // Szukamy roli [TAG] i [TAG] Marshal
+  const tagRole = guild.roles.cache.find(r => r.name === `[${tag}]`);
+  const marshalRole = guild.roles.cache.find(r => r.name === `[${tag}] Marshal`);
+  // Szukamy roli R1-R4
+  const rankRoles = getAllRankRoles().map(roleName => guild.roles.cache.find(r => r.name === roleName));
+
+  const rolesToRemove = [];
+  if (tagRole && member.roles.cache.has(tagRole.id)) rolesToRemove.push(tagRole);
+  if (marshalRole && member.roles.cache.has(marshalRole.id)) rolesToRemove.push(marshalRole);
+  for (const role of rankRoles) {
+    if (role && member.roles.cache.has(role.id)) rolesToRemove.push(role);
+  }
+  if (rolesToRemove.length > 0) {
+    await member.roles.remove(rolesToRemove);
   }
 }
 
@@ -38,40 +51,42 @@ async function removeAllTagRanks(member, tag, guild) {
  * Główna funkcja do przydzielania rangi
  */
 async function handleRankAssignment(interaction, target, newRank) {
-  // Pobierz tag w formacie [TAG] osoby przydzielającej
-  const authorTagRole = interaction.member.roles.cache.find(r => /^\[.+\]$/.test(r.name));
-  if (!authorTagRole)
+  // Pobierz [TAG] z roli osoby przydzielającej
+  const authorTagMatch = interaction.member.roles.cache.find(r => /^\[.+\]$/.test(r.name));
+  if (!authorTagMatch)
     return interaction.update({ content: 'You must have a [TAG] role to use this command.', components: [] });
+
+  // Wyciągnij tekst tagu bez nawiasów []
+  const tagName = authorTagMatch.name.replace(/^\[(.+)\]$/, '$1').replace(/ Marshal$/, '');
 
   // Uprawnienia
   if (!hasPermissionForRank(interaction.member, newRank))
     return interaction.update({ content: 'You do not have permission to assign this rank.', components: [] });
 
-  // Odczytaj dotychczasową rangę targeta dla tego tagu (jeśli była)
-  const possibleRanks = getAllTagRankNames(authorTagRole.name);
+  // Odczytaj starą rangę targeta (jeśli była) — patrzymy na same role R1-R4
   let oldRank = null;
-  for (const rankName of possibleRanks) {
-    if (target.roles.cache.some(r => r.name === rankName)) {
-      if (rankName.startsWith('R4')) oldRank = 'R4';
-      else if (rankName.startsWith('R3')) oldRank = 'R3';
-      else if (rankName.startsWith('R2')) oldRank = 'R2';
-      else if (rankName.startsWith('R1')) oldRank = 'R1';
-    }
+  for (const roleName of getAllRankRoles()) {
+    if (target.roles.cache.some(r => r.name === roleName)) oldRank = roleName;
   }
 
-  // Usuń WSZYSTKO z targeta dla tego taga
-  await removeAllTagRanks(target, authorTagRole.name, interaction.guild);
+  // Usuwamy WSZYSTKIE role R1-R4 i [TAG] oraz [TAG] Marshal
+  await removeAllAllianceRoles(target, tagName, interaction.guild);
 
-  // Przygotuj nazwę nowej roli
-  const newRoleName = (newRank === 'R4')
-    ? `R4 ${authorTagRole.name} Marshal`
-    : `${newRank} ${authorTagRole.name}`;
+  // Przygotuj role do nadania
+  const rankRole = interaction.guild.roles.cache.find(r => r.name === newRank);
+  if (!rankRole)
+    return interaction.update({ content: `Role "${newRank}" not found. Inform the admin.`, components: [] });
 
-  const newRole = interaction.guild.roles.cache.find(r => r.name === newRoleName);
-  if (!newRole)
-    return interaction.update({ content: `Role "${newRoleName}" not found. Inform the admin.`, components: [] });
+  let tagRoleName = (newRank === 'R4')
+    ? `[${tagName}] Marshal`
+    : `[${tagName}]`;
 
-  await target.roles.add(newRole);
+  const tagRole = interaction.guild.roles.cache.find(r => r.name === tagRoleName);
+  if (!tagRole)
+    return interaction.update({ content: `Role "${tagRoleName}" not found. Inform the admin.`, components: [] });
+
+  // Nadaj DWIE role naraz
+  await target.roles.add([rankRole, tagRole]);
 
   // Typ operacji: awans, degradacja, czy update
   let actionStr = '';
@@ -85,12 +100,12 @@ async function handleRankAssignment(interaction, target, newRank) {
     .setTitle('Alliance Rank Updated')
     .setDescription(
       `**${target.user.tag}**\n` +
-      `**Tag:** ${authorTagRole.name}\n` +
-      `**${actionStr} to:** ${newRoleName}\n\n` +
-      `All previous tag ranks removed.`
+      `**Tag:** [${tagName}]\n` +
+      `**${actionStr} to:** ${newRank}${newRank === 'R4' ? ' Marshal' : ''}\n\n` +
+      `All previous alliance tag/rank roles removed.`
     )
     .addFields(
-      { name: 'New Rank', value: newRoleName, inline: true }
+      { name: 'New Roles', value: `${rankRole.name}, ${tagRole.name}`, inline: true }
     )
     .setColor(actionStr === 'Promoted' ? 0x57F287 : (actionStr === 'Demoted' ? 0xED4245 : 0xFFC857))
     .setTimestamp();
