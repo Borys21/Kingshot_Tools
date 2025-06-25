@@ -16,7 +16,7 @@ const {
 } = require('discord.js');
 require('dotenv').config();
 
-const roles = require('./roles'); // CAŁA logika ról z osobnego pliku
+const roles = require('./roles');
 
 const token = process.env.DISCORD_TOKEN;
 const clientId = process.env.CLIENT_ID;
@@ -150,7 +150,7 @@ function createResultEmbed(selection) {
     .setColor(0xFFC857);
 }
 
-// ====== OBSŁUGA /addrank ======
+// ====== ALLIANCE RANK SYSTEM ======
 const rankOptions = [
   { label: 'R1', value: 'R1', description: 'Rookie', emoji: '1️⃣' },
   { label: 'R2', value: 'R2', description: 'Member', emoji: '2️⃣' },
@@ -202,33 +202,39 @@ client.on('interactionCreate', async interaction => {
       });
     }
 
-    // ====== OBSŁUGA /rank ======
+    // ====== /rank ======
     else if (interaction.commandName === 'rank') {
       const targetUser = interaction.options.getUser('target');
       if (!targetUser) return replyE(interaction, { content: 'No target user specified.' });
 
-      // Select menu do wyboru akcji (add/remove) z domyślną opcją 'add'
-      const actionRow = new ActionRowBuilder().addComponents(
-        new StringSelectMenuBuilder()
-          .setCustomId(`rank_action_${targetUser.id}`)
-          .setPlaceholder('Wybierz akcję')
-          .addOptions([
-            { label: 'Dodaj rangę', value: 'add', emoji: '➕', default: true },
-            { label: 'Usuń rangę', value: 'remove', emoji: '➖' }
-          ])
-      );
-
-      // Select menu do wyboru rangi
+      // Select menu for rank selection
       const selectMenu = new StringSelectMenuBuilder()
         .setCustomId(`rank_select_${targetUser.id}`)
-        .setPlaceholder('Select rank')
+        .setPlaceholder('Select alliance rank')
         .addOptions(rankOptions);
 
-      const row = new ActionRowBuilder().addComponents(selectMenu);
+      const rowSelect = new ActionRowBuilder().addComponents(selectMenu);
 
-      await replyE(interaction, {
-        content: `Wybierz co chcesz zrobić dla <@${targetUser.id}> (używa Twojego [TAG]):`,
-        components: [actionRow, row]
+      // Two buttons below the select
+      const rowButtons = new ActionRowBuilder().addComponents(
+        new ButtonBuilder()
+          .setCustomId(`rank_removeall_${targetUser.id}`)
+          .setLabel('Remove all alliance roles')
+          .setStyle(ButtonStyle.Danger)
+          .setEmoji('🗑️'),
+        new ButtonBuilder()
+          .setCustomId(`rank_add_${targetUser.id}`)
+          .setLabel('Add selected rank/tag')
+          .setStyle(ButtonStyle.Success)
+          .setEmoji('➕')
+      );
+
+      userSelections.set(interaction.user.id, { rank: null, targetId: targetUser.id });
+
+      await interaction.reply({
+        content: `Choose an alliance rank for <@${targetUser.id}> (uses your [TAG]):`,
+        components: [rowSelect, rowButtons],
+        ephemeral: true
       });
     }
 
@@ -268,6 +274,24 @@ client.on('interactionCreate', async interaction => {
       await replyE(interaction, { embeds: [embed] });
     }
 
+    // Alliance rank: Remove all
+    else if (interaction.customId.startsWith('rank_removeall_')) {
+      const targetId = interaction.customId.split('_').pop();
+      const target = await interaction.guild.members.fetch(targetId);
+      if (!target) return replyE(interaction, { content: 'User not found.', ephemeral: true });
+      await roles.handleRemoveAllAllianceRoles(interaction, target);
+    }
+
+    // Alliance rank: Add selected
+    else if (interaction.customId.startsWith('rank_add_')) {
+      const selection = userSelections.get(interaction.user.id);
+      if (!selection || !selection.rank)
+        return replyE(interaction, { content: 'Please select a rank from the list first!', ephemeral: true });
+      const target = await interaction.guild.members.fetch(selection.targetId);
+      if (!target) return replyE(interaction, { content: 'User not found.', ephemeral: true });
+      await roles.handleRankAssignment(interaction, target, selection.rank);
+    }
+
   } else if (interaction.isStringSelectMenu()) {
     // ---- Obsługa select menu dla kalkulatora odłamków
     if (interaction.customId === 'currentStar' || interaction.customId === 'currentTier' || interaction.customId === 'targetStar') {
@@ -284,44 +308,15 @@ client.on('interactionCreate', async interaction => {
     }
 
     // ---- Obsługa select menu dla /addrank ----
-    if (interaction.customId.startsWith('rank_action_')) {
-      // Ustaw domyślną opcję w menu akcji
-      const action = interaction.values[0];
-      const targetId = interaction.customId.split('_').pop();
-
-      // Zaktualizuj menu akcji z .setDefault(true) na wybranej opcji
-      const actionMenu = interaction.component;
-      actionMenu.options.forEach(opt => { opt.default = (opt.value === action); });
-
-      // Przepisz menu rangi (bez zmian)
-      const rankMenu = interaction.message.components[1].components[0];
-
-      await updateE(interaction, {
-        content: `Wybrano akcję: ${action === 'add' ? 'Dodaj rangę' : 'Usuń rangę'}. Teraz wybierz rangę.`,
-        components: [
-          new ActionRowBuilder().addComponents(actionMenu),
-          new ActionRowBuilder().addComponents(rankMenu)
-        ]
-      });
-      return;
-    }
-
-    // Wybór rangi
     if (interaction.customId.startsWith('rank_select_')) {
-      const targetId = interaction.customId.split('_').pop();
       const rank = interaction.values[0];
-      const target = await interaction.guild.members.fetch(targetId);
-      if (!target) return updateE(interaction, { content: 'User not found.', components: [] });
-
-      // Pobierz wybraną akcję z menu akcji (z .default)
-      const actionMenu = interaction.message.components[0].components[0];
-      const action = actionMenu.options.find(opt => opt.default)?.value || 'add';
-
-      if (action === 'add') {
-        return roles.handleRankAssignment(interaction, target, rank);
-      } else {
-        return roles.handleRankRemoval(interaction, target, rank);
-      }
+      const targetId = interaction.customId.split('_').pop();
+      userSelections.set(interaction.user.id, { rank, targetId });
+      await updateE(interaction, {
+        content: `Selected rank: ${rank}. Now choose an action below.`,
+        components: interaction.message.components,
+        ephemeral: true
+      });
     }
   }
 
