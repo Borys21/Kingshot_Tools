@@ -202,22 +202,33 @@ client.on('interactionCreate', async interaction => {
       });
     }
 
-    // ====== OBSŁUGA /addrank ======
+    // ====== OBSŁUGA /rank ======
     else if (interaction.commandName === 'rank') {
       const targetUser = interaction.options.getUser('target');
       if (!targetUser) return replyE(interaction, { content: 'No target user specified.' });
 
-      // Tworzymy select menu do wyboru rangi
+      // Select menu do wyboru akcji (add/remove) z domyślną opcją 'add'
+      const actionRow = new ActionRowBuilder().addComponents(
+        new StringSelectMenuBuilder()
+          .setCustomId(`rank_action_${targetUser.id}`)
+          .setPlaceholder('Wybierz akcję')
+          .addOptions([
+            { label: 'Dodaj rangę', value: 'add', emoji: '➕', default: true },
+            { label: 'Usuń rangę', value: 'remove', emoji: '➖' }
+          ])
+      );
+
+      // Select menu do wyboru rangi
       const selectMenu = new StringSelectMenuBuilder()
         .setCustomId(`rank_select_${targetUser.id}`)
-        .setPlaceholder('Select rank to assign')
+        .setPlaceholder('Select rank')
         .addOptions(rankOptions);
 
       const row = new ActionRowBuilder().addComponents(selectMenu);
 
       await replyE(interaction, {
-        content: `Choose a rank for <@${targetUser.id}> to assign (uses your [TAG]):`,
-        components: [row]
+        content: `Wybierz co chcesz zrobić dla <@${targetUser.id}> (używa Twojego [TAG]):`,
+        components: [actionRow, row]
       });
     }
 
@@ -273,14 +284,44 @@ client.on('interactionCreate', async interaction => {
     }
 
     // ---- Obsługa select menu dla /addrank ----
+    if (interaction.customId.startsWith('rank_action_')) {
+      // Ustaw domyślną opcję w menu akcji
+      const action = interaction.values[0];
+      const targetId = interaction.customId.split('_').pop();
+
+      // Zaktualizuj menu akcji z .setDefault(true) na wybranej opcji
+      const actionMenu = interaction.component;
+      actionMenu.options.forEach(opt => { opt.default = (opt.value === action); });
+
+      // Przepisz menu rangi (bez zmian)
+      const rankMenu = interaction.message.components[1].components[0];
+
+      await updateE(interaction, {
+        content: `Wybrano akcję: ${action === 'add' ? 'Dodaj rangę' : 'Usuń rangę'}. Teraz wybierz rangę.`,
+        components: [
+          new ActionRowBuilder().addComponents(actionMenu),
+          new ActionRowBuilder().addComponents(rankMenu)
+        ]
+      });
+      return;
+    }
+
+    // Wybór rangi
     if (interaction.customId.startsWith('rank_select_')) {
       const targetId = interaction.customId.split('_').pop();
       const rank = interaction.values[0];
       const target = await interaction.guild.members.fetch(targetId);
       if (!target) return updateE(interaction, { content: 'User not found.', components: [] });
 
-      // Cała logika w roles.js!
-      return roles.handleRankAssignment(interaction, target, rank);
+      // Pobierz wybraną akcję z menu akcji (z .default)
+      const actionMenu = interaction.message.components[0].components[0];
+      const action = actionMenu.options.find(opt => opt.default)?.value || 'add';
+
+      if (action === 'add') {
+        return roles.handleRankAssignment(interaction, target, rank);
+      } else {
+        return roles.handleRankRemoval(interaction, target, rank);
+      }
     }
   }
 
