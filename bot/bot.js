@@ -70,7 +70,7 @@ const commands = [
     .setName('heroes')
     .setDescription('Show hero gallery'),
   new SlashCommandBuilder()
-    .setName('addrank')
+    .setName('rank')
     .setDescription('Assign an alliance rank + tag to a member')
     .addUserOption(option =>
       option.setName('target').setDescription('User to assign rank to').setRequired(true)
@@ -203,7 +203,7 @@ client.on('interactionCreate', async interaction => {
     }
 
     // ====== OBSŁUGA /addrank ======
-    else if (interaction.commandName === 'addrank') {
+    else if (interaction.commandName === 'rank') {
       const targetUser = interaction.options.getUser('target');
       if (!targetUser) return replyE(interaction, { content: 'No target user specified.' });
 
