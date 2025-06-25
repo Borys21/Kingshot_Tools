@@ -215,25 +215,9 @@ client.on('interactionCreate', async interaction => {
 
       const rowSelect = new ActionRowBuilder().addComponents(selectMenu);
 
-      // Two buttons below the select
-      const rowButtons = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
-          .setCustomId(`rank_removeall_${targetUser.id}`)
-          .setLabel('Remove all alliance roles')
-          .setStyle(ButtonStyle.Danger)
-          .setEmoji('🗑️'),
-        new ButtonBuilder()
-          .setCustomId(`rank_add_${targetUser.id}`)
-          .setLabel('Add selected rank/tag')
-          .setStyle(ButtonStyle.Success)
-          .setEmoji('➕')
-      );
-
-      userSelections.set(interaction.user.id, { rank: null, targetId: targetUser.id });
-
       await interaction.reply({
         content: `Choose an alliance rank for <@${targetUser.id}> (uses your [TAG]):`,
-        components: [rowSelect, rowButtons],
+        components: [rowSelect],
         ephemeral: true
       });
     }

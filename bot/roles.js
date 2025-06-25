@@ -6,7 +6,6 @@ function hasPermissionForRank(member, targetRank) {
   return false;
 }
 
-// Dodaje wybraną rangę i tag bez usuwania czegokolwiek
 async function handleRankAssignment(interaction, target, newRank) {
   const authorTagMatch = interaction.member.roles.cache.find(r => /^\[.+\]$/.test(r.name));
   if (!authorTagMatch)
@@ -17,12 +16,12 @@ async function handleRankAssignment(interaction, target, newRank) {
   if (!hasPermissionForRank(interaction.member, newRank))
     return interaction.reply({ content: 'You do not have permission to assign this rank.', ephemeral: true });
 
-  // Dodaj tylko wybraną rangę
+  // Add only the selected rank
   const rankRole = interaction.guild.roles.cache.find(r => r.name === newRank);
   if (!rankRole)
     return interaction.reply({ content: `Role "${newRank}" not found. Inform the admin.`, ephemeral: true });
 
-  // Dodaj tylko wybrany tag
+  // Add only the selected tag
   const tagRoleName = (newRank === 'R4') ? `[${tagName}] Marshal` : `[${tagName}]`;
   const tagRole = interaction.guild.roles.cache.find(r => r.name === tagRoleName);
   if (!tagRole)
@@ -31,15 +30,15 @@ async function handleRankAssignment(interaction, target, newRank) {
   await target.roles.add([rankRole, tagRole]);
 
   const embed = new EmbedBuilder()
-    .setTitle('Alliance Rank Added')
+    .setTitle('Alliance Rank Assigned')
     .setDescription(
       `**${target.user.tag}**\n` +
       `**Tag:** [${tagName}]\n` +
-      `**Added role:** ${newRank}${newRank === 'R4' ? ' Marshal' : ''}\n\n` +
-      `Added chosen role and tag.`
+      `**Assigned rank:** ${newRank}${newRank === 'R4' ? ' Marshal' : ''}\n\n` +
+      `Selected rank and tag have been assigned.`
     )
     .addFields(
-      { name: 'Nowe role', value: `${rankRole.name}, ${tagRole.name}`, inline: true }
+      { name: 'New roles', value: `${rankRole.name}, ${tagRole.name}`, inline: true }
     )
     .setColor(0x57F287)
     .setTimestamp();
@@ -47,7 +46,6 @@ async function handleRankAssignment(interaction, target, newRank) {
   return interaction.reply({ embeds: [embed], ephemeral: true });
 }
 
-// Usuwa WSZYSTKIE role sojusznicze
 async function handleRemoveAllAllianceRoles(interaction, target) {
   const rolesToRemove = target.roles.cache
     .filter(r =>
