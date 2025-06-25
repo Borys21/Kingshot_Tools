@@ -48,7 +48,7 @@ async function handleRankAssignment(interaction, target, newRank) {
   await removeAllAllianceRoles(target, interaction.guild);
 
   // Odczekaj, aż Discord odświeży role (ważne!)
-  await sleep(700);
+  await sleep(1200);
 
   // POBIERZ usera na świeżo z API (nie z cache!)
   const freshTarget = await interaction.guild.members.fetch(target.id);
