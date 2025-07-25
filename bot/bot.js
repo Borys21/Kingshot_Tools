@@ -125,20 +125,35 @@ const rest = new REST({ version: '10' }).setToken(token);
 client.once('ready', () => {
   console.log(`Logged in as ${client.user.tag}`);
   
-  // Start HTTP server AFTER Discord is ready
+  // NAJPIERW uruchom serwer HTTP
   const server = app.listen(PORT, '0.0.0.0', () => {
     console.log(`🌐 Dashboard API running on port ${PORT}`);
     console.log(`🚀 Bot ready and API accessible!`);
+    console.log(`🔗 Health check: http://localhost:${PORT}/health`);
   });
   
-  // Graceful shutdown
-  process.on('SIGTERM', () => {
-    console.log('🛑 SIGTERM received, shutting down gracefully...');
-    server.close(() => {
+  // Lepszy graceful shutdown
+  const gracefulShutdown = (signal) => {
+    console.log(`🛑 ${signal} received, shutting down gracefully...`);
+    server.close((err) => {
+      if (err) {
+        console.error('❌ Error during server shutdown:', err);
+        process.exit(1);
+      }
+      console.log('✅ HTTP server closed');
       client.destroy();
+      console.log('✅ Discord client destroyed');
       process.exit(0);
     });
-  });
+  };
+  
+  process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+  process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+  
+  // Keep alive endpoint dla Railway
+  setInterval(() => {
+    console.log(`💓 Heartbeat - Bot: ${client.isReady()}, Server: running`);
+  }, 30000); // Co 30 sekund
 });
 
 async function replyE(interaction, options) {
@@ -380,11 +395,12 @@ client.on('interactionCreate', async interaction => {
 
 // DODAJ: API endpoints (dodaj przed client.login(token))
 app.get('/', (req, res) => {
-  res.json({ 
+  res.status(200).json({ 
     message: 'Kingshot Tools API is running!',
-    status: 'ok',
+    status: 'healthy',
     botReady: client.isReady(),
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
   });
 });
 
@@ -531,11 +547,17 @@ app.post('/get-embed', authenticateApiKey, async (req, res) => {
 });
 
 app.get('/health', (req, res) => {
-  res.json({ 
-    status: 'ok', 
+  const health = {
+    status: client.isReady() ? 'healthy' : 'unhealthy',
     botReady: client.isReady(),
-    timestamp: new Date().toISOString()
-  });
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    memory: process.memoryUsage(),
+    pid: process.pid
+  };
+  
+  console.log('🏥 Health check requested:', health);
+  res.status(client.isReady() ? 200 : 503).json(health);
 });
 
 client.login(token);
