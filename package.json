@@ -7,11 +7,11 @@
     "dev-bot": "nodemon bot/bot.js"
   },
   "dependencies": {
-    "@iframe-resizer/child": "^5.4.6",
-    "@iframe-resizer/parent": "^5.4.6",
-    "discord.js": "^14.7.1",
-    "dotenv": "^16.0.0",
-    "express": "^4.18.0",
+    "@iframe-resizer/child": "^5.4.7",
+    "@iframe-resizer/parent": "^5.4.7",
+    "discord.js": "^14.21.0",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
     "cors": "^2.8.5"
   }
 }
