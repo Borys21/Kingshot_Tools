@@ -32,8 +32,18 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 // Express setup
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'x-api-key']
+}));
 app.use(express.json({ limit: '50mb' }));
+
+// DODAJ timeout protection:
+app.use((req, res, next) => {
+  res.setTimeout(30000); // 30 sekund timeout
+  next();
+});
 
 // API Key middleware
 function authenticateApiKey(req, res, next) {
@@ -115,9 +125,19 @@ const rest = new REST({ version: '10' }).setToken(token);
 client.once('ready', () => {
   console.log(`Logged in as ${client.user.tag}`);
   
-  // DODAJ: Start HTTP server
-  app.listen(PORT, () => {
+  // Start HTTP server AFTER Discord is ready
+  const server = app.listen(PORT, '0.0.0.0', () => {
     console.log(`🌐 Dashboard API running on port ${PORT}`);
+    console.log(`🚀 Bot ready and API accessible!`);
+  });
+  
+  // Graceful shutdown
+  process.on('SIGTERM', () => {
+    console.log('🛑 SIGTERM received, shutting down gracefully...');
+    server.close(() => {
+      client.destroy();
+      process.exit(0);
+    });
   });
 });
 
@@ -359,6 +379,15 @@ client.on('interactionCreate', async interaction => {
 });
 
 // DODAJ: API endpoints (dodaj przed client.login(token))
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Kingshot Tools API is running!',
+    status: 'ok',
+    botReady: client.isReady(),
+    timestamp: new Date().toISOString()
+  });
+});
+
 app.get('/channels', authenticateApiKey, async (req, res) => {
   try {
     const guild = client.guilds.cache.get(guildId);
