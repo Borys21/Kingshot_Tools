@@ -16,13 +16,33 @@ const {
 } = require('discord.js');
 require('dotenv').config();
 
+// DODAJ Express
+const express = require('express');
+const cors = require('cors');
+
 const roles = require('./roles');
 
 const token = process.env.DISCORD_TOKEN;
 const clientId = process.env.CLIENT_ID;
 const guildId = process.env.GUILD_ID;
+const API_KEY = process.env.DASHBOARD_API_KEY; // NOWA ZMIENNA
+const PORT = process.env.PORT || 3000;
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+
+// Express setup
+const app = express();
+app.use(cors());
+app.use(express.json({ limit: '50mb' }));
+
+// API Key middleware
+function authenticateApiKey(req, res, next) {
+  const apiKey = req.headers['x-api-key'] || req.query.apikey;
+  if (!apiKey || apiKey !== API_KEY) {
+    return res.status(401).json({ error: 'Unauthorized - Invalid API key' });
+  }
+  next();
+}
 
 const baseIconUrl = 'https://borys21.github.io/Kingshot_Tools/calculators/hero-star-shard-calculator/icons/';
 const heroBaseUrl = 'https://borys21.github.io/Kingshot_Tools/bot/heroes/';
@@ -94,6 +114,11 @@ const rest = new REST({ version: '10' }).setToken(token);
 
 client.once('ready', () => {
   console.log(`Logged in as ${client.user.tag}`);
+  
+  // DODAJ: Start HTTP server
+  app.listen(PORT, () => {
+    console.log(`🌐 Dashboard API running on port ${PORT}`);
+  });
 });
 
 async function replyE(interaction, options) {
@@ -331,6 +356,157 @@ client.on('interactionCreate', async interaction => {
     userSelections.set(interaction.user.id, selection);
     await replyE(interaction, { embeds: [createResultEmbed(selection)] });
   }
+});
+
+// DODAJ: API endpoints (dodaj przed client.login(token))
+app.get('/channels', authenticateApiKey, async (req, res) => {
+  try {
+    const guild = client.guilds.cache.get(guildId);
+    if (!guild) {
+      return res.status(404).json({ error: 'Guild not found' });
+    }
+
+    const channels = guild.channels.cache
+      .filter(ch => ch.isTextBased() && ch.permissionsFor(guild.members.me).has('SendMessages'))
+      .map(ch => ({
+        id: ch.id,
+        name: ch.name,
+        type: ch.type
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+
+    res.json({ channels });
+  } catch (error) {
+    console.error('Error fetching channels:', error);
+    res.status(500).json({ error: 'Failed to fetch channels' });
+  }
+});
+
+app.post('/send-embed', authenticateApiKey, async (req, res) => {
+  try {
+    const { channelId, embed } = req.body;
+    
+    if (!channelId || !embed) {
+      return res.status(400).json({ error: 'Missing channelId or embed data' });
+    }
+
+    const channel = client.channels.cache.get(channelId);
+    if (!channel || !channel.isTextBased()) {
+      return res.status(404).json({ error: 'Channel not found or not text-based' });
+    }
+
+    const embedBuilder = new EmbedBuilder();
+    
+    if (embed.title) embedBuilder.setTitle(embed.title);
+    if (embed.description) embedBuilder.setDescription(embed.description);
+    if (embed.color) embedBuilder.setColor(embed.color);
+    if (embed.footer?.text) embedBuilder.setFooter({ text: embed.footer.text });
+    if (embed.image?.url) embedBuilder.setImage(embed.image.url);
+    if (embed.thumbnail?.url) embedBuilder.setThumbnail(embed.thumbnail.url);
+    if (embed.fields && Array.isArray(embed.fields)) {
+      embedBuilder.addFields(embed.fields);
+    }
+
+    embedBuilder.setTimestamp();
+
+    const message = await channel.send({ embeds: [embedBuilder] });
+    res.json({ messageId: message.id, success: true });
+
+  } catch (error) {
+    console.error('Error sending embed:', error);
+    res.status(500).json({ error: 'Failed to send embed: ' + error.message });
+  }
+});
+
+app.post('/edit-embed', authenticateApiKey, async (req, res) => {
+  try {
+    const { channelId, messageId, embed } = req.body;
+    
+    if (!channelId || !messageId || !embed) {
+      return res.status(400).json({ error: 'Missing required data' });
+    }
+
+    const channel = client.channels.cache.get(channelId);
+    if (!channel || !channel.isTextBased()) {
+      return res.status(404).json({ error: 'Channel not found' });
+    }
+
+    const message = await channel.messages.fetch(messageId);
+    if (!message) {
+      return res.status(404).json({ error: 'Message not found' });
+    }
+
+    if (message.author.id !== client.user.id) {
+      return res.status(403).json({ error: 'Can only edit bot messages' });
+    }
+
+    const embedBuilder = new EmbedBuilder();
+    
+    if (embed.title) embedBuilder.setTitle(embed.title);
+    if (embed.description) embedBuilder.setDescription(embed.description);
+    if (embed.color) embedBuilder.setColor(embed.color);
+    if (embed.footer?.text) embedBuilder.setFooter({ text: embed.footer.text });
+    if (embed.image?.url) embedBuilder.setImage(embed.image.url);
+    if (embed.thumbnail?.url) embedBuilder.setThumbnail(embed.thumbnail.url);
+    if (embed.fields && Array.isArray(embed.fields)) {
+      embedBuilder.addFields(embed.fields);
+    }
+
+    embedBuilder.setTimestamp();
+
+    await message.edit({ embeds: [embedBuilder] });
+    res.json({ success: true });
+
+  } catch (error) {
+    console.error('Error editing embed:', error);
+    res.status(500).json({ error: 'Failed to edit embed: ' + error.message });
+  }
+});
+
+app.post('/get-embed', authenticateApiKey, async (req, res) => {
+  try {
+    const { channelId, messageId } = req.body;
+    
+    if (!channelId || !messageId) {
+      return res.status(400).json({ error: 'Missing channelId or messageId' });
+    }
+
+    const channel = client.channels.cache.get(channelId);
+    if (!channel || !channel.isTextBased()) {
+      return res.status(404).json({ error: 'Channel not found' });
+    }
+
+    const message = await channel.messages.fetch(messageId);
+    if (!message || !message.embeds.length) {
+      return res.status(404).json({ error: 'Message or embed not found' });
+    }
+
+    const embed = message.embeds[0];
+    
+    const embedData = {
+      title: embed.title || '',
+      description: embed.description || '',
+      color: embed.color || null,
+      footer: embed.footer ? { text: embed.footer.text } : null,
+      image: embed.image ? { url: embed.image.url } : null,
+      thumbnail: embed.thumbnail ? { url: embed.thumbnail.url } : null,
+      fields: embed.fields || []
+    };
+
+    res.json({ embed: embedData });
+
+  } catch (error) {
+    console.error('Error getting embed:', error);
+    res.status(500).json({ error: 'Failed to get embed: ' + error.message });
+  }
+});
+
+app.get('/health', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    botReady: client.isReady(),
+    timestamp: new Date().toISOString()
+  });
 });
 
 client.login(token);
