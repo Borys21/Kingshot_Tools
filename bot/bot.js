@@ -33,9 +33,14 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 // Express setup
 const app = express();
 app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'x-api-key']
+  origin: function (origin, callback) {
+    // Pozwól na null origin (file://) i wszystkie inne
+    callback(null, true);
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'x-api-key', 'Authorization'],
+  credentials: false,
+  optionsSuccessStatus: 200
 }));
 app.use(express.json({ limit: '50mb' }));
 

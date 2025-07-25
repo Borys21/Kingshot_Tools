@@ -1,2 +1,11 @@
+# Security
+config/
+*.env
+.env*
+
+# Dependencies
 node_modules/
-.env
+package-lock.json
+
+# Logs
+*.log

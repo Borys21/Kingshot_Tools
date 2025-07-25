@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>🔒 Secure Discord Embed Dashboard</title>
+    <style>
+      body {
+        background: #23272a;
+        color: #fff;
+        font-family: "Segoe UI", Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      .dashboard-wrapper {
+        max-width: 1400px;
+        margin: 20px auto;
+        padding: 20px;
+        background: #2c2f33;
+        border-radius: 14px;
+        box-shadow: 0 4px 32px 0 #0003;
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2.3rem;
+        font-weight: 800;
+        letter-spacing: -1px;
+      }
+
+      /* Layout dwukolumnowy */
+      .main-content {
+        display: flex;
+        gap: 30px;
+        align-items: flex-start;
+      }
+      .form-panel {
+        flex: 1;
+        min-width: 500px;
+      }
+      .preview-panel {
+        flex: 1;
+        min-width: 400px;
+        position: sticky;
+        top: 20px;
+      }
+
+      /* Sekcje formularza */
+      .section {
+        background: #36393f;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+      .section-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: #fff;
+        border-bottom: 2px solid #5865f2;
+        padding-bottom: 8px;
+      }
+
+      .form-row {
+        margin-bottom: 15px;
+      }
+      label {
+        display: block;
+        margin-bottom: 7px;
+        font-weight: 600;
+        color: #b9bbbe;
+        font-size: 0.95rem;
+      }
+      input[type="text"],
+      textarea,
+      select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 2px solid #40444b;
+        background: #23272a;
+        color: #fff;
+        font-size: 1rem;
+        outline: none;
+        box-sizing: border-box;
+        transition: border-color 0.2s ease;
+      }
+      input[type="text"]:focus,
+      textarea:focus,
+      select:focus {
+        border-color: #5865f2;
+      }
+      textarea {
+        resize: vertical;
+        min-height: 80px;
+        font-family: inherit;
+      }
+
+      /* Color picker */
+      .color-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .color-input-wrapper {
+        display: flex;
+        align-items: center;
+        background: #23272a;
+        border-radius: 6px;
+        border: 2px solid #40444b;
+        transition: border-color 0.2s ease;
+        flex: 1;
+      }
+      .color-input-wrapper:focus-within {
+        border-color: #5865f2;
+      }
+      .hex-prefix {
+        padding: 8px 6px 8px 12px;
+        color: #72767d;
+        font-weight: 600;
+        font-size: 1rem;
+        user-select: none;
+      }
+      #hex-input {
+        background: transparent !important;
+        border: none !important;
+        padding: 8px 12px 8px 0 !important;
+        margin: 0 !important;
+        width: 100px;
+        font-family: "Courier New", monospace;
+        font-weight: 600;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      #color-preview-box {
+        width: 50px;
+        height: 40px;
+        border-radius: 6px;
+        border: 2px solid #40444b;
+        flex-shrink: 0;
+        cursor: pointer;
+        transition: transform 0.1s ease;
+      }
+      #color-preview-box:hover {
+        transform: scale(1.05);
+      }
+
+      /* Fields */
+      .field {
+        background: #2c2f33;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #40444b;
+      }
+      .field-inputs {
+        display: grid;
+        grid-template-columns: 1fr 1fr auto auto;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .field input[type="text"] {
+        margin-bottom: 0;
+      }
+      .inline-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+      }
+      .inline-label {
+        color: #b9bbbe;
+        font-size: 0.9rem;
+        user-select: none;
+      }
+      .remove-field-btn {
+        background: #ed4245;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.2s ease;
+      }
+      .remove-field-btn:hover {
+        background: #c23616;
+      }
+
+      /* Image upload */
+      .image-upload-area {
+        border: 2px dashed #40444b;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        transition: border-color 0.2s ease;
+      }
+      .image-upload-area:hover {
+        border-color: #5865f2;
+      }
+      .image-upload-input {
+        display: none;
+      }
+      .image-upload-btn {
+        background: #5865f2;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s ease;
+        margin-right: 10px;
+      }
+      .image-upload-btn:hover {
+        background: #4752c4;
+      }
+      .image-remove-btn {
+        background: #ed4245;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s ease;
+        display: none;
+      }
+      .image-remove-btn:hover {
+        background: #c23616;
+      }
+      .image-upload-preview {
+        max-width: 150px;
+        max-height: 150px;
+        margin: 15px auto 0;
+        border-radius: 8px;
+        display: none;
+      }
+
+      /* Action buttons */
+      .action-buttons {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-top: 25px;
+      }
+      .btn {
+        padding: 12px 20px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .btn-primary {
+        background: #5865f2;
+        color: white;
+      }
+      .btn-primary:hover {
+        background: #4752c4;
+      }
+      .btn-success {
+        background: #57f287;
+        color: #000;
+      }
+      .btn-success:hover {
+        background: #46d96c;
+      }
+      .btn-warning {
+        background: #fee75c;
+        color: #000;
+      }
+      .btn-warning:hover {
+        background: #fdd835;
+      }
+      .btn-secondary {
+        background: #747f8d;
+        color: white;
+      }
+      .btn-secondary:hover {
+        background: #5c6b7a;
+      }
+
+      /* Load embed section */
+      .load-embed-row {
+        display: flex;
+        gap: 10px;
+        align-items: end;
+      }
+      .load-embed-row input {
+        flex: 1;
+      }
+      .load-embed-row button {
+        height: 42px;
+        padding: 0 15px;
+        white-space: nowrap;
+      }
+
+      /* Preview panel */
+      .embed-preview-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 15px;
+        text-align: center;
+      }
+      .embed-preview {
+        background: #313338;
+        border-radius: 10px;
+        border-left: 6px solid #5865f2;
+        padding: 20px;
+        color: #fff;
+        min-height: 120px;
+        box-shadow: 0 2px 15px 0 #0004;
+        position: relative;
+        overflow: hidden;
+      }
+      .ep-title {
+        font-weight: 800;
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+        color: #fff;
+      }
+      .ep-description {
+        font-size: 1rem;
+        margin-bottom: 12px;
+        white-space: pre-line;
+        color: #dbdee1;
+        line-height: 1.4;
+      }
+      .ep-field {
+        margin: 12px 0;
+      }
+      .ep-field-name {
+        font-weight: 700;
+        color: #fff;
+        font-size: 1rem;
+        margin-bottom: 4px;
+      }
+      .ep-field-value {
+        color: #dbdee1;
+        font-size: 0.95rem;
+        line-height: 1.3;
+      }
+      .ep-footer {
+        color: #b9bbbe;
+        font-size: 0.9rem;
+        margin-top: 15px;
+        border-top: 1px solid #40444b;
+        padding-top: 8px;
+      }
+      .ep-thumbnail {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 2px solid #40444b;
+      }
+
+      /* Responsive */
+      @media (max-width: 1200px) {
+        .main-content {
+          flex-direction: column;
+        }
+        .preview-panel {
+          position: static;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-wrapper">
+      <h1>Discord Embed Builder</h1>
+
+      <div class="main-content">
+        <!-- PANEL FORMULARZA -->
+        <div class="form-panel">
+          <!-- SEKCJA: CHANNEL -->
+          <div class="section">
+            <div class="section-title">📡 Channel Selection</div>
+            <div class="form-row">
+              <label for="channel-select">Discord Channel</label>
+              <select id="channel-select">
+                <option value="">Loading channels...</option>
+              </select>
+            </div>
+            <button class="btn btn-secondary" id="refresh-channels-btn">
+              🔄 Refresh Channels
+            </button>
+          </div>
+
+          <!-- SEKCJA: STYLING (przeniesiona na górę) -->
+          <div class="section">
+            <div class="section-title">🎨 Styling</div>
+            <div class="form-row">
+              <label>Embed Color</label>
+              <div class="color-row">
+                <div class="color-input-wrapper">
+                  <span class="hex-prefix">#</span>
+                  <input
+                    type="text"
+                    id="hex-input"
+                    maxlength="6"
+                    placeholder="5865F2"
+                  />
+                </div>
+                <div id="color-preview-box"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SEKCJA: BASIC INFO -->
+          <div class="section">
+            <div class="section-title">📝 Basic Information</div>
+            <div class="form-row">
+              <label for="embed-title">Title</label>
+              <input
+                type="text"
+                id="embed-title"
+                placeholder="Enter embed title..."
+              />
+            </div>
+            <div class="form-row">
+              <label for="embed-description">Description</label>
+              <textarea
+                id="embed-description"
+                placeholder="Write your message here..."
+              ></textarea>
+            </div>
+            <div class="form-row">
+              <label for="embed-footer">Footer Text</label>
+              <input
+                type="text"
+                id="embed-footer"
+                placeholder="Footer text (optional)"
+              />
+            </div>
+          </div>
+
+          <!-- SEKCJA: FIELDS -->
+          <div class="section">
+            <div class="section-title">📋 Fields</div>
+            <div id="fields-container"></div>
+            <button class="btn btn-secondary" id="add-field-btn">
+              ➕ Add Field
+            </button>
+          </div>
+
+          <!-- SEKCJA: IMAGE -->
+          <div class="section">
+            <div class="section-title">🖼️ Image</div>
+            <div class="image-upload-area">
+              <div style="margin-bottom: 15px; color: #b9bbbe">
+                Upload an image for your embed (displays as thumbnail)
+              </div>
+              <input
+                type="file"
+                id="image-upload-input"
+                class="image-upload-input"
+                accept="image/*"
+              />
+              <button class="btn btn-primary image-upload-btn" id="upload-btn">
+                📷 Choose Image
+              </button>
+              <button class="btn image-remove-btn" id="remove-image-btn">
+                🗑️ Remove Image
+              </button>
+              <img id="image-upload-preview" class="image-upload-preview" />
+            </div>
+          </div>
+
+          <!-- SEKCJA: LOAD EMBED -->
+          <div class="section">
+            <div class="section-title">📥 Load Existing Embed</div>
+            <div class="form-row">
+              <label>Load embed for editing by Message ID</label>
+              <div class="load-embed-row">
+                <input
+                  type="text"
+                  id="load-message-id"
+                  placeholder="Enter Discord Message ID..."
+                />
+                <button class="btn btn-primary" id="load-embed-btn">
+                  Load
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- AKCJE -->
+          <div class="action-buttons">
+            <button class="btn btn-secondary" id="generate-json">
+              📋 Copy JSON
+            </button>
+            <button class="btn btn-success" id="send-embed-btn">
+              🚀 Send Embed
+            </button>
+            <button class="btn btn-warning" id="edit-embed-btn">
+              ✏️ Edit Embed
+            </button>
+          </div>
+        </div>
+
+        <!-- PANEL PODGLĄDU -->
+        <div class="preview-panel">
+          <div class="embed-preview-title">👁️ Live Preview</div>
+          <div class="embed-preview" id="embed-preview">
+            <div style="color: #72767d; text-align: center; padding: 20px">
+              Start typing to see your embed preview...
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Demo version - wymaga wprowadzenia kluczy
+      alert("⚠️ This is a demo version. Contact developer for access tokens.");
+
+      const API_BASE =
+        prompt("Enter API Base URL:") || "https://your-api-url.com";
+      const API_KEY = prompt("Enter API Key:") || "";
+      const ACCESS_TOKEN = prompt("Enter Access Token:") || "";
+
+      if (!API_BASE || !API_KEY || !ACCESS_TOKEN) {
+        document.body.innerHTML = `
+          <div style="background:#23272a;color:#fff;padding:50px;text-align:center;font-family:Arial;">
+            <h1>🔒 Access Required</h1>
+            <p>This dashboard requires valid API credentials.</p>
+            <p>Contact @YourGitHubUsername for access.</p>
+          </div>
+        `;
+      } else {
+        // Ten sam kod co w secure, ale używa prompt values
+        async function secureRequest(url, options = {}) {
+          return fetch(url, {
+            ...options,
+            headers: {
+              ...options.headers,
+              "x-api-key": API_KEY,
+              authorization: ACCESS_TOKEN,
+            },
+          });
+        }
+
+        // API Base URL
+        // const API_BASE = "https://kingshottools-production.up.railway.app";
+        // const API_KEY = "P4D7N8V2S1C5L9Q3"; // Ten sam co na Railway
+
+        // --------- Fields logic ---------
+        const fieldsContainer = document.getElementById("fields-container");
+        const addFieldBtn = document.getElementById("add-field-btn");
+        let fieldCount = 0;
+
+        function createFieldElement(id) {
+          const div = document.createElement("div");
+          div.classList.add("field");
+          div.dataset.fieldId = id;
+
+          div.innerHTML = `
+            <div class="field-inputs">
+              <input type="text" placeholder="Field name" class="field-name">
+              <input type="text" placeholder="Field value" class="field-value">
+              <div class="inline-wrapper">
+                <input type="checkbox" id="inline-${id}">
+                <label class="inline-label" for="inline-${id}">Inline</label>
+              </div>
+              <button type="button" class="remove-field-btn">✕</button>
+            </div>
+          `;
+
+          // POPRAWKA: Dodaj event listenery dla input fields
+          div.querySelector(".field-name").addEventListener("input", updateAll);
+          div
+            .querySelector(".field-value")
+            .addEventListener("input", updateAll);
+          div
+            .querySelector("input[type=checkbox]")
+            .addEventListener("change", updateAll);
+
+          // POPRAWKA: Dodaj listener dla przycisku remove + update preview
+          div.querySelector(".remove-field-btn").onclick = () => {
+            div.remove();
+            updateAll(); // Natychmiastowa aktualizacja po usunięciu
+          };
+
+          return div;
+        }
+
+        addFieldBtn.addEventListener("click", () => {
+          fieldCount++;
+          const fieldEl = createFieldElement(fieldCount);
+          fieldsContainer.appendChild(fieldEl);
+          updateAll();
+        });
+
+        // --------- Color HEX logic ---------
+        const hexInput = document.getElementById("hex-input");
+        const colorPreviewBox = document.getElementById("color-preview-box");
+
+        function setColorBox(val) {
+          val = val.replace(/^#/, "");
+          colorPreviewBox.style.background = /^[0-9A-Fa-f]{6}$/.test(val)
+            ? "#" + val
+            : "#5865F2";
+        }
+
+        function validateAndFormat(value) {
+          return value
+            .replace(/[^0-9A-Fa-f]/g, "")
+            .slice(0, 6)
+            .toUpperCase();
+        }
+
+        hexInput.value = "5865F2";
+        setColorBox("5865F2");
+
+        hexInput.addEventListener("input", function (e) {
+          const cleaned = validateAndFormat(e.target.value);
+          e.target.value = cleaned;
+          setColorBox(cleaned);
+          updateAll();
+        });
+
+        hexInput.addEventListener("paste", function (e) {
+          e.preventDefault();
+          const pastedText = (e.clipboardData || window.clipboardData).getData(
+            "text"
+          );
+          const cleaned = validateAndFormat(pastedText.replace(/^#/, ""));
+          e.target.value = cleaned;
+          setColorBox(cleaned);
+          updateAll();
+        });
+
+        hexInput.addEventListener("focus", function () {
+          setTimeout(() => this.select(), 10);
+        });
+
+        colorPreviewBox.addEventListener("click", function () {
+          hexInput.focus();
+        });
+
+        // --------- Image logic ---------
+        let embedImage = "";
+        const imageInput = document.getElementById("image-upload-input");
+        const uploadBtn = document.getElementById("upload-btn");
+        const removeImageBtn = document.getElementById("remove-image-btn");
+        const imagePreview = document.getElementById("image-upload-preview");
+
+        uploadBtn.onclick = () => imageInput.click();
+
+        imageInput.onchange = function (e) {
+          if (this.files && this.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (ev) {
+              embedImage = ev.target.result;
+              imagePreview.src = embedImage;
+              imagePreview.style.display = "block";
+              removeImageBtn.style.display = "inline-block"; // Pokaż przycisk usuwania
+              updateAll();
+            };
+            reader.readAsDataURL(this.files[0]);
+          }
+        };
+
+        // NOWE: Przycisk do usuwania obrazka
+        removeImageBtn.onclick = function () {
+          embedImage = "";
+          imagePreview.style.display = "none";
+          removeImageBtn.style.display = "none";
+          imageInput.value = ""; // Wyczyść input file
+          updateAll();
+        };
+
+        // --------- Auto update preview ---------
+        const autoUpdateElements = [
+          "embed-title",
+          "embed-description",
+          "embed-footer",
+        ];
+        autoUpdateElements.forEach((id) => {
+          document.getElementById(id).addEventListener("input", updateAll);
+        });
+
+        // USUNIĘTE: fieldsContainer.addEventListener("input", updateAll);
+        // Teraz każdy field ma swoje własne event listenery
+
+        // --------- Generate JSON ---------
+        document
+          .getElementById("generate-json")
+          .addEventListener("click", function () {
+            const json = getEmbedJSON();
+            navigator.clipboard.writeText(json).then(() => {
+              alert("JSON copied to clipboard!");
+            });
+          });
+
+        function getEmbedJSON() {
+          const title = document.getElementById("embed-title").value.trim();
+          const description = document
+            .getElementById("embed-description")
+            .value.trim();
+          const hex = hexInput.value.trim().toUpperCase();
+          const footerText = document
+            .getElementById("embed-footer")
+            .value.trim();
+
+          const fields = [];
+          fieldsContainer.querySelectorAll(".field").forEach((fieldDiv) => {
+            const name = fieldDiv.querySelector(".field-name").value.trim();
+            const value = fieldDiv.querySelector(".field-value").value.trim();
+            const inline = fieldDiv.querySelector(
+              "input[type=checkbox]"
+            ).checked;
+            if (name && value) {
+              fields.push({ name, value, inline });
+            }
+          });
+
+          const embed = {};
+          if (title) embed.title = title;
+          if (description) embed.description = description;
+          if (/^([0-9A-F]{6})$/.test(hex)) embed.color = parseInt(hex, 16);
+          if (fields.length > 0) embed.fields = fields;
+          if (embedImage) embed.image = { url: embedImage };
+          if (footerText) embed.footer = { text: footerText };
+
+          return JSON.stringify({ embeds: [embed] }, null, 2);
+        }
+
+        // --------- Update preview ---------
+        function updateAll() {
+          const preview = document.getElementById("embed-preview");
+          preview.innerHTML = "";
+
+          const title = document.getElementById("embed-title").value.trim();
+          const description = document
+            .getElementById("embed-description")
+            .value.trim();
+          const hex = hexInput.value.trim().toUpperCase();
+          const footerText = document
+            .getElementById("embed-footer")
+            .value.trim();
+
+          // Color bar
+          preview.style.borderLeft = /^([0-9A-F]{6})$/.test(hex)
+            ? `6px solid #${hex}`
+            : "6px solid #5865f2";
+
+          // Empty state
+          if (
+            !title &&
+            !description &&
+            !footerText &&
+            fieldsContainer.children.length === 0 &&
+            !embedImage
+          ) {
+            preview.innerHTML =
+              '<div style="color: #72767d; text-align: center; padding: 20px;">Start typing to see your embed preview...</div>';
+            return;
+          }
+
+          if (title) {
+            const titleDiv = document.createElement("div");
+            titleDiv.className = "ep-title";
+            titleDiv.textContent = title;
+            preview.appendChild(titleDiv);
+          }
+
+          if (description) {
+            const desc = document.createElement("div");
+            desc.className = "ep-description";
+            desc.textContent = description;
+            preview.appendChild(desc);
+          }
+
+          // Fields
+          fieldsContainer.querySelectorAll(".field").forEach((fieldDiv) => {
+            const name = fieldDiv.querySelector(".field-name").value.trim();
+            const value = fieldDiv.querySelector(".field-value").value.trim();
+            const inline = fieldDiv.querySelector(
+              "input[type=checkbox]"
+            ).checked;
+
+            if (name && value) {
+              const fieldEl = document.createElement("div");
+              fieldEl.className = "ep-field";
+              fieldEl.style.display = inline ? "inline-block" : "block";
+              fieldEl.style.verticalAlign = "top";
+              fieldEl.style.width = inline ? "46%" : "100%";
+              fieldEl.style.marginRight = inline ? "4%" : "0";
+
+              const nameDiv = document.createElement("div");
+              nameDiv.className = "ep-field-name";
+              nameDiv.textContent = name;
+
+              const valueDiv = document.createElement("div");
+              valueDiv.className = "ep-field-value";
+              valueDiv.textContent = value;
+
+              fieldEl.appendChild(nameDiv);
+              fieldEl.appendChild(valueDiv);
+              preview.appendChild(fieldEl);
+            }
+          });
+
+          // Thumbnail
+          if (embedImage) {
+            const img = document.createElement("img");
+            img.className = "ep-thumbnail";
+            img.src = embedImage;
+            preview.appendChild(img);
+          }
+
+          // Footer
+          if (footerText) {
+            const footer = document.createElement("div");
+            footer.className = "ep-footer";
+            footer.textContent = footerText;
+            preview.appendChild(footer);
+          }
+        }
+
+        // --------- API Functions (bez zmian) ---------
+        async function fetchChannelList() {
+          const select = document.getElementById("channel-select");
+          select.innerHTML = '<option value="">Loading...</option>';
+          try {
+            const res = await secureRequest(`${API_BASE}/channels`);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const data = await res.json();
+
+            select.innerHTML = "";
+            if (Array.isArray(data.channels) && data.channels.length) {
+              data.channels.forEach((ch) => {
+                const opt = document.createElement("option");
+                opt.value = ch.id;
+                opt.textContent = `#${ch.name}`;
+                select.appendChild(opt);
+              });
+            } else {
+              select.innerHTML = '<option value="">No channels found</option>';
+            }
+          } catch (e) {
+            console.error("Error fetching channels:", e);
+            select.innerHTML =
+              '<option value="">Error loading channels</option>';
+          }
+        }
+
+        document.getElementById("send-embed-btn").onclick = async function () {
+          const channelId = document.getElementById("channel-select").value;
+          if (!channelId) return alert("Please select a channel!");
+
+          try {
+            const embedData = JSON.parse(getEmbedJSON());
+            const res = await secureRequest(`${API_BASE}/send-embed`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                channelId: channelId,
+                embed: embedData.embeds[0],
+              }),
+            });
+
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const data = await res.json();
+
+            if (data.messageId) {
+              alert(
+                "✅ Embed sent successfully! Message ID: " + data.messageId
+              );
+            } else {
+              alert(
+                "❌ Error sending embed: " + (data.error || "Unknown error")
+              );
+            }
+          } catch (e) {
+            console.error("Error sending embed:", e);
+            alert("❌ Error sending embed: " + e.message);
+          }
+        };
+
+        document.getElementById("edit-embed-btn").onclick = async function () {
+          const channelId = document.getElementById("channel-select").value;
+          if (!channelId) return alert("Please select a channel!");
+          const messageId = prompt("Enter Message ID to edit:");
+          if (!messageId) return;
+
+          try {
+            const embedData = JSON.parse(getEmbedJSON());
+            const res = await secureRequest(`${API_BASE}/edit-embed`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "x-api-key": API_KEY,
+              },
+              body: JSON.stringify({
+                channelId: channelId,
+                messageId: messageId,
+                embed: embedData.embeds[0],
+              }),
+            });
+
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const data = await res.json();
+
+            if (data.success) {
+              alert("Embed updated successfully!");
+            } else {
+              alert("Error editing embed: " + (data.error || "Unknown error"));
+            }
+          } catch (e) {
+            console.error("Error editing embed:", e);
+            alert("Error editing embed: " + e.message);
+          }
+        };
+
+        document.getElementById("load-embed-btn").onclick = async function () {
+          const channelId = document.getElementById("channel-select").value;
+          const messageId = document
+            .getElementById("load-message-id")
+            .value.trim();
+          if (!channelId) return alert("Please select a channel!");
+          if (!messageId) return alert("Please enter a Message ID!");
+
+          try {
+            const res = await secureRequest(`${API_BASE}/get-embed`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "x-api-key": API_KEY,
+              },
+              body: JSON.stringify({ channelId, messageId }),
+            });
+
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const data = await res.json();
+
+            if (data.error || !data.embed) {
+              alert("Embed not found: " + (data.error || "Not found"));
+              return;
+            }
+
+            // Load embed data into form
+            const e = data.embed;
+            document.getElementById("embed-title").value = e.title || "";
+            document.getElementById("embed-description").value =
+              e.description || "";
+            document.getElementById("embed-footer").value =
+              e.footer?.text || "";
+
+            // Color handling
+            if (e.color) {
+              const hexColor = e.color
+                .toString(16)
+                .toUpperCase()
+                .padStart(6, "0");
+              document.getElementById("hex-input").value = hexColor;
+              setColorBox(hexColor);
+            } else {
+              document.getElementById("hex-input").value = "5865F2";
+              setColorBox("5865F2");
+            }
+
+            // Image handling
+            embedImage = e.image?.url || "";
+            if (embedImage) {
+              imagePreview.src = embedImage;
+              imagePreview.style.display = "block";
+              removeImageBtn.style.display = "inline-block";
+            } else {
+              imagePreview.style.display = "none";
+              removeImageBtn.style.display = "none";
+            }
+
+            // Fields handling
+            fieldsContainer.innerHTML = "";
+            if (Array.isArray(e.fields)) {
+              e.fields.forEach((f) => {
+                fieldCount++;
+                const fieldEl = createFieldElement(fieldCount);
+                fieldEl.querySelector(".field-name").value = f.name || "";
+                fieldEl.querySelector(".field-value").value = f.value || "";
+                fieldEl.querySelector("input[type=checkbox]").checked =
+                  !!f.inline;
+                fieldsContainer.appendChild(fieldEl);
+              });
+            }
+
+            updateAll();
+            alert("Embed loaded successfully!");
+          } catch (e) {
+            console.error("Error loading embed:", e);
+            alert("Error loading embed: " + e.message);
+          }
+        };
+
+        // Initialize
+        window.addEventListener("DOMContentLoaded", fetchChannelList);
+        document.getElementById("refresh-channels-btn").onclick =
+          fetchChannelList;
+        updateAll();
+      }
+    </script>
+  </body>
+</html>
